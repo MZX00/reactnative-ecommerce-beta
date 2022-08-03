@@ -6,4 +6,7 @@ export default {
   extra: {
     baseUrl: process.env.BASE_URL,
   },
+  android: {
+    package: "com.beta.ecommerce",
+  },
 };

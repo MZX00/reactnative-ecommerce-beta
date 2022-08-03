@@ -1,6 +1,6 @@
 {
   "name": "beta-ecommerce",
-  "version": "1.0.0",
+  "version": "22.08.03",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

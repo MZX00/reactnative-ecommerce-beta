@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { marginHorizontal, marginVertical } from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
+import MasterCard from "../../assets/public/svgs/MasterCard";
 
 const PaymentSection = () => {
   const navigation = useNavigation();
@@ -20,11 +21,7 @@ const PaymentSection = () => {
         </Text>
       </View>
       <View style={styles.line2}>
-        <Image
-          style={styles.img}
-          resizeMethod="resize"
-          source={require("../../assets/mastercard.png")}
-        />
+        <MasterCard />
         <Text style={styles.cardNum}>**** **** **** 3947</Text>
       </View>
     </View>

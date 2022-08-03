@@ -4,6 +4,7 @@ import Bags from "../../assets/public/svgs/Bags";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../features/cart";
+import OrderCompletionSVG from "../components/icons/OrderCompletionSVG";
 
 const ContinueShopping = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const ContinueShopping = () => {
 
   return (
     <View style={styles.container}>
-      <Bags />
+      <OrderCompletionSVG />
       <Text style={styles.heading}>Success!</Text>
       <Text style={styles.txt}>You order will be delivered soon.</Text>
       <Text style={styles.txt}>Thank you for choosing our app!</Text>
