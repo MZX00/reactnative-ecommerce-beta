@@ -1,17 +1,9 @@
-import {
-  Pressable,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Search from "../../assets/public/svgs/Search";
-import Bag from "../../assets/public/svgs/Bag";
-import Home from "../../assets/public/svgs/Home";
-import Profile from "../../assets/public/svgs/Profile";
+import { Pressable, StyleSheet, View } from "react-native";
+import Home from "../../assets/svgs/Home";
+import Profile from "../../assets/svgs/Profile";
 import { useNavigation, CommonActions } from "@react-navigation/native";
-import Cart from "../../assets/public/svgs/Cart";
-import Logout from "./icons/Logout";
+import Cart from "../../assets/svgs/Cart";
+import Logout from "../../assets/svgs/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/user";
 import { clearCart } from "../features/cart";
@@ -25,36 +17,34 @@ const HomePageMenu = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <TouchableWithoutFeedback
+        <Pressable
           style={styles.component}
           onPress={() => {
             navigation.navigate("HomePage");
           }}
         >
           <Home />
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
+        </Pressable>
+        <Pressable
           style={styles.component}
           onPress={() => {
             navigation.navigate("UserPanel");
           }}
         >
           <Profile />
-        </TouchableWithoutFeedback>
-        {/* <TouchableOpacity style={styles.component}>
-          <Search />
-        </TouchableOpacity> */}
+        </Pressable>
         {!admin && (
-          <TouchableWithoutFeedback
+          <Pressable
             style={styles.component}
             onPress={() => {
               navigation.navigate("Cart");
             }}
           >
             <Cart height={22} width={22} />
-          </TouchableWithoutFeedback>
+          </Pressable>
         )}
         <Pressable
+          style={styles.component}
           onPress={() => {
             dispatch(logout());
             dispatch(clearCart());
@@ -80,7 +70,6 @@ const HomePageMenu = () => {
 
 const styles = StyleSheet.create({
   component: {
-    flex: 1,
     justifyContent: "center",
   },
   card: {

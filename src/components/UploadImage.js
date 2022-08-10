@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { setReq } from "../features/api";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import EmptyImage from "./icons/EmptyImage";
+import EmptyImage from "../../assets/svgs//EmptyImage";
 
 const UploadImage = ({ flex }) => {
   const [img, setImg] = useState();
@@ -23,14 +23,16 @@ const UploadImage = ({ flex }) => {
     console.log(resp);
 
     if (!resp.cancelled) {
-      const imgData = new FormData();
-
-      imgData.append("image", {
-        name: resp.fileName,
-        type: resp.type,
-        uri: resp.uri,
-      });
-      dispatch(setReq({ property: "image", value: imgData }));
+      dispatch(
+        setReq({
+          property: "image",
+          value: {
+            name: resp.fileName,
+            type: resp.type,
+            uri: resp.uri,
+          },
+        })
+      );
       setImg(resp.uri);
     } else {
       console.log(resp);

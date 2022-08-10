@@ -1,7 +1,6 @@
-import * as React from "react";
 import Svg, { Mask, Rect, G } from "react-native-svg";
 
-function Chip(props) {
+const Chip = () => {
   return (
     <Svg
       width={32}
@@ -9,7 +8,6 @@ function Chip(props) {
       viewBox="0 0 32 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <Mask
         id="a"
@@ -83,6 +81,6 @@ function Chip(props) {
       </G>
     </Svg>
   );
-}
+};
 
 export default Chip;

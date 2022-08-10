@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import Svg, { Path, Defs, RadialGradient, Stop } from "react-native-svg";
 
-const EmptyCart = (props) => {
+const EmptyCart = () => {
   return (
     <View style={{ flex: 3, alignItems: "center", marginTop: 30 }}>
       <Svg
@@ -10,7 +10,6 @@ const EmptyCart = (props) => {
         viewBox="0 0 304 249"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
       >
         <Path
           d="M67.043 139.049a40.062 40.062 0 0177.1-15.38 40.277 40.277 0 013.051 15.38h-80.15z"

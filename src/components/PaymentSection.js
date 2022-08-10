@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { marginHorizontal, marginVertical } from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
-import MasterCard from "../../assets/public/svgs/MasterCard";
+import MasterCard from "../../assets/svgs/MasterCard";
 
 const PaymentSection = () => {
   const navigation = useNavigation();

@@ -2,8 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../features/cart";
 import { counterButtonSize } from "../utils/Constants";
-import Minus from "./icons/Minus";
-import Plus from "./icons/Plus";
+import Minus from "../../assets/svgs//Minus";
+import Plus from "../../assets/svgs//Plus";
 
 const mult = 1.3;
 
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigCounterButton: {
-    marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: (counterButtonSize * mult) / 2,

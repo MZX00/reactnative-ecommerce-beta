@@ -1,8 +1,6 @@
-import * as React from "react";
 import Svg, { G, Circle, Path, Defs } from "react-native-svg";
-/* SVGR has dropped some elements not supported by react-native-svg: filter */
 
-function Add(props) {
+const Add = () => {
   return (
     <Svg
       width={44}
@@ -10,7 +8,6 @@ function Add(props) {
       viewBox="0 0 44 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <G filter="url(#filter0_d_442_1908)">
         <Circle cx={22} cy={18} r={18} fill="#000DAE" />
@@ -24,6 +21,6 @@ function Add(props) {
       <Defs></Defs>
     </Svg>
   );
-}
+};
 
 export default Add;

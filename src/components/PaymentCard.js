@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { marginHorizontal, marginVertical } from "../utils/Constants";
-import Chip from "../../assets/public/svgs/Chip.js";
+import Chip from "../../assets/svgs/Chip.js";
 import { CheckBox } from "@rneui/themed";
 
 const PaymentCard = ({ item, onPress, backgroundColor, selectedId }) => {

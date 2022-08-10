@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import Counter from "./Counter";
-import EmptyCart from "./icons/EmptyCart";
+import EmptyCart from "../../assets/svgs/EmptyCart";
 import Constants from "expo-constants";
-import EmptyImage from "./icons/EmptyImage";
+import EmptyImage from "../../assets/svgs//EmptyImage";
 import { grey } from "../utils/Constants";
 
 const Item = ({
@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     marginVertical: 10,
+    overflow: "hidden",
     borderRadius: 10,
     borderWidth: 1,
-    overflow: "hidden",
     borderColor: "silver",
     // backgroundColor: "red",
   },

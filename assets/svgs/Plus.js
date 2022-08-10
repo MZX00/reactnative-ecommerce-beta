@@ -1,5 +1,4 @@
 import Svg, { Path } from "react-native-svg";
-import { counterButtonSize } from "../../utils/Constants";
 
 const Plus = ({ size }) => {
   const length = size - 16;

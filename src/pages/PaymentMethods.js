@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  FlatList,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import { CheckBox } from "@rneui/themed";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
 import { useState } from "react";
-import { marginHorizontal } from "../utils/Constants";
-import Add from "../../assets/public/svgs/Add";
+import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
 
 const DATA = [

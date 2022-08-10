@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
 import Constants from "expo-constants";
-import EmptyImage from "./icons/EmptyImage";
+import EmptyImage from "../../assets/svgs//EmptyImage";
 
 const SmallProduct = ({ product, admin }) => {
   const baseUrl = Constants.manifest.extra.baseUrl;
@@ -29,13 +29,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FAFDFF",
-    elevation: 1,
+    elevation: 5,
     marginHorizontal: 15,
     marginVertical: 10,
     paddingHorizontal: 15,
     paddingVertical: 5,
+    borderRadius: 15,
   },
-  img: { alignSelf: "center", width: 100, height: 100 },
+  img: { alignSelf: "center", width: 100, height: 100, marginTop: 10 },
   name: { paddingTop: 10, fontSize: 16 },
   price: { paddingBottom: 5 },
 });

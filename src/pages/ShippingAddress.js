@@ -1,7 +1,7 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "../components/Header";
 import AddressCard from "../components/AddressCard";
-import Add from "../../assets/public/svgs/Add";
+import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
 
 const ShippingAddress = () => {

@@ -36,8 +36,7 @@ const Main = () => {
           initialRouteName="Login"
           screenOptions={{
             headerShown: false,
-            gestureEnabled: true,
-            gestureDirection: "horizontal",
+            gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,
           }}
         >

@@ -1,7 +1,6 @@
-import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
-function Bags(props) {
+const Bags = () => {
   return (
     <Svg
       width={208}
@@ -9,7 +8,6 @@ function Bags(props) {
       viewBox="0 0 208 213"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <G clipPath="url(#clip0_442_2117)">
         <Path
@@ -100,6 +98,6 @@ function Bags(props) {
       </Defs>
     </Svg>
   );
-}
+};
 
 export default Bags;

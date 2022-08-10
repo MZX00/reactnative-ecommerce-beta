@@ -3,7 +3,7 @@ export const marginHorizontal = 40;
 export const buttonFontSize = 18;
 export const marginVertical = 15;
 export const smallFontSize = 16;
-export const counterButtonSize = 40;
+export const counterButtonSize = 35;
 
 //color
 export const peach = "#F9C678";
@@ -12,6 +12,7 @@ export const black = "#242A37";
 export const grey = "#afafaf";
 export const textBlue = "#2153ff";
 export const borderBlue = "#4098ff";
+export const blue = "#000DAE";
 
 //dropdown data
 export const sizeList = [

@@ -46,7 +46,18 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
         console.log(data);
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
-          resp.data = await api(endpoints[btnText], "post", data);
+          if (data.image) {
+            const imgData = new FormData();
+            imgData.append("image", data.image);
+
+            resp.data = await api(endpoints[btnText], "post", {
+              ...data,
+              image: imgData,
+            });
+          } else {
+            resp.data = await api(endpoints[btnText], "post", data);
+          }
+
           if (resp && resp.data.body) {
             // console.log(resp);
             dispatch(setRes(resp.data.body));
@@ -123,14 +134,16 @@ const styles = StyleSheet.create({
   },
   btn: {
     // flex: 1,
-    height: 50,
+    height: 55,
+    elevation: 2,
     justifyContent: "center",
     marginTop: marginVertical,
     alignItems: "center",
     marginHorizontal: marginHorizontal,
     backgroundColor: "#000DAE",
+    borderColor: "transparent",
+    borderRadius: 30,
     borderWidth: 1.5,
-    borderRadius: 3,
     alignSelf: "stretch",
   },
   text: {

@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/Api";
 import Counter from "../components/Counter";
 import Constants from "expo-constants";
-import EmptyImage from "../components/icons/EmptyImage";
+import EmptyImage from "../../assets/svgs/EmptyImage";
 
 const ViewProduct = ({ navigation }) => {
   const id = [{ id: 0 }, { id: 1 }, { id: 2 }];
@@ -128,7 +128,12 @@ const ViewProduct = ({ navigation }) => {
       <View flex={1}>
         <FlatList data={id} renderItem={renderItems}></FlatList>
       </View>
-      <View style={[styles.floatingButton]}>
+      <View
+        style={[
+          styles.floatingButton,
+          quantity > 0 && { height: "8%", paddingBottom: 0 },
+        ]}
+      >
         {quantity === 0 && !admin && (
           <LargeBlackButton
             btnText="ADD TO CART"
@@ -224,8 +229,8 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: "absolute",
     bottom: 0,
-    paddingBottom: 10,
-    height: "10%",
+    paddingBottom: 15,
+    height: "8%",
     width: "100%",
     elevation: 5,
     alignItems: "center",
