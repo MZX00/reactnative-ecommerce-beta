@@ -11,6 +11,7 @@ import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import SmallProduct from "../components/SmallProduct";
+import Chip from "../components/Chip";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/user";
 import { resetApi } from "../features/api";
@@ -111,7 +112,13 @@ const HomePage = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           data={filterData}
           renderItem={({ item, index, separators }) => {
-            return <Text style={styles.filterComponent}>{item.label}</Text>;
+            return (
+              <View style={styles.chipContainer}>
+                <TouchableOpacity activeOpacity={0.5}>
+                  <Text style={styles.txt}>{item.label}</Text>
+                </TouchableOpacity>
+              </View>
+            );
           }}
         />
       </View>
@@ -131,14 +138,11 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   horizontalFl: {
-    paddingVertical: 5,
-    borderTopWidth: 1,
-    borderColor: "black",
-    borderBottomWidth: 1,
-    marginHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 5,
   },
   filterComponent: {
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   contentContainer: {
     paddingBottom: 180,
@@ -151,10 +155,21 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    paddingTop: 30,
     backgroundColor: "white",
     // justifyContent: "center",
     // alignItems: "stretch",
+  },
+  chipContainer: {
+    elevation: 7,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    borderRadius: 20,
+    backgroundColor: "#000DAE",
+    marginHorizontal: 5,
+  },
+  txt: {
+    color: "#ffffff",
+    fontSize: 11,
   },
 });
 

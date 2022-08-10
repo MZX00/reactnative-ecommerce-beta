@@ -43,6 +43,17 @@ const HomePageMenu = () => {
             <Cart height={22} width={22} />
           </Pressable>
         )}
+
+        {admin && (
+          <TouchableWithoutFeedback
+            style={styles.component}
+            onPress={() => {
+              navigation.navigate("CartAdmin");
+            }}
+          >
+            <Cart height={22} width={22} />
+          </TouchableWithoutFeedback>
+        )}
         <Pressable
           style={styles.component}
           onPress={() => {
