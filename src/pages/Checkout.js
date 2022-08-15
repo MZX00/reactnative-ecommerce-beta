@@ -6,6 +6,7 @@ import PaymentSection from "../components/PaymentSection";
 import DeliveryCard from "../components/DeliveryCard";
 import OrderSummary from "../components/OrderSummary";
 import LargeBlackButton from "../components/LargeBlackButton";
+import { useSelector } from "react-redux";
 
 const Checkout = () => {
   return (

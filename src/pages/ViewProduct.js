@@ -29,7 +29,7 @@ const ViewProduct = ({ navigation }) => {
 
   const itemID = useSelector((state) => state.cart.selectedID);
   const quantity = useSelector((state) => {
-    const i = state.cart.ids.indexOf(itemID);
+    const i = state.cart.items.map((e) => e._id).indexOf(itemID);
     if (i != -1) {
       return state.cart.items[i].quantity;
     } else {

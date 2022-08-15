@@ -5,61 +5,71 @@ import Header from "../components/Header";
 import { useState } from "react";
 import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { setPayment } from "../features/checkout";
 
 const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    type: "visa",
-    number: 1234,
+    type: "mastercard",
+    cardNumber: "5134620098662680",
     name: "John Doe 0",
-    expDate: "07/21",
+    expDate: "07/27",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    type: "visa",
-    number: 5678,
+    type: "mastercard",
+    cardNumber: "5363807760088078",
     name: "John Doe 1",
-    expDate: "07/21",
+    expDate: "04/23",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    type: "visa",
-    number: 9101,
+    type: "mastercard",
+    cardNumber: "5238320152969409",
     name: "John Doe 2",
-    expDate: "07/21",
+    expDate: "11/29",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d88",
-    type: "visa",
-    number: 9101,
+    type: "mastercard",
+    cardNumber: "5238320152961319",
     name: "John Doe 2",
-    expDate: "07/21",
+    expDate: "9/25",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d99",
-    type: "visa",
-    number: 9101,
+    type: "mastercard",
+    cardNumber: "5403826459344685",
     name: "John Doe 2",
-    expDate: "07/21",
+    expDate: "03/21",
   },
 ];
 
 const PaymentMethods = () => {
   const navigation = useNavigation();
-  const [cashOnDelivery, setCashOnDelivery] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const dispatch = useDispatch();
+  const cashOnDelivery = useSelector(
+    (state) => state.checkout.payment === "cod"
+  );
+  const selectedId = useSelector((state) => {
+    if (state.checkout.payment === "cod") {
+      return null;
+    } else {
+      return state.checkout.payment;
+    }
+  });
 
   const checkCash = () => {
-    setCashOnDelivery(true);
-    setSelectedId(null);
+    dispatch(setPayment("cod"));
   };
 
   const rItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#000000" : "#9B9B9B";
+    const backgroundColor =
+      item.cardNumber === selectedId ? "#000000" : "#9B9B9B";
 
     const checkCard = () => {
-      setSelectedId(item.id);
-      setCashOnDelivery(false);
+      dispatch(setPayment(item.cardNumber));
     };
 
     return (

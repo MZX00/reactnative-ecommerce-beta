@@ -11,7 +11,9 @@ const PaymentCard = ({ item, onPress, backgroundColor, selectedId }) => {
           <Chip height={40} width={40} />
         </View>
         <View style={styles.test}>
-          <Text style={styles.number}>**** **** **** {item.number}</Text>
+          <Text style={styles.number}>
+            **** **** **** {item.cardNumber.substring(-1, 4)}
+          </Text>
           <View style={styles.cardBottom}>
             <View>
               <Text style={styles.label}>Card Holder Name</Text>
@@ -27,7 +29,7 @@ const PaymentCard = ({ item, onPress, backgroundColor, selectedId }) => {
 
       <CheckBox
         title="Use as default payment method"
-        checked={item.id === selectedId}
+        checked={item.cardNumber === selectedId}
         onPress={onPress}
       />
     </View>

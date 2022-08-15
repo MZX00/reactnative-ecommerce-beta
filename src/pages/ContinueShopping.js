@@ -1,23 +1,66 @@
 import { View, StyleSheet, Text } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { clearCart } from "../features/cart";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, clearCart } from "../features/cart";
 import OrderCompletionSVG from "../../assets/svgs/OrderCompletionSVG";
+import OrderFailed from "../../assets/svgs/OrderFailed";
+import api from "../utils/Api";
 
 const ContinueShopping = () => {
+  //redux
   const dispatch = useDispatch();
+  const products = useSelector((state) =>
+    state.cart.items.map((e) => {
+      return { _id: e._id, quantity: e.quantity, size: e.size, color: e.color };
+    })
+  );
+  const token = useSelector((state) => state.user.token);
+  const cost = useSelector((state) => {
+    return state.cart.items.reduce((sum, { price, quantity }) => {
+      return sum + price * quantity;
+    }, 0);
+  });
+
+  //states
+  const [success, setSuccess] = useState(null);
+
+  const addToCart = async () => {
+    const result = await api("order/create", "post", {
+      products: products,
+      token: token,
+      cost: cost,
+    });
+    console.log(result);
+    if (!result.error) {
+      console.log("I AM HERE");
+      dispatch(clearCart());
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    }
+  };
+
   useEffect(() => {
-    dispatch(clearCart());
+    addToCart();
   }, []);
 
   return (
     <View style={styles.container}>
-      <OrderCompletionSVG />
-      <Text style={styles.heading}>Success!</Text>
-      <Text style={styles.txt}>You order will be delivered soon.</Text>
-      <Text style={styles.txt}>Thank you for choosing our app!</Text>
-      <LargeBlackButton btnText="CONTINUE SHOPPING" changeTo="HomePage" />
+      {success ? <OrderCompletionSVG /> : <OrderFailed />}
+      <Text style={styles.heading}>{success ? "Success!" : "Failed!"}</Text>
+      <Text style={styles.txt}>
+        {success
+          ? "You order will be delivered soon."
+          : "Please try again. Unable to place order."}
+      </Text>
+      {success && (
+        <Text style={styles.txt}>Thank you for choosing our app!</Text>
+      )}
+      <LargeBlackButton
+        btnText={success ? "CONTINUE SHOPPING" : "Go Back"}
+        changeTo={success ? "HomePage" : "goBack"}
+      />
     </View>
   );
 };

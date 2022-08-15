@@ -5,7 +5,7 @@ const baseUrl = Constants.manifest.extra.baseUrl;
 
 const api = async (endpoint, requestType, payload) => {
   // console.log(Constants.manifest);
-  // console.log(baseUrl);
+  console.log(baseUrl);
   try {
     const resp = await axios({
       method: requestType,
@@ -16,10 +16,21 @@ const api = async (endpoint, requestType, payload) => {
     // console.log(resp.data.body.products);
     return resp.data;
   } catch (err) {
-    const title = err.response.data ? err.response.data.header.title : "Error";
-    const message = err.response.data
-      ? err.response.data.header.message
-      : err.message;
+    let title;
+    let message;
+    console.log(err);
+    if (err.response.data) {
+      title = err.response.data.header
+        ? err.response.data.header.title
+        : "Error";
+      message = err.response.data.header
+        ? err.response.data.header.message
+        : err.message;
+    } else {
+      title = "Error";
+      message = err.message;
+    }
+
     return { error: { title: title, message: message } };
   }
 };

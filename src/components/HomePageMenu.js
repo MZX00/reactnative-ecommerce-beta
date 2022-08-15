@@ -53,6 +53,7 @@ const HomePageMenu = () => {
             }}
           >
             <Document />
+            <Cart height={22} width={22} />
           </Pressable>
         )}
         <Pressable

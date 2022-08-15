@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { marginHorizontal, marginVertical } from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
 import MasterCard from "../../assets/svgs/MasterCard";
+import COD from "../../assets/svgs/COD";
+import { useSelector } from "react-redux";
 
 const PaymentSection = () => {
   const navigation = useNavigation();
+  const [cardNumber, setCardNumber] = useState("");
+  const payment = useSelector((state) => state.checkout.payment);
 
   return (
     <View style={styles.container}>
@@ -21,8 +25,16 @@ const PaymentSection = () => {
         </Text>
       </View>
       <View style={styles.line2}>
-        <MasterCard />
-        <Text style={styles.cardNum}>**** **** **** 3947</Text>
+        <View style={styles.paymentIcon}>
+          {payment == "cod" ? <COD /> : <MasterCard />}
+        </View>
+        {payment == "cod" ? (
+          <Text style={styles.paymentText}> Cash on Delivery</Text>
+        ) : (
+          <Text style={styles.paymentText}>
+            **** **** **** {payment.substring(-1, 4)}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -50,8 +62,17 @@ const styles = StyleSheet.create({
     marginTop: 15,
     // alignSelf: "flex-start",
   },
-  cardNum: {
+  paymentText: {
+    fontSize: 16,
+    marginLeft: 20,
     alignSelf: "center",
+  },
+  paymentIcon: {
+    marginLeft: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "white",
+    elevation: 5,
   },
   name: {
     fontWeight: "bold",

@@ -4,7 +4,7 @@ const MasterCard = () => {
   return (
     <Svg
       width={65}
-      height={50}
+      height={40}
       viewBox="0 0 32 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
