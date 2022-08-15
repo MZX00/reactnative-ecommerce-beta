@@ -6,6 +6,8 @@ import {
   View,
   Alert,
   BackHandler,
+  Modal,
+  Pressable,
 } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
@@ -19,6 +21,7 @@ import api from "../utils/Api";
 import Counter from "../components/Counter";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs/EmptyImage";
+import Close from "../../assets/svgs/Close";
 
 const ViewProduct = ({ navigation }) => {
   const id = [{ id: 0 }, { id: 1 }, { id: 2 }];
@@ -37,6 +40,8 @@ const ViewProduct = ({ navigation }) => {
   const [data, setData] = useState();
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [imagePath, setImagePath] = useState("");
 
   const loadData = async () => {
     const result = await api("product/view", "post", { _id: itemID });
@@ -52,16 +57,21 @@ const ViewProduct = ({ navigation }) => {
     loadData();
   }, [itemID]);
 
+  const openImage = () => {
+    if (imagePath != "") {
+      setModalOpen(true);
+    }
+  };
+
   const renderItems = ({ item }) => {
     switch (item.id) {
       case 0:
-        let imagePath;
         if (data && data.image) {
-          imagePath = Constants.manifest.extra.baseUrl + data.image;
+          setImagePath(Constants.manifest.extra.baseUrl + data.image);
         }
 
         return (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openImage}>
             <View style={styles.imageContainer}>
               {data && data.image ? (
                 <Image style={styles.image} source={{ uri: imagePath }}></Image>
@@ -124,6 +134,22 @@ const ViewProduct = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Modal visible={modalOpen} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <Pressable
+            style={styles.closeContainer}
+            onPress={() => {
+              console.log("Running");
+              setModalOpen(false);
+            }}
+          >
+            <Close />
+          </Pressable>
+
+          <Image style={styles.largeImage} source={{ uri: imagePath }}></Image>
+        </View>
+      </Modal>
+
       <Header content={data ? data.name : "Loading..."} flex={0} back={true} />
       <View flex={1}>
         <FlatList data={id} renderItem={renderItems}></FlatList>
@@ -239,6 +265,27 @@ const styles = StyleSheet.create({
   },
   admin: {
     flexDirection: "row",
+  },
+  closeContainer: {
+    width: 30,
+    backgroundColor: "#ffffff",
+    padding: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    // borderRadius: 25,
+  },
+  largeImage: {
+    width: "100%",
+    height: null,
+    aspectRatio: 1,
+  },
+  modalContainer: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.85)",
+    justifyContent: "center",
   },
 });
 

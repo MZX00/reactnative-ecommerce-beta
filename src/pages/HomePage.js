@@ -11,7 +11,6 @@ import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import SmallProduct from "../components/SmallProduct";
-import Chip from "../components/Chip";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/user";
 import { resetApi } from "../features/api";

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/user";
 import { clearCart } from "../features/cart";
 import { init } from "../features/validation";
+import Document from "../../assets/svgs/Document";
 
 const HomePageMenu = () => {
   const navigation = useNavigation();
@@ -45,14 +46,14 @@ const HomePageMenu = () => {
         )}
 
         {admin && (
-          <TouchableWithoutFeedback
+          <Pressable
             style={styles.component}
             onPress={() => {
               navigation.navigate("CartAdmin");
             }}
           >
-            <Cart height={22} width={22} />
-          </TouchableWithoutFeedback>
+            <Document />
+          </Pressable>
         )}
         <Pressable
           style={styles.component}

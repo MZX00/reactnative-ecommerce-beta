@@ -23,6 +23,7 @@ import Signup from "./Signup";
 import UserPanel from "./UserPanel";
 import ViewProduct from "./ViewProduct";
 import CartAdmin from "./CartAdmin";
+import OrderDetails from "./OrderDetails";
 
 // import Test from "./src/pages/Test";
 import Cart from "./Cart";
@@ -60,6 +61,10 @@ const Main = () => {
           <Stack.Screen name="ShippingAddress" component={ShippingAddress} />
           <Stack.Screen name="Cart" component={Cart}></Stack.Screen>
           <Stack.Screen name="CartAdmin" component={CartAdmin}></Stack.Screen>
+          <Stack.Screen
+            name="OrderDetails"
+            component={OrderDetails}
+          ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
