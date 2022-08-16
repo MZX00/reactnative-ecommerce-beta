@@ -1,11 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import {
-  buttonFontSize,
-  grey,
-  marginHorizontal,
-  smallFontSize,
-} from "../utils/Constants";
+import { buttonFontSize } from "../utils/Constants";
 
 const TotalAmmountLabel = () => {
   const total = useSelector((state) => {
@@ -15,11 +10,9 @@ const TotalAmmountLabel = () => {
   });
   // const total = "9,800";
   return (
-    <View>
-      <View style={styles.container}>
-        <Text style={styles.text}>Total:</Text>
-        <Text style={styles.text}>$ {total}</Text>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.text}>Total:</Text>
+      <Text style={styles.text}>$ {total}</Text>
     </View>
   );
 };
@@ -29,7 +22,6 @@ const styles = StyleSheet.create({
     // backgroundColor: "blue",
     borderColor: "#CBD0D3",
     borderTopWidth: 1,
-    // backgroundColor: "red",
     flexDirection: "row",
     justifyContent: "space-between",
     alignSelf: "stretch",

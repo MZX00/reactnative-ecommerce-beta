@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../features/cart";
+import { addToCart, removeOneFromCart } from "../features/cart";
 import { counterButtonSize } from "../utils/Constants";
 import Minus from "../../assets/svgs//Minus";
 import Plus from "../../assets/svgs//Plus";
 
-const mult = 1.3;
+const mult = 1.2;
 
 const Counter = ({ count, _id, big }) => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Counter = ({ count, _id, big }) => {
     dispatch(addToCart({ _id }));
   };
   const decrement = () => {
-    dispatch(removeFromCart(_id));
+    dispatch(removeOneFromCart(_id));
   };
   const size = big ? counterButtonSize * mult : counterButtonSize;
   return (
@@ -24,12 +24,7 @@ const Counter = ({ count, _id, big }) => {
       >
         <Minus size={size} />
       </TouchableOpacity>
-      <Text
-        style={[
-          styles.counterText,
-          big && { fontSize: 30, width: 50, marginTop: 5 },
-        ]}
-      >
+      <Text style={[styles.counterText, big && { fontSize: 30, width: 50 }]}>
         {count}
       </Text>
       <TouchableOpacity
@@ -47,7 +42,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // alignSelf: "stretch",
     alignItems: "center",
-    // backgroundColor: "yellow",
+    justifyContent: "space-around",
+    width: "65%",
+    marginLeft: 10,
   },
   counterButton: {
     alignItems: "center",
@@ -55,8 +52,8 @@ const styles = StyleSheet.create({
     borderRadius: counterButtonSize / 2,
     marginHorizontal: 10,
     overflow: "hidden",
-    height: counterButtonSize,
-    width: counterButtonSize,
+    height: counterButtonSize / 1.2,
+    width: counterButtonSize / 1.2,
     backgroundColor: "black",
   },
   bigCounterButton: {

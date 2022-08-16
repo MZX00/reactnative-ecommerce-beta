@@ -21,10 +21,16 @@ export const cartSlice = createSlice({
     removeFromCart: (state, { payload }) => {
       const i = state.items.map((e) => e._id).indexOf(payload);
       if (i != -1) {
+        state.items.splice(i, 1);
+      }
+    },
+    removeOneFromCart: (state, { payload }) => {
+      const i = state.items.map((e) => e._id).indexOf(payload);
+      if (i != -1) {
         if (state.items[i].quantity > 1) {
           state.items[i].quantity--;
         } else {
-          state.items.pop(i);
+          state.items.splice(i, 1);
         }
       }
     },
@@ -42,6 +48,7 @@ export const cartSlice = createSlice({
 
 export const {
   addToCart,
+  removeOneFromCart,
   removeFromCart,
   clearCart,
   selectItem,

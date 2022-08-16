@@ -1,11 +1,20 @@
 import { useEffect } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Counter from "./Counter";
 import EmptyCart from "../../assets/svgs/EmptyCart";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs//EmptyImage";
 import { grey } from "../utils/Constants";
+import Delete from "../../assets/svgs/Delete";
+import { removeFromCart } from "../features/cart";
 
 const Item = ({
   title = "",
@@ -14,6 +23,11 @@ const Item = ({
   image = "",
   _id = 0,
 }) => {
+  const dispatch = useDispatch();
+  const onPress = () => {
+    dispatch(removeFromCart(_id));
+  };
+
   const productImage = image ? Constants.manifest.extra.baseUrl + image : "";
   return (
     <View style={styles.item}>
@@ -25,10 +39,16 @@ const Item = ({
         </View>
       )}
       <View style={styles.itemCenter}>
-        <Text style={styles.headerText}>{title}</Text>
+        <Text numberOfLines={1} style={styles.headerText}>
+          {title}
+        </Text>
         <Counter count={quantity} _id={_id}></Counter>
       </View>
       <View style={styles.itemEnd}>
+        <Pressable style={styles.delete} onPress={onPress}>
+          <Delete />
+        </Pressable>
+
         <Text style={styles.price}>${price}</Text>
       </View>
     </View>
@@ -68,41 +88,40 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     alignSelf: "stretch",
-    marginHorizontal: 20,
-    // backgroundColor: "green",
   },
-  headerText: { fontSize: 22, marginLeft: 5 },
+  headerText: {
+    fontSize: 16,
+    marginLeft: 10,
+    width: "90%",
+  },
   image: {
     width: 100,
     height: 100,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   item: {
+    marginHorizontal: 20,
     flexDirection: "row",
-    marginVertical: 10,
-    overflow: "hidden",
+    marginBottom: 11,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "silver",
-    // backgroundColor: "red",
+    backgroundColor: "white",
+    elevation: 5,
   },
   itemCenter: {
+    flex: 2.5,
     alignItems: "flex-start",
     justifyContent: "space-around",
-    marginLeft: 5,
-    // backgroundColor: "green",
   },
   itemEnd: {
-    // alignSelf: "flex-end",
     flex: 1,
     alignItems: "flex-end",
     justifyContent: "flex-end",
-    // backgroundColor: "blue",
   },
   price: {
-    fontSize: 20,
+    fontSize: 14,
     paddingVertical: 10,
-    paddingRight: 20,
-    // fontWeight: "bold",
+    paddingRight: 10,
   },
   svg: {
     justifyContent: "center",
@@ -110,6 +129,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: "lightgrey",
+  },
+  delete: {
+    marginRight: 10,
+    marginBottom: 30,
   },
 });
 

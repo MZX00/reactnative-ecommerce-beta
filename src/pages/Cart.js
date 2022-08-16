@@ -21,7 +21,7 @@ const Cart = () => {
         ></LargeBlackButton>
       )}
 
-      <View style={{ padding: 5 }}></View>
+      <View style={styles.bottomBuffer}></View>
     </SafeAreaView>
   );
 };
@@ -29,6 +29,9 @@ const Cart = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  bottomBuffer: {
+    padding: 5,
   },
 });
 
