@@ -29,7 +29,7 @@ const HomePageMenu = () => {
         <Pressable
           style={styles.component}
           onPress={() => {
-            navigation.navigate("UserPanel");
+            navigation.navigate("MyProfile");
           }}
         >
           <Profile />

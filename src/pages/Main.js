@@ -24,6 +24,9 @@ import UserPanel from "./UserPanel";
 import ViewProduct from "./ViewProduct";
 import CartAdmin from "./CartAdmin";
 import OrderDetails from "./OrderDetails";
+import MyProfile from "./MyProfile";
+import MyOrders from "./MyOrders";
+import UserSettings from "./UserSettings";
 
 // import Test from "./src/pages/Test";
 import Cart from "./Cart";
@@ -64,6 +67,12 @@ const Main = () => {
           <Stack.Screen
             name="OrderDetails"
             component={OrderDetails}
+          ></Stack.Screen>
+          <Stack.Screen name="MyProfile" component={MyProfile}></Stack.Screen>
+          <Stack.Screen name="MyOrders" component={MyOrders}></Stack.Screen>
+          <Stack.Screen
+            name="UserSettings"
+            component={UserSettings}
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

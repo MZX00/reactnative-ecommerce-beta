@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 
 const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
