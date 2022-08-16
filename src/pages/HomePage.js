@@ -19,6 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { selectItem } from "../features/cart";
 import { init } from "../features/validation";
 import { useNavigationState } from "@react-navigation/native";
+import { background, blue50 } from "../utils/Constants";
 
 const HomePage = ({ navigation }) => {
   const filterData = [
@@ -154,16 +155,14 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "white",
-    // justifyContent: "center",
-    // alignItems: "stretch",
+    backgroundColor: background,
   },
   chipContainer: {
     elevation: 7,
     paddingHorizontal: 10,
     paddingVertical: 7,
     borderRadius: 20,
-    backgroundColor: "#000DAE",
+    backgroundColor: blue50,
     marginHorizontal: 5,
   },
   txt: {

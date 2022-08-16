@@ -67,9 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   modal: {},
-  modalTitle: {
-    // backgroundColor: "yellow",
-  },
+  modalTitle: {},
 });
 
 export default CustomDropDown;

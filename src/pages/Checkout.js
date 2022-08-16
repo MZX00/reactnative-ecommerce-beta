@@ -7,6 +7,7 @@ import DeliveryCard from "../components/DeliveryCard";
 import OrderSummary from "../components/OrderSummary";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { useSelector } from "react-redux";
+import { background } from "../utils/Constants";
 
 const Checkout = () => {
   return (
@@ -28,9 +29,8 @@ const Checkout = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: background,
     justifyContent: "space-evenly",
-    // height: "90%",
   },
   address: {
     marginHorizontal: 15,

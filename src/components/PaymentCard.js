@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   chip: { padding: 20 },
   container: { margin: 15, backgroundColor: "#ffffff" },
   card: {
-    // backgroundColor: "#9B9B9B",
     borderRadius: 15,
     marginHorizontal: 20,
     marginVertical: 10,
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
     height: 216,
     elevation: 10,
     shadowOpacity: 0.36,
-    // width: 344,
   },
 });
 

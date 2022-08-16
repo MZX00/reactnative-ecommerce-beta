@@ -13,7 +13,12 @@ import CustomTextInput from "../components/CustomTextInput";
 import FacebookButton from "../components/FacebookButton";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { black, marginVertical, smallFontSize } from "../utils/Constants";
+import {
+  background,
+  black,
+  marginVertical,
+  smallFontSize,
+} from "../utils/Constants";
 import { useDispatch } from "react-redux";
 import { resetApi } from "../features/api";
 import { resetV, resetValidation } from "../features/validation";
@@ -65,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
+    backgroundColor: background,
   },
   link: {
     alignSelf: "center",

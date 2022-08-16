@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
+import { blue, foreground, grey } from "../utils/Constants";
 
 const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
   const navigation = useNavigation();
@@ -64,7 +65,7 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: foreground,
     elevation: 4,
     color: "#000000",
     margin: 10,
@@ -81,11 +82,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   date: {
-    color: "#9B9B9B",
+    color: grey,
     fontSize: 14,
   },
   btn: {
-    backgroundColor: "#000DAE",
+    backgroundColor: blue,
     minWidth: 60,
     borderRadius: 15,
     fontSize: 14,

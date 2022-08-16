@@ -6,6 +6,7 @@ import { addToCart, clearCart } from "../features/cart";
 import OrderCompletionSVG from "../../assets/svgs/OrderCompletionSVG";
 import OrderFailed from "../../assets/svgs/OrderFailed";
 import api from "../utils/Api";
+import { background } from "../utils/Constants";
 
 const ContinueShopping = () => {
   //redux
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+    backgroundColor: background,
   },
   heading: {
     fontWeight: "bold",

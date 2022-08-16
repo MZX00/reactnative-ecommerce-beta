@@ -5,6 +5,7 @@ import TotalAmmountLabel from "../components/TotalAmmountLabel";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
+import { background } from "../utils/Constants";
 
 const Cart = () => {
   const empty = useSelector((state) => state.cart.items.length === 0);
@@ -29,6 +30,7 @@ const Cart = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: background,
   },
   bottomBuffer: {
     padding: 5,

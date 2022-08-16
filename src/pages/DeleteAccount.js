@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { useEffect, useState } from "react";
+import { background } from "../utils/Constants";
 
 const DeleteAccount = ({ route }) => {
   return (
@@ -21,6 +22,7 @@ const DeleteAccount = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: background,
     justifyContent: "center",
   },
 });

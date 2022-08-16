@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Forward from "../../assets/svgs/Forward";
+import { foreground, grey } from "../utils/Constants";
 
 const ProfileComponent = ({ mainText, secText, goTo }) => {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: foreground,
     marginLeft: 20,
     marginVertical: 10,
     marginRight: 20,
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   secText: {
-    color: "#9B9B9B",
+    color: grey,
     fontSize: 11,
   },
   back: {

@@ -5,6 +5,7 @@ import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
 import DropDownPicker from "react-native-dropdown-picker";
+import { background } from "../utils/Constants";
 
 const AddNewCard = () => {
   const [checked, setChecked] = useState(false);
@@ -60,7 +61,7 @@ const AddNewCard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: background,
   },
   dropDown: {
     marginHorizontal: 35,

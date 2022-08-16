@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { marginHorizontal, marginVertical } from "../utils/Constants";
+import {
+  blue,
+  foreground,
+  marginHorizontal,
+  marginVertical,
+  textBlue,
+} from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
 import MasterCard from "../../assets/svgs/MasterCard";
 import COD from "../../assets/svgs/COD";
@@ -60,7 +66,6 @@ const styles = StyleSheet.create({
   line2: {
     flexDirection: "row",
     marginTop: 15,
-    // alignSelf: "flex-start",
   },
   paymentText: {
     fontSize: 16,
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: foreground,
     elevation: 5,
   },
   name: {
@@ -79,7 +84,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   change: {
-    color: "blue",
+    color: textBlue,
+    marginRight: 15,
     fontSize: 16,
     fontWeight: "bold",
     textDecorationLine: "underline",

@@ -4,6 +4,7 @@ import Chip from "../components/Chip";
 import OrderMiniCard from "../components/OrderMiniCard";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
+import { background } from "../utils/Constants";
 
 const renderItem = ({ item, index, separators }) => {
   return (
@@ -58,7 +59,7 @@ const CartAdmin = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginTop: 10, flex: 1 },
+  container: { marginTop: 10, flex: 1, backgroundColor: background },
   chipContainer: {
     marginLeft: 10,
     flexDirection: "row",

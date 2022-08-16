@@ -4,6 +4,7 @@ import Forward from "../../assets/svgs/Forward";
 import Pencil from "../../assets/svgs/Pencil";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { background, foreground } from "../utils/Constants";
 
 const MyOrders = () => {
   const navigation = useNavigation();
@@ -60,12 +61,12 @@ const MyOrders = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "#ffffff", flex: 1 },
+  container: { backgroundColor: background, flex: 1 },
   innerContainer: {
     padding: 20,
   },
   dobContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: foreground,
     elevation: 3,
     padding: 15,
     marginVertical: 10,

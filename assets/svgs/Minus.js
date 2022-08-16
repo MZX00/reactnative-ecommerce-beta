@@ -10,7 +10,7 @@ const Minus = ({ size }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <Path fill="#9B9B9B" d="M5 12H19V14H5z" />
+      <Path fill="white" d="M5 12H19V14H5z" />
     </Svg>
   );
 };

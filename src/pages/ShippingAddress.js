@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import AddressCard from "../components/AddressCard";
 import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
+import { background } from "../utils/Constants";
 
 const ShippingAddress = () => {
   const navigation = useNavigation();
@@ -30,7 +31,7 @@ const ShippingAddress = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: background,
   },
   add: {
     position: "absolute",
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     height: 60,
     zIndex: 1,
-    // backgroundColor: "blue",
   },
 });
 

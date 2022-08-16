@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { blue50 } from "../utils/Constants";
 
 const Chip = ({ text }) => {
   return (
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 7,
     borderRadius: 15,
-    backgroundColor: "#000DAE",
+    backgroundColor: blue50,
     marginHorizontal: 8,
   },
   txt: {

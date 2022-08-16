@@ -12,7 +12,7 @@ import Counter from "./Counter";
 import EmptyCart from "../../assets/svgs/EmptyCart";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs//EmptyImage";
-import { grey } from "../utils/Constants";
+import { foreground, grey } from "../utils/Constants";
 import Delete from "../../assets/svgs/Delete";
 import { removeFromCart } from "../features/cart";
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 11,
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: foreground,
     elevation: 5,
   },
   itemCenter: {

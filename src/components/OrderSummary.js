@@ -26,7 +26,6 @@ const OrderSummary = () => {
         <Text style={styles.summary}>Summary:</Text>
         <Text style={styles.summary}>USD $ {total + 15}</Text>
       </View>
-      {/* <LargeBlackButton btnText="Submit Order" changeTo="ContinueShopping" /> */}
     </View>
   );
 };
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   summary: {
-    // fontWeight: "bold",
     fontSize: 16,
   },
 });

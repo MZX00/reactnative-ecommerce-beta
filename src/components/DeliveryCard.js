@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View, FlatList } from "react-native";
 import TCS from "../../assets/svgs/TCS";
 import Fedex from "../../assets/svgs/Fedex";
 import Leopard from "../../assets/svgs/Leopard";
-import { blue, borderBlue, grey } from "../utils/Constants";
+import { blue, borderBlue, foreground, grey } from "../utils/Constants";
 
 const data = [
   { id: 0, text: "2-3 days" },
@@ -60,7 +60,6 @@ const DeliveryCard = () => {
 
 const styles = StyleSheet.create({
   img: {
-    // backgroundColor: "#000000",
     height: 80,
     width: 100,
     marginRight: 20,
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
-    backgroundColor: "white",
+    backgroundColor: foreground,
   },
   listText: {
     paddingTop: 5,
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   selected: {
-    backgroundColor: "#F9F9F9",
     borderColor: blue,
     borderWidth: 2,
   },

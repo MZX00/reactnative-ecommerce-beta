@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch",
-    // backgroundColor: "blue",
   },
   input: {
     flex: 1,
@@ -172,7 +171,6 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     borderBottomWidth: 0.5,
     borderBottomColor: grey,
-    // backgroundColor: "red",
   },
   inputError: {
     borderBottomColor: "red",

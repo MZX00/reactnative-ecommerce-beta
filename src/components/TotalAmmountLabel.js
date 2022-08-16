@@ -19,7 +19,6 @@ const TotalAmmountLabel = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "blue",
     borderColor: "#CBD0D3",
     borderTopWidth: 1,
     flexDirection: "row",

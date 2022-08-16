@@ -7,6 +7,7 @@ import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setPayment } from "../features/checkout";
+import { background } from "../utils/Constants";
 
 const DATA = [
   {
@@ -118,6 +119,11 @@ const PaymentMethods = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: background,
+  },
   cashStyle: {
     marginLeft: 20,
   },
@@ -127,13 +133,6 @@ const styles = StyleSheet.create({
     right: 5,
     resizeMode: "contain",
     height: 60,
-    // backgroundColor: "blue",
-  },
-  container: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#ffffff",
-    // backgroundColor: "red",
   },
   cash: {
     padding: 20,

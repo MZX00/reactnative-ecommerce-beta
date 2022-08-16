@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { addToCart, removeOneFromCart } from "../features/cart";
-import { counterButtonSize } from "../utils/Constants";
+import { blue, counterButtonSize } from "../utils/Constants";
 import Minus from "../../assets/svgs//Minus";
 import Plus from "../../assets/svgs//Plus";
 
@@ -40,7 +40,6 @@ const Counter = ({ count, _id, big }) => {
 const styles = StyleSheet.create({
   counter: {
     flexDirection: "row",
-    // alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "space-around",
     width: "65%",
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     height: counterButtonSize / 1.2,
     width: counterButtonSize / 1.2,
-    backgroundColor: "black",
+    backgroundColor: blue,
   },
   bigCounterButton: {
     alignItems: "center",

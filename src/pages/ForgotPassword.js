@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
 import CustomTextInput from "../components/CustomTextInput";
 import { useState } from "react";
+import { background } from "../utils/Constants";
 
 const ForgotPassword = () => {
   const [isValid, setIsValid] = useState(false);
@@ -35,7 +36,7 @@ const ForgotPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
+    backgroundColor: background,
     alignItems: "stretch",
     justifyContent: "flex-start",
     marginBottom: 150,

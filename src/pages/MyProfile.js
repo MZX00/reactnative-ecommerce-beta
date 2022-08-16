@@ -1,10 +1,12 @@
 import { View, StyleSheet, Text, Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import ProfileComponent from "../components/ProfileComponent";
+import { background } from "../utils/Constants";
 
 const MyProfile = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="My Profile" back={true} />
       <View style={styles.belowHeader}>
         <Image
@@ -39,13 +41,13 @@ const MyProfile = () => {
         secText="Password, Delete account"
         goTo="UserSettings"
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: background,
     flex: 1,
   },
   profile: {

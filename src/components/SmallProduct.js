@@ -3,7 +3,7 @@ import { Image, StyleSheet, View, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs/EmptyImage";
 import CartPlus from "../../assets/svgs/CartPlus";
-import { blue } from "../utils/Constants";
+import { blue, foreground } from "../utils/Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart";
 
@@ -55,11 +55,7 @@ const SmallProduct = ({ product, admin }) => {
         <Text style={styles.price}>$ {product.price}</Text>
         <Pressable style={styles.cartIcon} onPress={onPress}>
           {quantity === 0 && <CartPlus />}
-          {quantity != 0 && (
-            // <View style={styles.quantity}>
-            // </View>
-            <Text style={styles.quantity}>{quantity}</Text>
-          )}
+          {quantity != 0 && <Text style={styles.quantity}>{quantity}</Text>}
         </Pressable>
       </View>
     </View>
@@ -69,7 +65,7 @@ const SmallProduct = ({ product, admin }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFDFF",
+    backgroundColor: foreground,
     elevation: 7,
     marginHorizontal: 15,
     marginVertical: 10,
@@ -105,18 +101,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
-  },
-  test: {
-    width: 25,
-    height: 25,
-    backgroundColor: "white",
-    elevation: 5,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    right: -10,
-    top: -10,
   },
 });
 

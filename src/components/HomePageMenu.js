@@ -9,6 +9,7 @@ import { logout } from "../features/user";
 import { clearCart } from "../features/cart";
 import { init } from "../features/validation";
 import Document from "../../assets/svgs/Document";
+import { foreground } from "../utils/Constants";
 
 const HomePageMenu = () => {
   const navigation = useNavigation();
@@ -88,20 +89,19 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: "space-evenly",
     width: "100%",
-    backgroundColor: "#F5F8FA",
-    // backgroundColor: "red",
-    borderRadius: 15,
+    backgroundColor: foreground,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    elevation: 2,
+    elevation: 50,
   },
   container: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-    // backgroundColor: "blue",
     position: "absolute",
     bottom: 0,
   },

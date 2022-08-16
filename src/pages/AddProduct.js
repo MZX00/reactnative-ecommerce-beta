@@ -3,10 +3,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import UploadImage from "../components/UploadImage";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
+import { background } from "../utils/Constants";
 
 const AddProduct = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <UploadImage flex={1}></UploadImage>
         <CustomTextInput
@@ -49,6 +50,8 @@ const AddProduct = () => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: background },
+});
 
 export default AddProduct;

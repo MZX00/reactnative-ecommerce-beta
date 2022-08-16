@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import Header from "../components/Header";
 import Constants from "expo-constants";
+import { background, foreground } from "../utils/Constants";
 
 const renderItem = ({ item, index, separators }) => {
   const baseUrl = Constants.manifest.extra.baseUrl;
@@ -70,16 +71,16 @@ const OrderDetails = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: { backgroundColor: background, flex: 1 },
   cardConatiner: {
     elevation: 5,
-    backgroundColor: "#ffffff",
+    backgroundColor: foreground,
     marginVertical: 10,
     justifyContent: "center",
     borderRadius: 4,
     marginHorizontal: 20,
     marginVertical: 10,
   },
-  container: { backgroundColor: "#ffffff", flex: 1 },
   img: {
     width: 100,
     height: 100,

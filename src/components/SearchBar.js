@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
+import { foreground } from "../utils/Constants";
 
 const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
   return (
@@ -55,14 +56,15 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "100%",
-    backgroundColor: "#FAFBFC",
+    backgroundColor: foreground,
     borderRadius: 15,
     alignItems: "center",
+    elevation: 2,
   },
   searchBar__clicked: {
     padding: 10,
     flexDirection: "row",
-    backgroundColor: "#FAFBFC",
+    backgroundColor: foreground,
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",

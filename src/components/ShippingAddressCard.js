@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { blue, foreground, textBlue } from "../utils/Constants";
 
 const ShippingAddressCard = () => {
   const navigation = useNavigation();
@@ -30,14 +31,10 @@ const ShippingAddressCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    // width: "80%",
     marginVertical: 10,
     marginHorizontal: 15,
-    // backgroundColor: "#849DFE",
-    // borderColor: "#849DFE",
-    // borderWidth: 2,
     borderRadius: 0,
-    backgroundColor: "white",
+    backgroundColor: foreground,
     borderRadius: 5,
     elevation: 5,
   },
@@ -47,7 +44,7 @@ const styles = StyleSheet.create({
   },
   name: {},
   change: {
-    color: "blue",
+    color: textBlue,
     fontSize: 16,
     fontWeight: "bold",
     textDecorationLine: "underline",

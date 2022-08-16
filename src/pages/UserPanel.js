@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flex: 1,
-    // justifyContent: "space-evenly",
   },
   container: {
     flex: 1,

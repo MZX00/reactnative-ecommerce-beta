@@ -14,7 +14,7 @@ import Header from "../components/Header";
 import CustomDropDown from "../components/CustomDropDown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { grey } from "../utils/Constants";
+import { background, grey } from "../utils/Constants";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/Api";
@@ -195,6 +195,7 @@ const ViewProduct = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: background,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "stretch",
@@ -203,12 +204,10 @@ const styles = StyleSheet.create({
     width: 300,
     height: null,
     aspectRatio: 1,
-    // backgroundColor: "red",
   },
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "pink",
   },
   center: {
     flexDirection: "row",
@@ -222,7 +221,6 @@ const styles = StyleSheet.create({
   productHeader: {
     width: "50%",
     marginVertical: 5,
-    // backgroundColor: "orange",
     paddingLeft: 15,
   },
   productTitle: {
@@ -235,7 +233,6 @@ const styles = StyleSheet.create({
   productPrice: {
     paddingRight: 15,
     width: "50%",
-    // backgroundColor: "purple",
     textAlign: "right",
     textAlignVertical: "center",
     fontSize: 25,
@@ -249,8 +246,6 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     marginTop: 15,
     paddingBottom: 100,
-
-    // backgroundColor: "honeydew",
   },
   floatingButton: {
     position: "absolute",
@@ -258,10 +253,10 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     height: "8%",
     width: "100%",
-    elevation: 5,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
+    elevation: 10,
   },
   admin: {
     flexDirection: "row",
@@ -274,7 +269,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    // borderRadius: 25,
   },
   largeImage: {
     width: "100%",

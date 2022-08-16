@@ -43,10 +43,7 @@ const ShippingAddressCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    // width: "80%",
     margin: 8,
-    // elevation: 5,
-    //backgroundColor: "#849DFE",
     borderColor: "#849DFE",
     borderWidth: 2,
     borderRadius: 15,

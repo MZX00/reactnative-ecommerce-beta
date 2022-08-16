@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import {
   black,
+  blue,
   buttonFontSize,
   marginHorizontal,
   marginVertical,
@@ -129,18 +130,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1.5,
     alignSelf: "stretch",
-    // backgroundColor: "orange",
-    // justifyContent:""
   },
   btn: {
-    // flex: 1,
     height: 55,
     elevation: 2,
     justifyContent: "center",
     marginTop: marginVertical,
     alignItems: "center",
     marginHorizontal: marginHorizontal,
-    backgroundColor: "#000DAE",
+    backgroundColor: blue,
     borderColor: "transparent",
     borderRadius: 30,
     borderWidth: 1.5,

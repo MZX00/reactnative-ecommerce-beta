@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
+import { background } from "../utils/Constants";
 
 const AddAddress = () => {
   return (
@@ -33,6 +34,7 @@ const AddAddress = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: background,
   },
 });
 

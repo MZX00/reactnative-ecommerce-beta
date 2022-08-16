@@ -14,7 +14,7 @@ const Plus = ({ size }) => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M11 5v6H5v2h6v6h2v-6h6v-2h-6V5h-2z"
-        fill="#9B9B9B"
+        fill="white"
       />
     </Svg>
   );

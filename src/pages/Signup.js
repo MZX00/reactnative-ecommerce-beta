@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
+import { background } from "../utils/Constants";
 
 const Signup = () => {
   return (
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "stretch",
     justifyContent: "space-around",
+    backgroundColor: background,
   },
 });
 
