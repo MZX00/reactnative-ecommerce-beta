@@ -5,6 +5,7 @@ import OrderMiniCard from "../components/OrderMiniCard";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { background } from "../utils/Constants";
+import HomePageMenu from "../components/HomePageMenu";
 
 const renderItem = ({ item, index, separators }) => {
   return (
@@ -54,6 +55,8 @@ const CartAdmin = () => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
       />
+
+      <HomePageMenu cartPage={true} />
     </View>
   );
 };

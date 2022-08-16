@@ -131,7 +131,7 @@ const HomePage = ({ navigation }) => {
           renderItem={renderItem}
         />
       </View>
-      <HomePageMenu />
+      <HomePageMenu homeP={true} />
     </SafeAreaView>
   );
 };

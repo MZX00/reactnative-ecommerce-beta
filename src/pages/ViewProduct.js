@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: null,
     aspectRatio: 1,
+    borderRadius: 20,
   },
   imageContainer: {
     alignItems: "center",
@@ -269,6 +270,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
+    borderRadius: 20,
   },
   largeImage: {
     width: "100%",
