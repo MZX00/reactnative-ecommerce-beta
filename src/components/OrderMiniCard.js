@@ -1,10 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
+import { useSelector } from "react-redux";
 import { blue, foreground, grey } from "../utils/Constants";
 
 const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
   const navigation = useNavigation();
+  const admin = useSelector((state) => state.user.admin);
   const [statusColor, setStatusColor] = useState("#FF980E");
 
   useEffect(() => {
@@ -21,21 +23,30 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
     <View style={styles.container}>
       <View style={styles.verticle}>
         <Text style={styles.id}>
-          Order id : {id ? id.slice(-7) : "Loading..."}
+          Order N.o: {id ? id.slice(-7) : "Loading..."}
         </Text>
         <Text style={styles.date}>
-          Date : {date ? date.substring(0, 10) : "Loading..."}
+          {date ? date.substring(0, 10) : "Loading..."}
         </Text>
       </View>
       <View style={styles.verticle}>
-        <Text style={styles.quantity}>
-          Quantity: {productList ? productList.length : "Loading..."}
+        <Text style={[styles.label, !admin && styles.name]}>
+          Items:{" "}
+          <Text style={styles.value}>
+            {productList ? productList.length : "Loading..."}
+          </Text>
         </Text>
-        <Text style={styles.cost}>Cost : ${cost ? cost : "Loading..."}</Text>
+        <Text style={styles.label}>
+          Total Ammount :
+          <Text style={styles.value}> ${cost ? cost : "Loading..."}</Text>
+        </Text>
       </View>
-      <Text style={styles.quantity}>
-        Customer Name: {name ? name : "Loading..."}
-      </Text>
+      {admin && (
+        <Text style={[styles.name, styles.label]}>
+          Customer Name:{" "}
+          <Text style={styles.value}>{name ? name : "Loading..."}</Text>
+        </Text>
+      )}
       <View style={styles.verticle}>
         <Pressable
           onPress={() => {
@@ -55,7 +66,9 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
         </Pressable>
         <View>
           <Text style={styles.status}>
-            Status :<Text style={{ color: statusColor }}>{" " + status}</Text>
+            <Text style={{ color: statusColor, textTransform: "capitalize" }}>
+              {" " + status}
+            </Text>
           </Text>
         </View>
       </View>
@@ -97,12 +110,23 @@ const styles = StyleSheet.create({
   },
   details: {
     color: "#ffffff",
+    paddingHorizontal: 5,
   },
   quantity: {
-    marginVertical: 5,
+    marginTop: 10,
   },
   status: {
     fontSize: 14,
+  },
+  name: {
+    marginVertical: 5,
+  },
+  label: {
+    marginTop: 10,
+    color: grey,
+  },
+  value: {
+    color: "black",
   },
 });
 

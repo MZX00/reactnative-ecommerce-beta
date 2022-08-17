@@ -37,7 +37,6 @@ const HomePage = ({ navigation }) => {
   const navIndex = useNavigationState((s) => s.index);
 
   const [productList, setProductList] = useState(null);
-  const admin = useSelector((state) => state.user.admin);
 
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
@@ -93,7 +92,7 @@ const HomePage = ({ navigation }) => {
           navigation.navigate("ViewProduct");
         }}
       >
-        <SmallProduct product={item} admin={admin} />
+        <SmallProduct product={item} />
       </TouchableOpacity>
     );
   };
@@ -109,6 +108,7 @@ const HomePage = ({ navigation }) => {
       <View style={styles.horizontalFl}>
         <FlatList
           horizontal
+          contentContainerStyle={styles.chipList}
           showsHorizontalScrollIndicator={false}
           data={filterData}
           renderItem={({ item, index, separators }) => {
@@ -138,19 +138,21 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   horizontalFl: {
-    paddingVertical: 3,
     marginHorizontal: 5,
+    marginTop: 10,
   },
   filterComponent: {
     marginHorizontal: 20,
   },
   contentContainer: {
     paddingBottom: 180,
-    marginTop: 10,
   },
 
   head: {
     marginTop: 5,
+  },
+  chipList: {
+    paddingBottom: 5,
   },
 
   container: {
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: background,
   },
   chipContainer: {
-    elevation: 7,
+    elevation: 5,
     paddingHorizontal: 10,
     paddingVertical: 7,
     borderRadius: 20,

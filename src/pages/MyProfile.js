@@ -24,7 +24,7 @@ const MyProfile = () => {
       <ProfileComponent
         mainText="My Orders"
         secText="Already have 12 orders"
-        goTo="MyOrders"
+        goTo="OrderPanel"
       />
       <ProfileComponent
         mainText="Shipping Addresses"

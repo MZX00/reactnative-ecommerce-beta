@@ -22,7 +22,7 @@ import ShippingAddress from "./ShippingAddress";
 import Signup from "./Signup";
 import UserPanel from "./UserPanel";
 import ViewProduct from "./ViewProduct";
-import CartAdmin from "./CartAdmin";
+import OrderPanel from "./OrderPanel";
 import OrderDetails from "./OrderDetails";
 import MyProfile from "./MyProfile";
 import MyOrders from "./MyOrders";
@@ -63,7 +63,7 @@ const Main = () => {
           <Stack.Screen name="ContinueShopping" component={ContinueShopping} />
           <Stack.Screen name="ShippingAddress" component={ShippingAddress} />
           <Stack.Screen name="Cart" component={Cart}></Stack.Screen>
-          <Stack.Screen name="CartAdmin" component={CartAdmin}></Stack.Screen>
+          <Stack.Screen name="OrderPanel" component={OrderPanel}></Stack.Screen>
           <Stack.Screen
             name="OrderDetails"
             component={OrderDetails}

@@ -14,7 +14,13 @@ import Header from "../components/Header";
 import CustomDropDown from "../components/CustomDropDown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { background, grey } from "../utils/Constants";
+import {
+  background,
+  blue50,
+  buttonFontSize,
+  grey,
+  marginVertical,
+} from "../utils/Constants";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/Api";
@@ -22,11 +28,13 @@ import Counter from "../components/Counter";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs/EmptyImage";
 import Close from "../../assets/svgs/Close";
+import { addToCart } from "../features/cart";
 
 const ViewProduct = ({ navigation }) => {
   const id = [{ id: 0 }, { id: 1 }, { id: 2 }];
-  const admin = useSelector((state) => state.user.admin);
 
+  const dispatch = useDispatch();
+  const admin = useSelector((state) => state.user.admin);
   const itemID = useSelector((state) => state.cart.selectedID);
   const quantity = useSelector((state) => {
     const i = state.cart.items.map((e) => e._id).indexOf(itemID);
@@ -161,25 +169,53 @@ const ViewProduct = ({ navigation }) => {
         ]}
       >
         {quantity === 0 && !admin && (
-          <LargeBlackButton
-            btnText="ADD TO CART"
-            cartItem={
-              data
-                ? {
-                    _id: itemID,
-                    name: data.name,
-                    stock: data.stock,
-                    price: data.price,
-                    image: data.image,
-                    color: color,
-                    size: size,
+          <View style={styles.bottom}>
+            <LargeBlackButton
+              flex={1}
+              btnText="ADD TO CART"
+              cartItem={
+                data
+                  ? {
+                      _id: itemID,
+                      name: data.name,
+                      stock: data.stock,
+                      price: data.price,
+                      image: data.image,
+                      color: color,
+                      size: size,
+                    }
+                  : {}
+              }
+            ></LargeBlackButton>
+            <Pressable style={styles.checkout}>
+              <Text
+                style={styles.checkoutText}
+                onPress={() => {
+                  if (data) {
+                    dispatch(
+                      addToCart({
+                        _id: itemID,
+                        name: data.name,
+                        stock: data.stock,
+                        price: data.price,
+                        image: data.image,
+                        color: color,
+                        size: size,
+                      })
+                    );
                   }
-                : {}
-            }
-          ></LargeBlackButton>
+                  navigation.navigate("Checkout");
+                }}
+              >
+                BUY NOW
+              </Text>
+            </Pressable>
+          </View>
         )}
         {quantity > 0 && !admin && (
-          <Counter _id={itemID} count={quantity} big={true} />
+          <View style={[styles.bottom, { marginTop: 10 }]}>
+            <Counter _id={itemID} count={quantity} big={true} />
+          </View>
         )}
 
         {admin && (
@@ -250,11 +286,8 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: "absolute",
     bottom: 0,
-    paddingBottom: 15,
-    height: "8%",
+    height: "10%",
     width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "white",
     elevation: 10,
   },
@@ -280,6 +313,27 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.85)",
     justifyContent: "center",
+  },
+  bottom: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkout: {
+    flex: 0.5,
+    backgroundColor: blue50,
+    marginTop: marginVertical,
+    marginLeft: -30,
+    marginRight: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 30,
+    height: 55,
+  },
+  checkoutText: {
+    fontSize: buttonFontSize,
+    color: "white",
+    fontWeight: "500",
   },
 });
 

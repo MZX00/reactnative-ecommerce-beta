@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import Header from "../components/Header";
 import Constants from "expo-constants";
 import { background, foreground } from "../utils/Constants";
+import { useSelector } from "react-redux";
 
 const renderItem = ({ item, index, separators }) => {
   const baseUrl = Constants.manifest.extra.baseUrl;
@@ -36,7 +37,9 @@ const renderItem = ({ item, index, separators }) => {
 };
 
 const OrderDetails = ({ navigation, route }) => {
+  const admin = useSelector((state) => state.user.admin);
   const { id, cost, date, productList, status, name } = route.params;
+
   return (
     <View style={styles.container}>
       <Header content={"Order Details"} back={true} />
@@ -44,15 +47,15 @@ const OrderDetails = ({ navigation, route }) => {
         <View style={styles.horizontal}>
           <View style={styles.labels}>
             <Text style={styles.order}>Order id: </Text>
-            <Text style={styles.name}>Customer name : </Text>
+            {admin && <Text style={styles.name}>Customer name : </Text>}
             <Text style={styles.name}>Status: </Text>
             <Text style={styles.name}>Order date : </Text>
-            <Text style={styles.name}>Total cost: </Text>
+            <Text style={styles.name}>Total Ammount: </Text>
           </View>
 
           <View style={styles.values}>
             <Text style={styles.order}>{id.slice(-7)}</Text>
-            <Text style={styles.name}>{name}</Text>
+            {admin && <Text style={styles.name}>{name}</Text>}
             <Text style={styles.name}>{status}</Text>
             <Text style={styles.name}>{date.substring(0, 10)}</Text>
             <Text style={styles.name}>$ {cost}</Text>

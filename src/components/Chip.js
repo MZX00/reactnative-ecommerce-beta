@@ -1,11 +1,17 @@
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { blue50 } from "../utils/Constants";
+import { Text, Pressable, StyleSheet } from "react-native";
+import { blue, blue50 } from "../utils/Constants";
 
-const Chip = ({ text }) => {
+const Chip = ({ text, target, selected, setSelected }) => {
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.5}>
+    <Pressable
+      onPress={() => {
+        setSelected(target);
+      }}
+      style={[styles.container, target === selected && styles.selected]}
+      activeOpacity={0.5}
+    >
       <Text style={styles.txt}>{text}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -16,6 +22,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: blue50,
     marginHorizontal: 8,
+    elevation: 5,
+  },
+  selected: {
+    backgroundColor: blue,
   },
   txt: {
     color: "#ffffff",

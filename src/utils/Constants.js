@@ -14,7 +14,7 @@ export const grey = "#9B9B9B";
 export const textBlue = "#2153ff";
 export const borderBlue = "#4098ff";
 export const blue = "#000DAE";
-export const blue50 = "#000DAE";
+export const blue50 = "#707EFF";
 export const background = "#F9F9F9";
 export const foreground = "white";
 

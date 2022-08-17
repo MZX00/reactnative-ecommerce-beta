@@ -7,7 +7,7 @@ import { blue, foreground } from "../utils/Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart";
 
-const SmallProduct = ({ product, admin }) => {
+const SmallProduct = ({ product }) => {
   //redux
   const dispatch = useDispatch();
   const quantity = useSelector((state) => {
@@ -18,6 +18,7 @@ const SmallProduct = ({ product, admin }) => {
       return 0;
     }
   });
+  const admin = useSelector((state) => state.user.admin);
 
   //image
   const baseUrl = Constants.manifest.extra.baseUrl;
@@ -53,10 +54,12 @@ const SmallProduct = ({ product, admin }) => {
       <Text style={styles.name}>{product.name}</Text>
       <View style={styles.containerBottom}>
         <Text style={styles.price}>$ {product.price}</Text>
-        <Pressable style={styles.cartIcon} onPress={onPress}>
-          {quantity === 0 && <CartPlus />}
-          {quantity != 0 && <Text style={styles.quantity}>{quantity}</Text>}
-        </Pressable>
+        {!admin && (
+          <Pressable style={styles.cartIcon} onPress={onPress}>
+            {quantity === 0 && <CartPlus />}
+            {quantity != 0 && <Text style={styles.quantity}>{quantity}</Text>}
+          </Pressable>
+        )}
       </View>
     </View>
   );

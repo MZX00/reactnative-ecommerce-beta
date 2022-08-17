@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     height: counterButtonSize * mult,
     width: counterButtonSize * mult,
-    backgroundColor: "black",
+    backgroundColor: blue,
   },
   counterText: {
     fontSize: 20,

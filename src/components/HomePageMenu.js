@@ -50,7 +50,7 @@ const HomePageMenu = () => {
           <Pressable
             style={styles.component}
             onPress={() => {
-              navigation.navigate("CartAdmin");
+              navigation.navigate("OrderPanel");
             }}
           >
             <Document />

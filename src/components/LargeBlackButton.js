@@ -120,7 +120,9 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   return (
     <View style={[styles.container, { flex: flex }]}>
       <TouchableOpacity disabled={disable} style={styles.btn} onPress={onPress}>
-        <Text style={styles.text}>{btnText}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.text}>
+          {btnText}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -133,16 +135,14 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: 55,
+    paddingHorizontal: 10,
     elevation: 2,
     justifyContent: "center",
     marginTop: marginVertical,
     alignItems: "center",
     marginHorizontal: marginHorizontal,
     backgroundColor: blue,
-    borderColor: "transparent",
     borderRadius: 30,
-    borderWidth: 1.5,
-    alignSelf: "stretch",
   },
   text: {
     fontWeight: "500",
