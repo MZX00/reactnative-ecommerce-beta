@@ -1,20 +1,23 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import Home from "../../assets/svgs/Home";
-import Profile from "../../assets/svgs/Profile";
-import { useNavigation, CommonActions } from "@react-navigation/native";
-import Cart from "../../assets/svgs/Cart";
-import Logout from "../../assets/svgs/Logout";
+import HomeOutline from "../../assets/svgs/HomeOutline";
+import HomeFilled from "../../assets/svgs/HomeFilled";
+import ProfileFilled from "../../assets/svgs/ProfileFilled";
+import ProfileOutline from "../../assets/svgs/ProfileOutline";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../features/user";
-import { clearCart } from "../features/cart";
-import { init } from "../features/validation";
 import Document from "../../assets/svgs/Document";
+import DocumentFilled from "../../assets/svgs/DocumentFilled";
 import { foreground } from "../utils/Constants";
+import CartFilled from "../../assets/svgs/CartFilled";
+import CartOutline from "../../assets/svgs/CartOutline";
 
-const HomePageMenu = () => {
+const HomePageMenu = ({
+  cartPage = false,
+  homeP = false,
+  profilePage = false,
+}) => {
   const navigation = useNavigation();
   const admin = useSelector((state) => state.user.admin);
-  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -25,16 +28,10 @@ const HomePageMenu = () => {
             navigation.navigate("HomePage");
           }}
         >
-          <Home />
+          {homeP && <HomeFilled />}
+          {!homeP && <HomeOutline />}
         </Pressable>
-        <Pressable
-          style={styles.component}
-          onPress={() => {
-            navigation.navigate("MyProfile");
-          }}
-        >
-          <Profile />
-        </Pressable>
+
         {!admin && (
           <Pressable
             style={styles.component}
@@ -42,7 +39,8 @@ const HomePageMenu = () => {
               navigation.navigate("Cart");
             }}
           >
-            <Cart height={22} width={22} />
+            {cartPage && <CartFilled />}
+            {!cartPage && <CartOutline height={22} width={22} />}
           </Pressable>
         )}
 
@@ -53,29 +51,18 @@ const HomePageMenu = () => {
               navigation.navigate("OrderPanel");
             }}
           >
-            <Document />
-            <Cart height={22} width={22} />
+            {cartPage && <DocumentFilled />}
+            {!cartPage && <Document />}
           </Pressable>
         )}
         <Pressable
           style={styles.component}
           onPress={() => {
-            dispatch(logout());
-            dispatch(clearCart());
-            dispatch(init(0));
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [
-                  {
-                    name: "Login",
-                  },
-                ],
-              })
-            );
+            navigation.navigate("MyProfile");
           }}
         >
-          <Logout />
+          {profilePage && <ProfileFilled />}
+          {!profilePage && <ProfileOutline />}
         </Pressable>
       </View>
     </View>
@@ -95,7 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    elevation: 50,
   },
   container: {
     width: "100%",

@@ -1,10 +1,32 @@
-import { useNavigation } from "@react-navigation/native";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
+import { View, StyleSheet, Text, Pressable, Alert } from "react-native";
+import { useDispatch } from "react-redux";
 import Forward from "../../assets/svgs/Forward";
 import { foreground, grey } from "../utils/Constants";
+import { logout } from "../features/user";
+import { clearCart } from "../features/cart";
+import { init } from "../features/validation";
 
-const ProfileComponent = ({ mainText, secText, goTo }) => {
+const ProfileComponent = ({ mainText, secText, goTo, log = false }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const logoutFunction = () => {
+    dispatch(logout());
+    dispatch(clearCart());
+    dispatch(init(0));
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: "Login",
+          },
+        ],
+      })
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.names}>
@@ -14,7 +36,14 @@ const ProfileComponent = ({ mainText, secText, goTo }) => {
       <Pressable
         style={styles.back}
         onPress={() => {
-          navigation.navigate(goTo);
+          if (log) {
+            Alert.alert("Log out", "Are you sure you want to log out ?", [
+              { text: "Yes", onPress: () => logoutFunction() },
+              { text: "No" },
+            ]);
+          } else {
+            navigation.navigate(goTo);
+          }
         }}
       >
         <Forward />
