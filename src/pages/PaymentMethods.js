@@ -2,7 +2,6 @@ import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import { CheckBox } from "@rneui/themed";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
-import { useState } from "react";
 import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,11 +66,13 @@ const PaymentMethods = () => {
 
   const rItem = ({ item }) => {
     const backgroundColor =
-      item.cardNumber === selectedId ? "#000000" : "#9B9B9B";
+      item.cardNumber === selectedId ? "#00086D" : "#ACA4FE";
 
     const checkCard = () => {
       dispatch(setPayment(item.cardNumber));
     };
+
+    console.log(item);
 
     return (
       <PaymentCard

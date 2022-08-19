@@ -62,7 +62,7 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
           if (resp && resp.data.body) {
             // console.log(resp);
             dispatch(setRes(resp.data.body));
-            console.log("I IS WORK");
+            // console.log("I IS WORK");
             let success = successMessages[btnText];
             // Alert.alert(success.title, success.message);
           } else {

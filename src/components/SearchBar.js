@@ -2,7 +2,13 @@ import { StyleSheet, TextInput, View } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 import { foreground } from "../utils/Constants";
 
-const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
+const SearchBar = ({
+  clicked,
+  searchPhrase,
+  setSearchPhrase,
+  setClicked,
+  searchFilter,
+}) => {
   return (
     <View style={styles.container}>
       <View
@@ -20,7 +26,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
           style={styles.input}
           placeholder="Search"
           value={searchPhrase}
-          onChangeText={setSearchPhrase}
+          onChangeText={(text) => searchFilter(text)}
           onFocus={() => {
             setClicked(true);
           }}

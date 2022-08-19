@@ -1,9 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
-import { marginHorizontal, marginVertical } from "../utils/Constants";
 import Chip from "../../assets/svgs/Chip.js";
 import { CheckBox } from "@rneui/themed";
 
-const PaymentCard = ({ item, onPress, backgroundColor, selectedId }) => {
+const PaymentCard = ({
+  item,
+  onPress,
+  backgroundColor,
+  selectedId,
+  def = true,
+}) => {
   return (
     <View style={styles.container}>
       <View style={[styles.card, backgroundColor]}>
@@ -27,11 +32,13 @@ const PaymentCard = ({ item, onPress, backgroundColor, selectedId }) => {
         </View>
       </View>
 
-      <CheckBox
-        title="Use as default payment method"
-        checked={item.cardNumber === selectedId}
-        onPress={onPress}
-      />
+      {def && (
+        <CheckBox
+          title="Use as default payment method"
+          checked={item.cardNumber === selectedId}
+          onPress={onPress}
+        />
+      )}
     </View>
   );
 };
@@ -59,14 +66,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   chip: { padding: 20 },
-  container: { margin: 15, backgroundColor: "#ffffff" },
+  container: { flex: 1, margin: 15 },
   card: {
     borderRadius: 15,
     marginHorizontal: 20,
     marginVertical: 10,
-    flex: 1,
-    height: 216,
-    elevation: 10,
+    height: 186,
+    elevation: 6,
     shadowOpacity: 0.36,
   },
 });

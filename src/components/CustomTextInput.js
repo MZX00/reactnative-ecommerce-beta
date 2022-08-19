@@ -1,4 +1,9 @@
-import { FontAwesome5 } from "@expo/vector-icons";
+import Eye from "../../assets/svgs/Eye";
+import EyeSlashed from "../../assets/svgs/EyeSlashed";
+import ProfileFilled from "../../assets/svgs/ProfileFilled";
+import CreditCardIcon from "../../assets/svgs/CreditCardIcon";
+import Calander from "../../assets/svgs/Calander";
+import Lock from "../../assets/svgs/Lock";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -8,18 +13,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  black,
-  grey,
-  marginHorizontal,
-  marginVertical,
-} from "../utils/Constants";
+import { black, grey, marginHorizontal } from "../utils/Constants";
 import validateText from "../utils/Validation";
 import { setReq } from "../features/api";
 import { setValid, setInvalid, toggleError } from "../features/validation";
 import { useDispatch, useSelector } from "react-redux";
 
-const CustomTextInput = ({ required, type, placeholderText }) => {
+const CustomTextInput = ({ required, type, placeholderText, Icon }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
@@ -99,15 +99,15 @@ const CustomTextInput = ({ required, type, placeholderText }) => {
           {
             top: anim.interpolate({
               inputRange: [0, 1],
-              outputRange: [25, 0],
+              outputRange: [!Icon ? 25 : 26, 0],
             }),
             left: anim.interpolate({
               inputRange: [0, 1],
-              outputRange: [4, 2],
+              outputRange: [!Icon ? 4 : 30, 2],
             }),
             fontSize: anim.interpolate({
               inputRange: [0, 1],
-              outputRange: [20, 14],
+              outputRange: [!Icon ? 20 : 18, 14],
             }),
             color: anim.interpolate({
               inputRange: [0, 1],
@@ -118,12 +118,23 @@ const CustomTextInput = ({ required, type, placeholderText }) => {
       >
         {placeholderText}
       </Animated.Text>
-      <View style={styles.eyeContainer}>
+      <View
+        style={[
+          styles.eyeContainer,
+          Icon !== undefined && { alignItems: "stretch" },
+        ]}
+      >
+        {Icon !== undefined && (
+          <View style={[styles.icon, error && styles.inputError]}>
+            <Icon color={"#97AABD"} />
+          </View>
+        )}
         <TextInput
           style={[
             styles.input,
             error && styles.inputError,
             !isPassword && { marginRight: marginHorizontal },
+            Icon !== undefined && { marginLeft: 0 },
           ]}
           value={text}
           placeholderTextColor="#afafaf"
@@ -133,17 +144,22 @@ const CustomTextInput = ({ required, type, placeholderText }) => {
           onFocus={onFocus}
         />
         {isPassword && (
-          <View style={[styles.eye, error && styles.inputError]}>
+          <View
+            style={[
+              styles.eye,
+              error && styles.inputError,
+              Icon !== undefined && {
+                paddingVertical: 6,
+                alignSelf: "flex-end",
+              },
+            ]}
+          >
             <TouchableOpacity
               onPress={() => {
                 setIsSecureEntry(!isSecureEntry);
               }}
             >
-              <FontAwesome5
-                name={isSecureEntry ? "eye" : "eye-slash"}
-                size={20}
-                color="gray"
-              />
+              {isSecureEntry ? <EyeSlashed /> : <Eye />}
             </TouchableOpacity>
           </View>
         )}
@@ -161,12 +177,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch",
+    minHeight: 30,
   },
   input: {
     flex: 1,
     color: black,
     marginLeft: marginHorizontal,
-    paddingBottom: 5,
+    // paddingBottom: 5,
     fontSize: 16,
     paddingLeft: 5,
     borderBottomWidth: 0.5,
@@ -180,7 +197,6 @@ const styles = StyleSheet.create({
     marginLeft: marginHorizontal,
     alignSelf: "flex-start",
   },
-
   error: {
     alignSelf: "flex-start",
     color: "red",
@@ -188,15 +204,21 @@ const styles = StyleSheet.create({
   },
   eye: {
     paddingRight: 5,
-    paddingVertical: 6,
+    paddingVertical: 4,
     marginRight: marginHorizontal,
-    alignSelf: "flex-end",
     borderBottomWidth: 0.5,
     borderBottomColor: grey,
   },
   eyeContainer: {
     flexDirection: "row",
-    alignItems: "stretch",
+    alignItems: "flex-end",
+  },
+  icon: {
+    marginLeft: 40,
+    paddingVertical: 4,
+    paddingHorizontal: 5,
+    borderBottomWidth: 0.5,
+    borderBottomColor: grey,
   },
 });
 

@@ -17,7 +17,7 @@ import { resetApi } from "../features/api";
 import HomePageMenu from "../components/HomePageMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { selectItem } from "../features/cart";
-import { init } from "../features/validation";
+import { init, validationSlice } from "../features/validation";
 import { useNavigationState } from "@react-navigation/native";
 import { background, blue50 } from "../utils/Constants";
 
@@ -37,6 +37,7 @@ const HomePage = ({ navigation }) => {
   const navIndex = useNavigationState((s) => s.index);
 
   const [productList, setProductList] = useState(null);
+  const [searchData, setSearchData] = useState("");
 
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
@@ -97,6 +98,28 @@ const HomePage = ({ navigation }) => {
     );
   };
 
+  const searchFilter = (phrase) => {
+    if (phrase) {
+      const newData = productList.filter((item) => {
+        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
+        const textData = phrase.toUpperCase();
+        console.log("item.name");
+        console.log(item.name);
+        return itemData.indexOf(textData) > -1;
+      });
+
+      console.log("new Data");
+      console.log(newData);
+      setSearchData(newData);
+      console.log("Phrase");
+      console.log(phrase);
+      setSearchPhrase(phrase);
+    } else {
+      setSearchData(productList);
+      setSearchPhrase(phrase);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
@@ -104,6 +127,7 @@ const HomePage = ({ navigation }) => {
         searchPhrase={searchPhrase}
         setSearchPhrase={setSearchPhrase}
         setClicked={setClicked}
+        searchFilter={searchFilter}
       ></SearchBar>
       <View style={styles.horizontalFl}>
         <FlatList
@@ -126,7 +150,7 @@ const HomePage = ({ navigation }) => {
         <FlatList
           contentContainerStyle={styles.contentContainer}
           numColumns={2}
-          data={productList}
+          data={searchData}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
         />
