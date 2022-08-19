@@ -6,11 +6,11 @@ import { init } from "../features/validation";
 import { black, marginHorizontal, marginVertical } from "../utils/Constants";
 import BackIcon from "../../assets/svgs/BackIcon";
 
-const Header = ({ flex, content, back = false }) => {
+const Header = ({ flex, content, back = false, onPress }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const onPress = () => {
+  const defaultOnPress = () => {
     dispatch(init(0));
     navigation.goBack();
   };
@@ -24,7 +24,10 @@ const Header = ({ flex, content, back = false }) => {
       }}
     >
       {back && (
-        <TouchableOpacity style={styles.backicon} onPress={onPress}>
+        <TouchableOpacity
+          style={styles.backicon}
+          onPress={onPress ? onPress : defaultOnPress}
+        >
           <BackIcon />
         </TouchableOpacity>
       )}
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 32,
     fontWeight: "bold",
+    textTransform: "capitalize",
   },
 });
 

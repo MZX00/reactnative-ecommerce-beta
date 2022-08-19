@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,6 +10,8 @@ import { background } from "../utils/Constants";
 
 const Categories = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState();
+  const header = useRef("Categories");
 
   const loadData = async () => {
     const result = await api("category/view", "get", {});
@@ -23,24 +25,54 @@ const Categories = ({ navigation }) => {
     loadData();
   }, []);
 
+  const headerOnPress = () => {
+    header.current = "Categories";
+    setSubCategories(undefined);
+  };
+
   const renderItem = ({ item }) => {
     return (
-      <Pressable onPress={onPress}>
+      <Pressable
+        onPress={async () => {
+          if (!subCategories) {
+            const result = await api("category/sub/view", "post", {
+              _id: item._id,
+            });
+            if (result.body) {
+              if (result.body.subCategories) {
+                header.current = item.name;
+                setSubCategories(result.body.subCategories);
+              } else {
+                navigation.navigate("HomePage", {
+                  catId: item._id,
+                  catName: item.name,
+                });
+              }
+            }
+          } else {
+            navigation.navigate("HomePage", {
+              catId: item._id,
+              catName: item.name,
+            });
+          }
+        }}
+      >
         <CategoryCard name={item.name} image={item.image} />
       </Pressable>
     );
   };
 
-  const onPress = () => {
-    navigation.navigate("HomePage");
-  };
   return (
     <SafeAreaView style={styles.container}>
-      <Header content={"Categories"} back></Header>
+      <Header
+        content={header.current}
+        back
+        onPress={subCategories ? headerOnPress : undefined}
+      ></Header>
       <FlatList
         contentContainerStyle={styles.container}
-        data={categories}
-        extraData={categories}
+        data={subCategories ? subCategories : categories}
+        extraData={[categories, subCategories]}
         renderItem={renderItem}
       />
       <HomePageMenu categoriesPage />

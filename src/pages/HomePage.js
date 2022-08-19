@@ -20,8 +20,9 @@ import { selectItem } from "../features/cart";
 import { init, validationSlice } from "../features/validation";
 import { useNavigationState } from "@react-navigation/native";
 import { background, blue50 } from "../utils/Constants";
+import Header from "../components/Header";
 
-const HomePage = ({ navigation }) => {
+const HomePage = ({ route, navigation }) => {
   const filterData = [
     { label: "Chair" },
     { label: "Cupboard" },
@@ -30,6 +31,10 @@ const HomePage = ({ navigation }) => {
     { label: "Furniture" },
     { label: "Enlighte" },
   ];
+
+  const { catId, catName } = route.params
+    ? route.params
+    : { catId: undefined, catName: undefined };
 
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
@@ -43,13 +48,22 @@ const HomePage = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const loadData = async () => {
-    const result = await api("product/view/list", "post", {});
-    if (result && result.body) {
-      setProductList(result.body.products);
+    //loading data on page load
+    if (catId) {
+      const result = await api("product/view/category", "post", { _id: catId });
+      if (result && result.body) {
+        setProductList(result.body.products);
+      }
+    } else {
+      const result = await api("product/view/list", "post", {});
+      if (result && result.body) {
+        setProductList(result.body.products);
+      }
     }
   };
 
   useEffect(() => {
+    //cleanup after login
     if (data.token) {
       dispatch(login(data));
       dispatch(resetApi());
@@ -122,13 +136,24 @@ const HomePage = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar
-        clicked={clicked}
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-        setClicked={setClicked}
-        searchFilter={searchFilter}
-      ></SearchBar>
+      {/*Header vs Searchbar if category */}
+      {catName ? (
+        <Header
+          back
+          content={catName}
+          onPress={() => {
+            navigation.navigate("Categories");
+          }}
+        />
+      ) : (
+        <SearchBar
+          clicked={clicked}
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+          setClicked={setClicked}
+          searchFilter={searchFilter}
+        ></SearchBar>
+      )}
       <View style={styles.horizontalFl}>
         <FlatList
           horizontal
