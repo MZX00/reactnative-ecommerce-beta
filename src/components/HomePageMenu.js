@@ -10,14 +10,11 @@ import DocumentFilled from "../../assets/svgs/DocumentFilled";
 import { foreground } from "../utils/Constants";
 import CartFilled from "../../assets/svgs/CartFilled";
 import CartOutline from "../../assets/svgs/CartOutline";
-import CategoriesFilled from "../../assets/svgs/CategoriesFilled";
-import CategoriesOutline from "../../assets/svgs/CategoriesOutline";
 
 const HomePageMenu = ({
   cartPage = false,
   homeP = false,
   profilePage = false,
-  categoriesPage = false,
 }) => {
   const navigation = useNavigation();
   const admin = useSelector((state) => state.user.admin);
@@ -34,17 +31,6 @@ const HomePageMenu = ({
           {homeP && <HomeFilled />}
           {!homeP && <HomeOutline />}
         </Pressable>
-        {!admin && (
-          <Pressable
-            style={styles.component}
-            onPress={() => {
-              navigation.navigate("Categories");
-            }}
-          >
-            {categoriesPage && <CategoriesFilled />}
-            {!categoriesPage && <CategoriesOutline />}
-          </Pressable>
-        )}
 
         {!admin && (
           <Pressable
@@ -69,7 +55,6 @@ const HomePageMenu = ({
             {!cartPage && <Document />}
           </Pressable>
         )}
-
         <Pressable
           style={styles.component}
           onPress={() => {
