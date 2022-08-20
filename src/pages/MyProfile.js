@@ -1,11 +1,13 @@
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import ProfileComponent from "../components/ProfileComponent";
 import { background } from "../utils/Constants";
 
 const MyProfile = () => {
+  const admin = useSelector((state) => state.user.admin);
   return (
     <SafeAreaView style={styles.container}>
       <Header content="My Profile" back={true} />
@@ -23,33 +25,46 @@ const MyProfile = () => {
       </View>
 
       <View style={styles.scrollContainer}>
-        <ScrollView style={{ flex: 1 }} showsHorizontalScrollIndicator={true}>
-          <ProfileComponent
-            mainText="My Orders"
-            secText="Already have 12 orders"
-            goTo="OrderPanel"
-          />
-          <ProfileComponent
-            mainText="Shipping Addresses"
-            secText="3 addresses"
-            goTo="ShippingAddress"
-          />
-          <ProfileComponent
-            mainText="Payment Methods"
-            secText="Vise **34"
-            goTo="PaymentMethods"
-          />
+        <ScrollView style={{ flex: 1 }}>
+          {!admin && (
+            <View>
+              <ProfileComponent
+                mainText="My Orders"
+                secText="Already have 12 orders"
+                goTo="OrderPanel"
+              />
+              <ProfileComponent
+                mainText="Shipping Addresses"
+                secText="3 addresses"
+                goTo="ShippingAddress"
+              />
+              <ProfileComponent
+                mainText="Payment Methods"
+                secText="Vise **34"
+                goTo="PaymentMethods"
+              />
+            </View>
+          )}
+          {
+            <View>
+              <ProfileComponent
+                mainText="Add Product"
+                secText="Create a new product listing"
+                goTo="AddProduct"
+              />
+            </View>
+          }
           <ProfileComponent
             mainText="Settings"
             secText="Password, Delete account"
             goTo="UserSettings"
           />
 
-          <ProfileComponent
+          {/* <ProfileComponent
             mainText="Delete Account"
             secText="Use current password to delete your account"
             goTo="DeleteAccount"
-          />
+          /> */}
           <ProfileComponent mainText="Logout" log={true} />
         </ScrollView>
       </View>

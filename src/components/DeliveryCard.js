@@ -24,7 +24,7 @@ const Item = ({ id, text, onPress, backgroundColor, textColor, selected }) => (
 );
 
 const DeliveryCard = () => {
-  const [selectedID, setSelectedID] = useState(null);
+  const [selectedID, setSelectedID] = useState(0);
 
   const renderItem = ({ item }) => {
     const backgroundColor = selectedID === item.id ? "#F9F9F9" : "white";
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderColor: blue,
+    backgroundColor: "lavender",
     borderWidth: 2,
   },
   name: {

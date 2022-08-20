@@ -4,6 +4,7 @@ import UploadImage from "../components/UploadImage";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { background } from "../utils/Constants";
+import CustomDropDown from "../components/CustomDropDown";
 
 const AddProduct = () => {
   return (
@@ -32,13 +33,14 @@ const AddProduct = () => {
         ></CustomTextInput>
         <CustomTextInput placeholderText="Stock" type="stock"></CustomTextInput>
         <CustomTextInput placeholderText="Brand" type="brand"></CustomTextInput>
-        {/* <CustomDropDown
-          itemList={sizeList}
+        <CustomDropDown
           placeholderText="Select a size"
           type="size"
-          setReqData={setReqData}
-          reqData={reqData}
-        ></CustomDropDown> */}
+        ></CustomDropDown>
+        <CustomDropDown
+          placeholderText="Select a size"
+          type="color"
+        ></CustomDropDown>
         <LargeBlackButton
           btnText="Add Product"
           changeTo="goBack"

@@ -43,8 +43,9 @@ const ProfileComponent = ({ mainText, secText, goTo, log = false }) => {
     >
       <View style={styles.names}>
         <Text style={styles.mainText}>{mainText}</Text>
-        <Text style={styles.secText}>{secText}</Text>
+        {secText && <Text style={styles.secText}>{secText}</Text>}
       </View>
+
       <View style={styles.back}>
         <Forward />
       </View>
