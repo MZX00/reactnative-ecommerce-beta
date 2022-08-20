@@ -1,12 +1,12 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { Keyboard, StyleSheet, TextInput, View } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 import { foreground } from "../utils/Constants";
 
 const SearchBar = ({
   clicked,
   searchPhrase,
-  setSearchPhrase,
   setClicked,
+  onFocus,
   searchFilter,
 }) => {
   return (
@@ -27,9 +27,7 @@ const SearchBar = ({
           placeholder="Search"
           value={searchPhrase}
           onChangeText={(text) => searchFilter(text)}
-          onFocus={() => {
-            setClicked(true);
-          }}
+          onFocus={onFocus}
         />
         {clicked && (
           <Entypo
@@ -38,7 +36,10 @@ const SearchBar = ({
             color="black"
             style={{ padding: 1 }}
             onPress={() => {
-              setSearchPhrase("");
+              // setSearchPhrase("");
+              Keyboard.dismiss();
+              setClicked(false);
+              searchFilter("");
             }}
           />
         )}

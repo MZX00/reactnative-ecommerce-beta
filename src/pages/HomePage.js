@@ -8,7 +8,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../utils/Api";
 import SmallProduct from "../components/SmallProduct";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +42,8 @@ const HomePage = ({ route, navigation }) => {
   const navIndex = useNavigationState((s) => s.index);
 
   const [productList, setProductList] = useState(null);
-  const [searchData, setSearchData] = useState("");
+  // const [searchData, setSearchData] = useState("");
+  const fetchData = useRef(productList);
 
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
@@ -52,15 +53,22 @@ const HomePage = ({ route, navigation }) => {
     if (catId) {
       const result = await api("product/view/category", "post", { _id: catId });
       if (result && result.body) {
+        // setSearchData(result.body.products);
         setProductList(result.body.products);
       }
     } else {
       const result = await api("product/view/list", "post", {});
       if (result && result.body) {
+        // setSearchData(result.body.products);
         setProductList(result.body.products);
+        fetchData.current = result.body.products;
       }
     }
   };
+
+  useEffect(() => {
+    loadData();
+  }, [route.params]);
 
   useEffect(() => {
     //cleanup after login
@@ -113,25 +121,29 @@ const HomePage = ({ route, navigation }) => {
   };
 
   const searchFilter = (phrase) => {
+    console.log("running");
+    console.log(phrase);
     if (phrase) {
-      const newData = productList.filter((item) => {
+      const newData = fetchData.current.filter((item) => {
         const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
         const textData = phrase.toUpperCase();
-        console.log("item.name");
-        console.log(item.name);
         return itemData.indexOf(textData) > -1;
       });
 
-      console.log("new Data");
-      console.log(newData);
-      setSearchData(newData);
-      console.log("Phrase");
-      console.log(phrase);
+      setProductList(newData);
       setSearchPhrase(phrase);
     } else {
-      setSearchData(productList);
+      console.log(fetchData.current);
+      setProductList(fetchData.current);
       setSearchPhrase(phrase);
     }
+  };
+
+  const onFocus = () => {
+    // if (!searchPhrase) {
+    //   fetchData.current = productList;
+    // }
+    setClicked(true);
   };
 
   return (
@@ -149,8 +161,8 @@ const HomePage = ({ route, navigation }) => {
         <SearchBar
           clicked={clicked}
           searchPhrase={searchPhrase}
-          setSearchPhrase={setSearchPhrase}
           setClicked={setClicked}
+          onFocus={onFocus}
           searchFilter={searchFilter}
         ></SearchBar>
       )}
@@ -163,7 +175,13 @@ const HomePage = ({ route, navigation }) => {
           renderItem={({ item, index, separators }) => {
             return (
               <View style={styles.chipContainer}>
-                <TouchableOpacity activeOpacity={0.5}>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={() => {
+                    searchFilter(item.label);
+                    setClicked(true);
+                  }}
+                >
                   <Text style={styles.txt}>{item.label}</Text>
                 </TouchableOpacity>
               </View>
@@ -175,12 +193,15 @@ const HomePage = ({ route, navigation }) => {
         <FlatList
           contentContainerStyle={styles.contentContainer}
           numColumns={2}
-          data={searchData}
+          data={productList}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
         />
       </View>
-      <HomePageMenu homeP={true} />
+      <HomePageMenu
+        homeP={catId ? false : true}
+        categoriesPage={catId ? true : false}
+      />
     </SafeAreaView>
   );
 };

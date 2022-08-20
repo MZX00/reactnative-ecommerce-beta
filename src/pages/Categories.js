@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -8,7 +9,9 @@ import HomePageMenu from "../components/HomePageMenu";
 import api from "../utils/Api";
 import { background } from "../utils/Constants";
 
-const Categories = ({ navigation }) => {
+const Categories = () => {
+  const navigation = useNavigation();
+
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState();
   const header = useRef("Categories");

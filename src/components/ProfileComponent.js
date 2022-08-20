@@ -28,27 +28,27 @@ const ProfileComponent = ({ mainText, secText, goTo, log = false }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        if (log) {
+          Alert.alert("Log out", "Are you sure you want to log out ?", [
+            { text: "Yes", onPress: () => logoutFunction() },
+            { text: "No" },
+          ]);
+        } else {
+          navigation.navigate(goTo);
+        }
+      }}
+    >
       <View style={styles.names}>
         <Text style={styles.mainText}>{mainText}</Text>
         <Text style={styles.secText}>{secText}</Text>
       </View>
-      <Pressable
-        style={styles.back}
-        onPress={() => {
-          if (log) {
-            Alert.alert("Log out", "Are you sure you want to log out ?", [
-              { text: "Yes", onPress: () => logoutFunction() },
-              { text: "No" },
-            ]);
-          } else {
-            navigation.navigate(goTo);
-          }
-        }}
-      >
+      <View style={styles.back}>
         <Forward />
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 };
 
