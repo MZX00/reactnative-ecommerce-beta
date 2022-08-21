@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const UserPanel = () => {
   const admin = useSelector((state) => state.user.admin);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header
         content={admin ? "Admin Panel" : "User Panel"}
         flex={0.2}
@@ -32,7 +32,7 @@ const UserPanel = () => {
           />
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

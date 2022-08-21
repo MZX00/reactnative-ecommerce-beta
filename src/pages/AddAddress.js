@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
@@ -6,7 +6,7 @@ import { background } from "../utils/Constants";
 
 const AddAddress = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Add Shipping Address" back={true} />
       <CustomTextInput
         type="Name"
@@ -27,7 +27,7 @@ const AddAddress = () => {
       <CustomTextInput type="name" placeholderText="Country" required={true} />
 
       <LargeBlackButton btnText="Save Address" changeTo="Checkout" />
-    </View>
+    </SafeAreaView>
   );
 };
 

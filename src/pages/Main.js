@@ -25,7 +25,6 @@ import ViewProduct from "./ViewProduct";
 import OrderPanel from "./OrderPanel";
 import OrderDetails from "./OrderDetails";
 import MyProfile from "./MyProfile";
-import MyOrders from "./MyOrders";
 import UserSettings from "./UserSettings";
 import Categories from "./Categories";
 
@@ -71,7 +70,6 @@ const Main = () => {
             component={OrderDetails}
           ></Stack.Screen>
           <Stack.Screen name="MyProfile" component={MyProfile}></Stack.Screen>
-          <Stack.Screen name="MyOrders" component={MyOrders}></Stack.Screen>
           <Stack.Screen
             name="UserSettings"
             component={UserSettings}

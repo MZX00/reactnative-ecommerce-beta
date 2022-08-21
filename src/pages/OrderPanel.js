@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import Chip from "../components/Chip";
 import OrderMiniCard from "../components/OrderMiniCard";
@@ -35,7 +35,7 @@ const OrderPanel = () => {
     const endpath = admin ? "order/admin/view" : "order/view";
     const result = await api(endpath, "post", { token: token });
     if (result) {
-      setData(result);
+      setData(result.body);
     } else {
       console.log("API not working");
       console.log(result);
@@ -47,7 +47,7 @@ const OrderPanel = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content={admin ? "Admin Order" : "My Orders"} back={true} />
       <View style={styles.chipContainer}>
         <Chip
@@ -76,7 +76,7 @@ const OrderPanel = () => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

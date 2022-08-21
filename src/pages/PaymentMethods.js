@@ -1,4 +1,10 @@
-import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { CheckBox } from "@rneui/themed";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
@@ -72,8 +78,6 @@ const PaymentMethods = () => {
       dispatch(setPayment(item.cardNumber));
     };
 
-    console.log(item);
-
     return (
       <PaymentCard
         item={item}
@@ -85,7 +89,7 @@ const PaymentMethods = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Payment methods" back={true} />
       <View style={styles.cashStyle}>
         <CheckBox
@@ -115,7 +119,7 @@ const PaymentMethods = () => {
       >
         <Add width={70} height={70} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

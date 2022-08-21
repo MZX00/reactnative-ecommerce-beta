@@ -1,26 +1,49 @@
+import { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import ProfileComponent from "../components/ProfileComponent";
 import { background } from "../utils/Constants";
+import api from "../utils/Api";
 
 const MyProfile = () => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [dob, setDob] = useState();
+
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
   const admin = useSelector((state) => state.user.admin);
+
+  const loadData = async () => {
+    //loading data on page load
+    const result = await api("user/view", "post", { token: token });
+    if (result && result.body) {
+      setName(result.body.name);
+      setEmail(result.body.email);
+      setDob(result.body.dob);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header content="My Profile" back={true} />
       <View style={styles.belowHeader}>
-        <Image
+        {/* <Image
           style={styles.profile}
           source={{
             uri: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
           }}
-        />
+        /> */}
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>Matilda Brown</Text>
-          <Text style={styles.email}>matildabrown@mail.com</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.email}>{email}</Text>
         </View>
       </View>
 
@@ -45,7 +68,7 @@ const MyProfile = () => {
               />
             </View>
           )}
-          {
+          {admin && (
             <View>
               <ProfileComponent
                 mainText="Add Product"
@@ -53,18 +76,12 @@ const MyProfile = () => {
                 goTo="AddProduct"
               />
             </View>
-          }
+          )}
           <ProfileComponent
             mainText="Settings"
             secText="Password, Delete account"
             goTo="UserSettings"
           />
-
-          {/* <ProfileComponent
-            mainText="Delete Account"
-            secText="Use current password to delete your account"
-            goTo="DeleteAccount"
-          /> */}
           <ProfileComponent mainText="Logout" log={true} />
         </ScrollView>
       </View>

@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import AddressCard from "../components/AddressCard";
 import Add from "../../assets/svgs/Add";
@@ -9,7 +9,7 @@ const ShippingAddress = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Shipping Addresses" back={true} />
       <AddressCard />
       <AddressCard />
@@ -25,7 +25,7 @@ const ShippingAddress = () => {
       >
         <Add width={70} height={70} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

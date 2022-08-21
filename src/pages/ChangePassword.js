@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
 import CustomTextInput from "../components/CustomTextInput";
@@ -17,7 +17,7 @@ const ChangePassword = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Change Password" flex={0.5} back={true} />
 
       <CustomTextInput
@@ -42,7 +42,7 @@ const ChangePassword = ({ route }) => {
         changeTo="HomePage"
         fields={3}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

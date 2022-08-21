@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import ShippingAddressCard from "../components/ShippingAddressCard";
 import Header from "../components/Header";
 import PaymentSection from "../components/PaymentSection";
@@ -11,7 +11,7 @@ import { background } from "../utils/Constants";
 
 const Checkout = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Checkout" back={true} />
       <View>
         <Text style={styles.address}>Shipping Address</Text>
@@ -22,7 +22,7 @@ const Checkout = () => {
       <OrderSummary />
 
       <LargeBlackButton btnText="Submit Order" changeTo="ContinueShopping" />
-    </View>
+    </SafeAreaView>
   );
 };
 

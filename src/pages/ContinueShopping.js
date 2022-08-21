@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,9 +32,7 @@ const ContinueShopping = () => {
       token: token,
       cost: cost,
     });
-    console.log(result);
     if (!result.error) {
-      console.log("I AM HERE");
       dispatch(clearCart());
       setSuccess(true);
     } else {
@@ -47,7 +45,7 @@ const ContinueShopping = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {success ? <OrderCompletionSVG /> : <OrderFailed />}
       <Text style={styles.heading}>{success ? "Success!" : "Failed!"}</Text>
       <Text style={styles.txt}>
@@ -62,7 +60,7 @@ const ContinueShopping = () => {
         btnText={success ? "CONTINUE SHOPPING" : "Go Back"}
         changeTo={success ? "HomePage" : "goBack"}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

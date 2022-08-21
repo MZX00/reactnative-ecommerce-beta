@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "stretch",
     marginHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: 15,
     paddingRight: 5,
   },
   text: {

@@ -147,7 +147,6 @@ const ViewProduct = ({ navigation }) => {
           <Pressable
             style={styles.closeContainer}
             onPress={() => {
-              console.log("Running");
               setModalOpen(false);
             }}
           >

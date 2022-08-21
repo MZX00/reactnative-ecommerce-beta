@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  SafeAreaView,
+} from "react-native";
 import Header from "../components/Header";
 import Constants from "expo-constants";
 import { background, foreground } from "../utils/Constants";
@@ -41,7 +48,7 @@ const OrderDetails = ({ navigation, route }) => {
   const { id, cost, date, productList, status, name } = route.params;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content={"Order Details"} back={true} />
       <View style={styles.orderDetails}>
         <View style={styles.horizontal}>
@@ -69,7 +76,7 @@ const OrderDetails = ({ navigation, route }) => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

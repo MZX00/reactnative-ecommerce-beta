@@ -121,8 +121,6 @@ const HomePage = ({ route, navigation }) => {
   };
 
   const searchFilter = (phrase) => {
-    console.log("running");
-    console.log(phrase);
     if (phrase) {
       const newData = fetchData.current.filter((item) => {
         const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
@@ -133,16 +131,12 @@ const HomePage = ({ route, navigation }) => {
       setProductList(newData);
       setSearchPhrase(phrase);
     } else {
-      console.log(fetchData.current);
       setProductList(fetchData.current);
       setSearchPhrase(phrase);
     }
   };
 
   const onFocus = () => {
-    // if (!searchPhrase) {
-    //   fetchData.current = productList;
-    // }
     setClicked(true);
   };
 

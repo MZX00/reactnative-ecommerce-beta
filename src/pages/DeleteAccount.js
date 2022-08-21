@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import { background } from "../utils/Constants";
 
 const DeleteAccount = ({ route }) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Delete Account" flex={1} back={true} />
       <CustomTextInput type="password" required={true} />
       <LargeBlackButton
@@ -15,7 +15,7 @@ const DeleteAccount = ({ route }) => {
         btnText="Delete Account"
         fields={1}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

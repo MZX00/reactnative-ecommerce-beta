@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
@@ -34,7 +34,7 @@ const AddNewCard = () => {
   const [expDate, setExpDate] = useState("06/25");
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView>
         <Header content="Add New Card" back={true} />
 
@@ -83,7 +83,7 @@ const AddNewCard = () => {
         </View>
         <LargeBlackButton btnText="ADD CARD" changeTo="Checkout" />
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,19 +1,58 @@
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { View, StyleSheet, Text, Pressable, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import Forward from "../../assets/svgs/Forward";
 import Pencil from "../../assets/svgs/Pencil";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { background, foreground } from "../utils/Constants";
+import { TextInput } from "react-native-gesture-handler";
+import Tick from "../components/Tick";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../utils/Api";
+
+const data = { name: "Matilda brown", dob: "12/2/1989" };
 
 const MyOrders = () => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [dob, setDob] = useState();
+
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
+  const admin = useSelector((state) => state.user.admin);
+
+  const loadData = async () => {
+    //loading data on page load
+    const result = await api("user/view", "post", { token: token });
+    if (result && result.body) {
+      setName(result.body.name);
+      setEmail(result.body.email);
+      setDob(result.body.dob.substring(0, 10));
+    }
+  };
+
+  const setNameApi = async () => {
+    console.log("I am mad ");
+    const result = await api("user/update/name", { token: token, name: name });
+    console.log("result");
+    console.log(result);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const navigation = useNavigation();
 
   const [nameClicked, setNameClicked] = useState(false);
   const [dobClicked, setDobClicked] = useState(false);
 
+  // useEffect(() => {
+
+  // },[])
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header content="Settings" back={true} />
 
       <View style={styles.innerContainer}>
@@ -21,16 +60,51 @@ const MyOrders = () => {
 
         <View style={styles.dobContainer}>
           <View>
-            <Text style={styles.name}>Full name</Text>
-            <Text>Matilda Brown</Text>
+            <Text style={styles.label}>Full name</Text>
+            {nameClicked ? (
+              <TextInput
+                autoFocus={true}
+                value={name}
+                onChange={(e) => {
+                  setName(e.nativeEvent.text);
+                }}
+                onBlur={() => {
+                  setNameClicked(false);
+                }}
+              />
+            ) : (
+              <Text>{name}</Text>
+            )}
           </View>
-          <Pencil />
+          <Pressable
+            onPress={() => {
+              if (nameClicked) {
+                setNameApi();
+              }
+              setNameClicked(!nameClicked);
+            }}
+          >
+            {nameClicked ? <Tick /> : <Pencil />}
+          </Pressable>
         </View>
 
         <View style={styles.dobContainer}>
           <View>
             <Text>Date of Birth</Text>
-            <Text>12/2/1989</Text>
+            {dobClicked ? (
+              <TextInput
+                autoFocus={true}
+                value={dob}
+                onChange={(e) => {
+                  setDob(e.nativeEvent.text);
+                }}
+                onBlur={() => {
+                  setDobClicked(false);
+                }}
+              />
+            ) : (
+              <Text>{dob}</Text>
+            )}
           </View>
         </View>
 
@@ -56,7 +130,7 @@ const MyOrders = () => {
           <Forward />
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -66,6 +140,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   dobContainer: {
+    // backgroundColor: "yellow",
     backgroundColor: foreground,
     elevation: 3,
     padding: 15,
@@ -79,14 +154,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 5,
   },
-  proceed: {
-    color: "blue",
-  },
-  passwordLabel: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 20,
+  label: {
+    textDecorationLine: "underline",
+    // fontSize: 16,
+    paddingBottom: 5,
   },
 });
 

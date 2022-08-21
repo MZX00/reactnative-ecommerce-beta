@@ -1,6 +1,8 @@
-import { Keyboard, StyleSheet, TextInput, View } from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { foreground } from "../utils/Constants";
+import Search from "../../assets/svgs/Search";
+import Close from "../../assets/svgs/Close";
+import CloseA from "../../assets/svgs/CloseA";
 
 const SearchBar = ({
   clicked,
@@ -16,12 +18,7 @@ const SearchBar = ({
           clicked ? styles.searchBar__clicked : styles.searchBar__unclicked
         }
       >
-        <Feather
-          name="search"
-          size={20}
-          color="black"
-          style={{ marginLeft: 1 }}
-        />
+        <Search />
         <TextInput
           style={styles.input}
           placeholder="Search"
@@ -30,18 +27,16 @@ const SearchBar = ({
           onFocus={onFocus}
         />
         {clicked && (
-          <Entypo
-            name="cross"
-            size={20}
-            color="black"
-            style={{ padding: 1 }}
+          <Pressable
+            style={{ paddingRight: 8 }}
             onPress={() => {
-              // setSearchPhrase("");
               Keyboard.dismiss();
               setClicked(false);
               searchFilter("");
             }}
-          />
+          >
+            <CloseA />
+          </Pressable>
         )}
       </View>
     </View>
