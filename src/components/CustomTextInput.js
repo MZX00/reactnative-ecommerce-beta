@@ -159,7 +159,7 @@ const CustomTextInput = ({ required, type, placeholderText, Icon }) => {
                 setIsSecureEntry(!isSecureEntry);
               }}
             >
-              {isSecureEntry ? <EyeSlashed /> : <Eye />}
+              {isSecureEntry ? <Eye /> : <EyeSlashed />}
             </TouchableOpacity>
           </View>
         )}
