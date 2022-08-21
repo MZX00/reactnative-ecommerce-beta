@@ -24,9 +24,9 @@ const OrderPanel = () => {
   const admin = useSelector((state) => state.user.admin);
   const token = useSelector((state) => state.user.token);
 
-  const [selected, setSelected] = useState("inprogress");
+  const [selected, setSelected] = useState("processing");
   const [data, setData] = useState({
-    inprogress: [],
+    processing: [],
     completed: [],
     cancelled: [],
   });
@@ -51,8 +51,8 @@ const OrderPanel = () => {
       <Header content={admin ? "Admin Order" : "My Orders"} back={true} />
       <View style={styles.chipContainer}>
         <Chip
-          text={"In-Progress"}
-          target={"inprogress"}
+          text={"Processing"}
+          target={"processing"}
           selected={selected}
           setSelected={setSelected}
         />
