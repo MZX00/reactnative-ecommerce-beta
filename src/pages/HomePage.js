@@ -18,11 +18,12 @@ import HomePageMenu from "../components/HomePageMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { selectItem } from "../features/cart";
 import { init, validationSlice } from "../features/validation";
-import { useNavigationState } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { background, blue50 } from "../utils/Constants";
 import Header from "../components/Header";
 
-const HomePage = ({ route, navigation }) => {
+const HomePage = ({ route }) => {
+  const navigation = useNavigation();
   const filterData = [
     { label: "Chair" },
     { label: "Cupboard" },
@@ -32,9 +33,16 @@ const HomePage = ({ route, navigation }) => {
     { label: "Enlighte" },
   ];
 
-  const { catId, catName } = route.params
+  console.log(route.params);
+
+  const { catId, catName, subCat, header } = route.params
     ? route.params
-    : { catId: undefined, catName: undefined };
+    : {
+        catId: undefined,
+        catName: undefined,
+        subCat: [],
+        header: "",
+      };
 
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
@@ -141,14 +149,17 @@ const HomePage = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/*Header vs Searchbar if category */}
       {catName ? (
         <Header
           back
           content={catName}
           onPress={() => {
-            navigation.navigate("Categories");
+            navigation.navigate("Categories", {
+              subCat: route.params.subCat,
+              prevHead: route.params.header,
+            });
           }}
         />
       ) : (
@@ -161,27 +172,29 @@ const HomePage = ({ route, navigation }) => {
         ></SearchBar>
       )}
       <View style={styles.horizontalFl}>
-        <FlatList
-          horizontal
-          contentContainerStyle={styles.chipList}
-          showsHorizontalScrollIndicator={false}
-          data={filterData}
-          renderItem={({ item, index, separators }) => {
-            return (
-              <View style={styles.chipContainer}>
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  onPress={() => {
-                    searchFilter(item.label);
-                    setClicked(true);
-                  }}
-                >
-                  <Text style={styles.txt}>{item.label}</Text>
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
+        {!catId && (
+          <FlatList
+            horizontal
+            contentContainerStyle={styles.chipList}
+            showsHorizontalScrollIndicator={false}
+            data={filterData}
+            renderItem={({ item, index, separators }) => {
+              return (
+                <View style={styles.chipContainer}>
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                      searchFilter(item.label);
+                      setClicked(true);
+                    }}
+                  >
+                    <Text style={styles.txt}>{item.label}</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+        )}
       </View>
       <View>
         <FlatList
@@ -196,7 +209,7 @@ const HomePage = ({ route, navigation }) => {
         homeP={catId ? false : true}
         categoriesPage={catId ? true : false}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

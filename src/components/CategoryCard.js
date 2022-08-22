@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 8,
     marginHorizontal: 10,
-    elevation: 10,
+    elevation: 5,
   },
   left: {
     flex: 1,

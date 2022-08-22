@@ -3,7 +3,6 @@ import CartList from "../components/CartList";
 import Header from "../components/Header";
 import TotalAmmountLabel from "../components/TotalAmmountLabel";
 import LargeBlackButton from "../components/LargeBlackButton";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { background } from "../utils/Constants";
 import HomePageMenu from "../components/HomePageMenu";
@@ -11,7 +10,7 @@ import HomePageMenu from "../components/HomePageMenu";
 const Cart = () => {
   const empty = useSelector((state) => state.cart.items.length === 0);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header flex={0} content="My Cart" back={true}></Header>
       <CartList></CartList>
       {!empty && <TotalAmmountLabel></TotalAmmountLabel>}
@@ -25,7 +24,7 @@ const Cart = () => {
 
       <View style={styles.bottomBuffer}></View>
       <HomePageMenu cartPage={true} />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: background,
   },
   bottomBuffer: {
-    padding: 5,
+    padding: 30,
   },
 });
 

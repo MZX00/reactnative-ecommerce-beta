@@ -32,7 +32,7 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content="My Profile" back={true} />
       <View style={styles.belowHeader}>
         {/* <Image
@@ -86,7 +86,7 @@ const MyProfile = () => {
         </ScrollView>
       </View>
       <HomePageMenu profilePage={true} />
-    </SafeAreaView>
+    </View>
   );
 };
 

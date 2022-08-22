@@ -51,7 +51,9 @@ const SmallProduct = ({ product }) => {
           <EmptyImage width={80} height={80} />
         </View>
       )}
-      <Text style={styles.name}>{product.name}</Text>
+      <Text style={styles.name} numberOfLines={1}>
+        {product.name}
+      </Text>
       <View style={styles.containerBottom}>
         <Text style={styles.price}>$ {product.price}</Text>
         {!admin && (
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  name: { fontSize: 16, marginHorizontal: 10, paddingTop: 5 },
+  name: { fontSize: 16, marginHorizontal: 10, paddingTop: 5, marginRight: 40 },
   price: {},
   quantity: {
     color: "white",

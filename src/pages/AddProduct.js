@@ -5,8 +5,10 @@ import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { background } from "../utils/Constants";
 import CustomDropDown from "../components/CustomDropDown";
+import { useState } from "react";
 
 const AddProduct = () => {
+  const [dropdown, setDropdown] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -17,34 +19,36 @@ const AddProduct = () => {
           required={true}
         ></CustomTextInput>
         <CustomTextInput
-          placeholderText="Category"
-          type="category"
-          required={false}
-        ></CustomTextInput>
-        <CustomTextInput
           placeholderText="Description"
           type="description"
         ></CustomTextInput>
-        <CustomTextInput placeholderText="Price" type="price"></CustomTextInput>
+        <CustomTextInput
+          placeholderText="Price"
+          type="price"
+          required={true}
+        ></CustomTextInput>
         <CustomTextInput
           placeholderText="Discount"
           type="discount"
-          required={true}
         ></CustomTextInput>
         <CustomTextInput placeholderText="Stock" type="stock"></CustomTextInput>
         <CustomTextInput placeholderText="Brand" type="brand"></CustomTextInput>
         <CustomDropDown
           placeholderText="Select a size"
           type="size"
+          dropdown={dropdown}
+          setDropdown={setDropdown}
         ></CustomDropDown>
         <CustomDropDown
-          placeholderText="Select a size"
+          placeholderText="Select a color"
           type="color"
+          dropdown={dropdown}
+          setDropdown={setDropdown}
         ></CustomDropDown>
         <LargeBlackButton
           btnText="Add Product"
           changeTo="goBack"
-          fields={7}
+          fields={2}
         ></LargeBlackButton>
         <View style={{ flex: 1, padding: 10 }}></View>
       </ScrollView>

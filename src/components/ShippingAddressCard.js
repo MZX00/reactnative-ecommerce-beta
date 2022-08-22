@@ -1,14 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { blue, foreground, textBlue } from "../utils/Constants";
+import { useSelector } from "react-redux";
 
 const ShippingAddressCard = () => {
   const navigation = useNavigation();
+  const address = useSelector((state) => state.checkout.address);
 
   return (
     <View style={styles.container}>
       <View style={styles.line1}>
-        <Text style={styles.name}>John Doe</Text>
+        <Text style={styles.name}>{address.fullName}</Text>
         <Text
           style={styles.change}
           onPress={() => {
@@ -19,11 +21,11 @@ const ShippingAddressCard = () => {
         </Text>
       </View>
       <View>
-        <Text>3 NewBridge Court</Text>
+        <Text style={styles.address}>{address.address}</Text>
+        <Text style={styles.address}>{address.city + " " + address.state}</Text>
+        <Text style={styles.address}>{address.country}</Text>
       </View>
-      <View>
-        <Text>Chino Hills, CA 91709, United States</Text>
-      </View>
+      <View style={styles.checkbox}></View>
     </View>
   );
 };
@@ -31,7 +33,7 @@ const ShippingAddressCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    marginVertical: 10,
+    marginTop: 10,
     marginHorizontal: 15,
     borderRadius: 0,
     backgroundColor: foreground,
@@ -42,15 +44,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  name: {},
+  checkbox: {
+    marginLeft: -20,
+  },
+  name: {
+    fontSize: 18,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
   change: {
-    color: textBlue,
+    color: "blue",
     fontSize: 16,
     fontWeight: "bold",
     textDecorationLine: "underline",
   },
-  line2: {},
-  line3: {},
+  address: { marginBottom: 5 },
 });
 
 export default ShippingAddressCard;

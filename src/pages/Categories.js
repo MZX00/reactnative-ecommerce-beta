@@ -2,19 +2,22 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CategoryCard from "../components/CategoryCard";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import api from "../utils/Api";
 import { background } from "../utils/Constants";
 
-const Categories = () => {
+const Categories = ({ route }) => {
   const navigation = useNavigation();
+
+  const { subCat, prevHead } = route.params
+    ? route.params
+    : { subCat: undefined, prevHead: undefined };
 
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState();
-  const header = useRef("Categories");
+  const [header, setHeader] = useState("Categories");
 
   const loadData = async () => {
     const result = await api("category/view", "get", {});
@@ -25,12 +28,18 @@ const Categories = () => {
     }
   };
   useEffect(() => {
-    loadData();
-  }, []);
+    if (subCat) {
+      setSubCategories(subCat);
+      setHeader(prevHead);
+    } else {
+      loadData();
+    }
+  }, [subCat]);
 
   const headerOnPress = () => {
-    header.current = "Categories";
+    setHeader("Categories");
     setSubCategories(undefined);
+    loadData();
   };
 
   const renderItem = ({ item }) => {
@@ -43,7 +52,7 @@ const Categories = () => {
             });
             if (result.body) {
               if (result.body.subCategories) {
-                header.current = item.name;
+                setHeader(item.name);
                 setSubCategories(result.body.subCategories);
               } else {
                 navigation.navigate("HomePage", {
@@ -56,6 +65,8 @@ const Categories = () => {
             navigation.navigate("HomePage", {
               catId: item._id,
               catName: item.name,
+              subCat: subCategories,
+              header: header,
             });
           }
         }}
@@ -66,11 +77,20 @@ const Categories = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
-        content={header.current}
+        content={header}
         back
-        onPress={subCategories ? headerOnPress : undefined}
+        onPress={
+          subCategories
+            ? headerOnPress
+            : () => {
+                navigation.navigate("HomePage", {
+                  catId: undefined,
+                  catName: undefined,
+                });
+              }
+        }
       ></Header>
       <FlatList
         contentContainerStyle={styles.container}
@@ -79,14 +99,13 @@ const Categories = () => {
         renderItem={renderItem}
       />
       <HomePageMenu categoriesPage />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: background,
   },
 });
 

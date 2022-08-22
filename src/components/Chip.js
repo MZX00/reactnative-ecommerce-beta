@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 15,
     backgroundColor: blue50,
-    marginHorizontal: 8,
+    marginRight: 15,
     elevation: 5,
   },
   selected: {

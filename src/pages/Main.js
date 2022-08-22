@@ -20,7 +20,6 @@ import Login from "./Login";
 import PaymentMethods from "./PaymentMethods";
 import ShippingAddress from "./ShippingAddress";
 import Signup from "./Signup";
-import UserPanel from "./UserPanel";
 import ViewProduct from "./ViewProduct";
 import OrderPanel from "./OrderPanel";
 import OrderDetails from "./OrderDetails";
@@ -28,7 +27,6 @@ import MyProfile from "./MyProfile";
 import UserSettings from "./UserSettings";
 import Categories from "./Categories";
 
-// import Test from "./src/pages/Test";
 import Cart from "./Cart";
 
 const Stack = createStackNavigator();
@@ -53,9 +51,7 @@ const Main = () => {
           <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
           <Stack.Screen name="ChangePassword" component={ChangePassword} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
-          <Stack.Screen name="UserPanel" component={UserPanel} />
           <Stack.Screen name="ViewProduct" component={ViewProduct} />
-          {/* <Stack.Screen name="Test" component={Test} /> */}
           <Stack.Screen name="Checkout" component={Checkout} />
           <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
           <Stack.Screen name="AddAddress" component={AddAddress} />

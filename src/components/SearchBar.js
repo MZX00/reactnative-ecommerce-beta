@@ -1,4 +1,11 @@
-import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { foreground } from "../utils/Constants";
 import Search from "../../assets/svgs/Search";
 import Close from "../../assets/svgs/Close";
@@ -46,7 +53,7 @@ const SearchBar = ({
 // styles
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: StatusBar.currentHeight + 10,
     marginBottom: 5,
     marginHorizontal: 15,
     justifyContent: "flex-start",

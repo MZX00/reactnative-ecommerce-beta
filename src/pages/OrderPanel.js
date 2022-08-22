@@ -1,10 +1,10 @@
-import { StyleSheet, View, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import Header from "../components/Header";
 import Chip from "../components/Chip";
 import OrderMiniCard from "../components/OrderMiniCard";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
-import { background, grey } from "../utils/Constants";
+import { foreground } from "../utils/Constants";
 import { useSelector } from "react-redux";
 
 const renderItem = ({ item, index, separators }) => {
@@ -47,8 +47,12 @@ const OrderPanel = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header content={admin ? "Admin Order" : "My Orders"} back={true} />
+    <View style={styles.container}>
+      <Header
+        content={admin ? "Admin Order" : "My Orders"}
+        back
+        elevate={false}
+      />
       <View style={styles.chipContainer}>
         <Chip
           text={"Processing"}
@@ -76,16 +80,17 @@ const OrderPanel = () => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { marginTop: 10, flex: 1, backgroundColor: background },
+  container: { backgroundColor: foreground },
 
   chipContainer: {
+    justifyContent: "center",
+    marginBottom: 10,
     marginLeft: 10,
-    marginBottom: 7,
     flexDirection: "row",
   },
   line: {

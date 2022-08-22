@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
@@ -9,8 +9,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview"
 
 const Signup = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Header content="Personal details" flex={2} back={true} />
+    <View style={styles.container}>
+      <Header content="Personal details" back={true} />
       <KeyboardAwareScrollView>
         <CustomTextInput
           type="email"
@@ -50,7 +50,7 @@ const Signup = () => {
         ></LargeBlackButton>
         <Footer content="Already have an account?" link="Sign In"></Footer>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

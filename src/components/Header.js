@@ -3,10 +3,16 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { init } from "../features/validation";
-import { black, marginHorizontal, marginVertical } from "../utils/Constants";
+import { StatusBar } from "react-native";
+import {
+  black,
+  foreground,
+  marginHorizontal,
+  marginVertical,
+} from "../utils/Constants";
 import BackIcon from "../../assets/svgs/BackIcon";
 
-const Header = ({ flex, content, back = false, onPress }) => {
+const Header = ({ content, back = false, onPress, elevate = true }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -16,43 +22,56 @@ const Header = ({ flex, content, back = false, onPress }) => {
   };
 
   return (
-    <View
-      style={{
-        flex: flex,
-        flexDirection: "row",
-        justifyContent: "center",
-      }}
-    >
-      {back && (
+    <View style={[styles.container, elevate && styles.elevate]}>
+      {back ? (
         <TouchableOpacity
           style={styles.backicon}
           onPress={onPress ? onPress : defaultOnPress}
         >
           <BackIcon />
         </TouchableOpacity>
+      ) : (
+        <View style={styles.buffer}></View>
       )}
-      <Text style={styles.heading}>{content}</Text>
+      <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit={true}
+        style={styles.heading}
+      >
+        {content}
+      </Text>
+      <View style={styles.buffer}></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: foreground,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    paddingTop: StatusBar.currentHeight,
+  },
   backicon: {
-    marginVertical: marginVertical,
-    alignSelf: "center",
-    justifyContent: "flex-start",
-    position: "absolute",
-    left: 20,
-    padding: 10,
+    flex: 0.15,
+    alignItems: "center",
   },
   heading: {
-    marginHorizontal: marginHorizontal,
-    marginVertical: marginVertical,
-    alignSelf: "center",
+    flex: 0.7,
+    paddingVertical: 15,
     color: black,
     fontSize: 32,
     fontWeight: "bold",
     textTransform: "capitalize",
+    textAlign: "center",
+  },
+  buffer: {
+    flex: 0.15,
+  },
+  elevate: {
+    elevation: 20,
   },
 });
 

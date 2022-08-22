@@ -12,7 +12,6 @@ import {
 import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
 import CustomDropDown from "../components/CustomDropDown";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   background,
@@ -45,11 +44,12 @@ const ViewProduct = ({ navigation }) => {
     }
   });
 
+  const [dropdown, setDropdown] = useState("");
   const [data, setData] = useState();
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [imagePath, setImagePath] = useState("");
+  const [imagePath, setImagePath] = useState(Constants.manifest.extra.baseUrl);
 
   const loadData = async () => {
     const result = await api("product/view", "post", { _id: itemID });
@@ -94,26 +94,36 @@ const ViewProduct = ({ navigation }) => {
           ? data.size.map((value) => {
               return { label: value.toUpperCase(), value };
             })
-          : [{ label: "loading", value: "loading" }];
+          : [];
         const colorList = data
           ? data.color.map((value) => {
               return { label: value.toUpperCase(), value };
             })
-          : [{ label: "loading", value: "loading" }];
+          : [];
 
         return (
           <View style={styles.center}>
             <View style={styles.selectionContainer}>
-              <CustomDropDown
-                itemList={sizeList}
-                placeholderText="Size"
-                setResult={setSize}
-              ></CustomDropDown>
-              <CustomDropDown
-                itemList={colorList}
-                placeholderText="Color"
-                setResult={setColor}
-              ></CustomDropDown>
+              {sizeList.length > 0 && (
+                <CustomDropDown
+                  data={sizeList}
+                  type={"size"}
+                  placeholderText={"Size"}
+                  setData={setSize}
+                  dropdown={dropdown}
+                  setDropdown={setDropdown}
+                ></CustomDropDown>
+              )}
+              {colorList.length > 0 && (
+                <CustomDropDown
+                  data={colorList}
+                  type={"color"}
+                  placeholderText={"Color"}
+                  setData={setColor}
+                  dropdown={dropdown}
+                  setDropdown={setDropdown}
+                ></CustomDropDown>
+              )}
             </View>
 
             <View style={styles.productHeader}>
@@ -141,7 +151,7 @@ const ViewProduct = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Modal visible={modalOpen} animationType="fade" transparent={true}>
         <View style={styles.modalContainer}>
           <Pressable
@@ -161,47 +171,53 @@ const ViewProduct = ({ navigation }) => {
       <View flex={1}>
         <FlatList data={id} renderItem={renderItems}></FlatList>
       </View>
-      <View
-        style={[
-          styles.floatingButton,
-          quantity > 0 && { height: "8%", paddingBottom: 0 },
-        ]}
-      >
-        {quantity === 0 && !admin && (
+      <View style={[styles.floatingButton]}>
+        {!admin && (
           <View style={styles.bottom}>
-            <LargeBlackButton
-              flex={1}
-              btnText="ADD TO CART"
-              cartItem={
-                data
-                  ? {
-                      _id: itemID,
-                      name: data.name,
-                      stock: data.stock,
-                      price: data.price,
-                      image: data.image,
-                      color: color,
-                      size: size,
-                    }
-                  : {}
-              }
-            ></LargeBlackButton>
+            {quantity > 0 ? (
+              <View style={styles.counter}>
+                <Counter _id={itemID} count={quantity} big={true} />
+              </View>
+            ) : (
+              <View style={styles.addButton}>
+                <LargeBlackButton
+                  flex={1}
+                  btnText="ADD TO CART"
+                  cartItem={
+                    data
+                      ? {
+                          _id: itemID,
+                          name: data.name,
+                          stock: data.stock,
+                          price: data.price,
+                          image: data.image,
+                          color: color,
+                          size: size,
+                        }
+                      : {}
+                  }
+                ></LargeBlackButton>
+              </View>
+            )}
+
             <Pressable style={styles.checkout}>
               <Text
                 style={styles.checkoutText}
                 onPress={() => {
                   if (data) {
-                    dispatch(
-                      addToCart({
-                        _id: itemID,
-                        name: data.name,
-                        stock: data.stock,
-                        price: data.price,
-                        image: data.image,
-                        color: color,
-                        size: size,
-                      })
-                    );
+                    if (quantity === 0) {
+                      dispatch(
+                        addToCart({
+                          _id: itemID,
+                          name: data.name,
+                          stock: data.stock,
+                          price: data.price,
+                          image: data.image,
+                          color: color,
+                          size: size,
+                        })
+                      );
+                    }
                   }
                   navigation.navigate("Checkout");
                 }}
@@ -209,11 +225,6 @@ const ViewProduct = ({ navigation }) => {
                 BUY NOW
               </Text>
             </Pressable>
-          </View>
-        )}
-        {quantity > 0 && !admin && (
-          <View style={[styles.bottom, { marginTop: 10 }]}>
-            <Counter _id={itemID} count={quantity} big={true} />
           </View>
         )}
 
@@ -224,7 +235,7 @@ const ViewProduct = ({ navigation }) => {
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -312,7 +323,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.85)",
+    backgroundColor: "rgba(0, 0, 0, 0.95)",
     justifyContent: "center",
   },
   bottom: {
@@ -320,16 +331,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  counter: {
+    flex: 1,
+    marginLeft: 25,
+    marginRight: -35,
+    marginTop: 10,
+  },
   checkout: {
     flex: 0.5,
     backgroundColor: blue50,
-    marginTop: marginVertical,
     marginLeft: -30,
-    marginRight: 30,
+    marginRight: 40,
+    marginTop: 9.5,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 30,
     height: 55,
+    elevation: 1,
+  },
+  addButton: {
+    flex: 1,
+    marginTop: -5,
+    marginLeft: -10,
   },
   checkoutText: {
     fontSize: buttonFontSize,

@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { adress: "", payment: "cod" };
+const initialState = { address: { _id: "" }, payment: "cod" };
 
 export const checkout = createSlice({
   name: "checkout",
   initialState,
   reducers: {
-    setAdress: (state, { payload }) => {
+    setAddress: (state, { payload }) => {
       state.address = payload;
     },
     setPayment: (state, { payload }) => {
@@ -15,6 +15,6 @@ export const checkout = createSlice({
   },
 });
 
-export const { setAdress, setPayment } = checkout.actions;
+export const { setAddress, setPayment } = checkout.actions;
 
 export default checkout.reducer;

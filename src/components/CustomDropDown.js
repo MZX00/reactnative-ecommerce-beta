@@ -1,114 +1,138 @@
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useDispatch } from "react-redux";
+import { setReq } from "../features/api";
 import {
   blue,
+  colorDefaults,
   grey,
   marginHorizontal,
   marginVertical,
+  sizeDefaults,
 } from "../utils/Constants";
 
-const CustomDropDown = ({ placeholderText, type, required }) => {
+const CustomDropDown = ({
+  placeholderText,
+  type,
+  dropdown,
+  setDropdown,
+  data,
+  setData,
+}) => {
+  const dispatch = useDispatch();
+  const valid = useRef([]);
+  const oldValues = useRef([]);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(data ? "" : []);
   const [items, setItems] = useState([]);
+  const [searched, setSearched] = useState(false);
+  const [selected, setSelected] = useState(false);
   const [searchPlaceholder, setSearchPlaceholder] =
     useState("Add something...");
   const badgeDotColors = useRef([blue]).current;
 
   useEffect(() => {
-    if (type == "size") {
-      setItems([
-        {
-          label: "Extra Small (XS)",
-          value: "xs",
-        },
-        {
-          label: "Small (S)",
-          value: "s",
-        },
-        {
-          label: "Medium (M)",
-          value: "m",
-        },
-        {
-          label: "Large (L)",
-          value: "l",
-        },
-        {
-          label: "Extra Large (XL)",
-          value: "xl",
-        },
-        {
-          label: "2x Extra Large (XXL)",
-          value: "xxl",
-        },
-      ]);
-      setSearchPlaceholder("Add a hex color : '#00000'");
-    } else if (type == "color") {
-      setItems([
-        {
-          label: "black",
-          value: "black",
-        },
-        {
-          label: "brown",
-          value: "brown",
-        },
-        {
-          label: "lavender",
-          value: "lavender",
-        },
-        {
-          label: "white",
-          value: "white",
-        },
-      ]);
+    //initializing customdropdown
+    if (data) {
+      setItems(data);
+      valid.current = data;
+    } else if (type == "size") {
+      setItems(sizeDefaults);
+      valid.current = sizeDefaults;
       setSearchPlaceholder("Add a custom size");
+    } else if (type == "color") {
+      setItems(colorDefaults);
+      valid.current = colorDefaults;
+      setSearchPlaceholder("Add a hex color : '#00000'");
     }
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      console.log("I THE GREATEs");
+      console.log(value);
+      setData(value);
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (dropdown != type) {
+      setOpen(false);
+    }
+  }, [dropdown]);
+
   const onChangeSearchText = (text) => {
-    const prevData = items;
     const reg1 = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
     const reg2 = /^(?:[0-9a-fA-F]{3}){1,2}$/;
+    let finalText = undefined;
 
     if (reg1.test(text)) {
-      setItems([
-        {
-          label: text,
-          value: text,
-        },
-      ]);
+      finalText = text;
     } else if (reg2.test(text)) {
-      console.log("I AM GREAT");
+      finalText = "#" + text;
+    }
+    if (finalText) {
+      oldValues.current = value.length != 0 ? value : oldValues.current;
+      setValue([]);
       setItems([
         {
-          label: "#" + text,
-          value: "#" + text,
+          label: finalText,
+          value: finalText,
         },
       ]);
+      setSearched(true);
     } else {
       setItems([]);
     }
   };
 
-  // useEffect(() => {
-  //   setResult(value);
-  // }, [value]);
+  const onSelectItem = (item) => {
+    if (!data) {
+      setSelected(true);
+    }
+  };
 
-  // useEffect(() => {
-  //   let temp = {};
-  //   temp[type] = value;
-  //   setReqData({ ...reqData, ...temp });
-  // }, [value]);
+  const onOpen = () => {
+    if (!data) {
+      setSelected(false);
+      setSearched(false);
+    }
+    setDropdown(type);
+  };
+
+  const onClose = () => {
+    if (searched && !data) {
+      if (selected) {
+        const check = valid.current.filter(
+          (item) => item.value == items[0].value
+        );
+        if (check.length === 0) {
+          valid.current = [...valid.current, ...items];
+        }
+        const valCheck = !oldValues.current.includes(items[0].value);
+        if (valCheck) {
+          oldValues.current = [...oldValues.current, items[0].value];
+        }
+      }
+      setValue([...oldValues.current]);
+      setItems([...valid.current]);
+    }
+    if (data) {
+      // console.log("I AM HERE");
+      // console.log(value);
+      // setData(value);
+    } else {
+      dispatch(setReq({ property: type, value: value }));
+    }
+  };
 
   return (
     <View style={styles.container}>
       <DropDownPicker
-        multiple={true}
-        searchable={true}
-        addCustomItem={true}
+        multiple={!data}
+        searchable={!data}
+        addCustomItem={!data}
         min={0}
         max={items.length}
         open={open}
@@ -119,15 +143,29 @@ const CustomDropDown = ({ placeholderText, type, required }) => {
         setItems={setItems}
         searchPlaceholder={searchPlaceholder}
         mode="BADGE"
-        listMode="SCROLLVIEW"
+        listMode={data ? "MODAL" : "SCROLLVIEW"}
         placeholder={placeholderText}
-        // dropDownContainerStyle={styles.dropdown}
-        // modalContentContainerStyle={styles.modal}
-        // modalTitleStyle={styles.modalTitle}
         badgeDotColors={badgeDotColors}
         badgeColors={["lavender"]}
         disableLocalSearch={type === "color" ? true : false} // required for remote search
-        onChangeSearchText={onChangeSearchText}
+        onChangeSearchText={!type === "color" ? onChangeSearchText : undefined}
+        onSelectItem={type === "color" ? onSelectItem : undefined}
+        onOpen={
+          type === "color"
+            ? onOpen
+            : () => {
+                setDropdown(type);
+              }
+        }
+        onClose={
+          type === "color"
+            ? onClose
+            : () => {
+                if (!data) {
+                  dispatch(setReq({ property: type, value: value }));
+                }
+              }
+        }
       ></DropDownPicker>
     </View>
   );

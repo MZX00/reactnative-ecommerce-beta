@@ -5,6 +5,7 @@ import {
   Alert,
   View,
   Keyboard,
+  Pressable,
 } from "react-native";
 import {
   black,
@@ -20,7 +21,8 @@ import api from "../utils/Api";
 import { successMessages, endpoints } from "../utils/Constants";
 import { setRes } from "../features/api";
 import { init, toggleError } from "../features/validation";
-import { addToCart } from "../features/cart";
+import cart, { addToCart } from "../features/cart";
+import { TextInput } from "react-native";
 
 const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const [disable, setDisable] = useState(false);
@@ -28,8 +30,6 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.apiData.req);
   const isValid = useSelector((state) => {
-    console.log("Validation Target: " + state.validation.target);
-    console.log("Validation Valid: " + state.validation.valid);
     return state.validation.target === state.validation.valid;
   });
 
@@ -40,10 +40,10 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   }, [fields]);
 
   const onPress = async () => {
-    Keyboard.dismiss();
     if (isValid) {
       setDisable(true);
       try {
+        console.log("CART Data");
         console.log(data);
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
@@ -55,6 +55,7 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
               ...data,
               image: imgData,
             });
+            // console.log(data);
           } else {
             resp.data = await api(endpoints[btnText], "post", data);
           }
@@ -119,11 +120,16 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
 
   return (
     <View style={[styles.container, { flex: flex }]}>
-      <TouchableOpacity disabled={disable} style={styles.btn} onPress={onPress}>
+      <Pressable
+        onPressIn={Keyboard.dismiss}
+        disabled={disable}
+        style={styles.btn}
+        onPress={onPress}
+      >
         <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.text}>
           {btnText}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

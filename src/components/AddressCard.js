@@ -1,17 +1,41 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { marginHorizontal, marginVertical } from "../utils/Constants";
-import { CheckBox } from "@rneui/themed";
+import {
+  foreground,
+  marginHorizontal,
+  marginVertical,
+} from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
+import CheckBox from "./CheckBox";
+import { useDispatch, useSelector } from "react-redux";
+import { setAddress } from "../features/checkout";
 
-const ShippingAddressCard = () => {
-  const [tick, setTick] = useState(false);
+const ShippingAddressCard = ({
+  _id,
+  fullName,
+  address,
+  city,
+  state,
+  country,
+}) => {
+  const dispatch = useDispatch();
+  const selected = useSelector((state) => {
+    if (state.checkout.address._id === _id) {
+      return true;
+    } else {
+      return false;
+    }
+  });
   const navigation = useNavigation();
+
+  const onPress = () => {
+    dispatch(setAddress({ _id, fullName, address, city, state, country }));
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.line1}>
-        <Text style={styles.name}>John Doe</Text>
+        <Text style={styles.name}>{fullName}</Text>
         <Text
           style={styles.change}
           onPress={() => {
@@ -22,20 +46,16 @@ const ShippingAddressCard = () => {
         </Text>
       </View>
       <View>
-        <Text>3 NewBridge Court</Text>
+        <Text style={styles.address}>{address}</Text>
+        <Text style={styles.address}>{city + " " + state}</Text>
+        <Text style={styles.address}>{country}</Text>
       </View>
-      <View>
-        <Text>Chino Hills, CA 91709, United States</Text>
-      </View>
-      <View style={styles.checkbox}>
-        <CheckBox
-          title="Use as the shipping address"
-          checked={tick}
-          onPress={() => {
-            setTick(!tick);
-          }}
-        />
-      </View>
+      <CheckBox
+        label="select shipping address"
+        selected={selected}
+        onPress={onPress}
+      />
+      <View style={styles.checkbox}></View>
     </View>
   );
 };
@@ -44,8 +64,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     margin: 8,
-    borderColor: "#849DFE",
-    borderWidth: 2,
+    backgroundColor: foreground,
+    elevation: 10,
     borderRadius: 15,
   },
   line1: {
@@ -55,15 +75,18 @@ const styles = StyleSheet.create({
   checkbox: {
     marginLeft: -20,
   },
-  name: {},
+  name: {
+    fontSize: 18,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
   change: {
     color: "blue",
     fontSize: 16,
     fontWeight: "bold",
     textDecorationLine: "underline",
   },
-  line2: {},
-  line3: {},
+  address: { marginBottom: 5 },
 });
 
 export default ShippingAddressCard;
