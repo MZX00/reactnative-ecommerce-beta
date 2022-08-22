@@ -5,7 +5,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { CheckBox } from "@rneui/themed";
+
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
 import Add from "../../assets/svgs/Add";
@@ -13,48 +13,14 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setPayment } from "../features/checkout";
 import { background } from "../utils/Constants";
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    type: "mastercard",
-    cardNumber: "5134620098662680",
-    name: "John Doe 0",
-    expDate: "07/27",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    type: "mastercard",
-    cardNumber: "5363807760088078",
-    name: "John Doe 1",
-    expDate: "04/23",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    type: "mastercard",
-    cardNumber: "5238320152969409",
-    name: "John Doe 2",
-    expDate: "11/29",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d88",
-    type: "mastercard",
-    cardNumber: "5238320152961319",
-    name: "John Doe 2",
-    expDate: "9/25",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d99",
-    type: "mastercard",
-    cardNumber: "5403826459344685",
-    name: "John Doe 2",
-    expDate: "03/21",
-  },
-];
+import { useEffect, useState } from "react";
+import api from "../utils/Api";
+import CheckBox from "../components/CheckBox";
 
 const PaymentMethods = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
   const cashOnDelivery = useSelector(
     (state) => state.checkout.payment === "cod"
   );
@@ -66,9 +32,16 @@ const PaymentMethods = () => {
     }
   });
 
+  const [data, setData] = useState();
+
   const checkCash = () => {
     dispatch(setPayment("cod"));
   };
+
+  useEffect(async () => {
+    const result = await api("user/card/view", "post", { token });
+    setData(result.body.cards);
+  }, []);
 
   const rItem = ({ item }) => {
     const backgroundColor =
@@ -93,9 +66,8 @@ const PaymentMethods = () => {
       <Header content="Payment methods" back={true} />
       <View style={styles.cashStyle}>
         <CheckBox
-          title="Cash on delivery"
-          checked={cashOnDelivery}
-          style={styles.cash}
+          label={"Cash on Delivery"}
+          selected={selectedId == null}
           onPress={checkCash}
         ></CheckBox>
       </View>
@@ -103,7 +75,7 @@ const PaymentMethods = () => {
       <View>
         <FlatList
           contentContainerStyle={styles.contentContainer}
-          data={DATA}
+          data={data}
           renderItem={rItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
@@ -143,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   contentContainer: {
-    paddingBottom: 130,
+    paddingBottom: 150,
   },
 });
 

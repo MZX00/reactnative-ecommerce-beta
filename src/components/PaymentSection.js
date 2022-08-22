@@ -38,7 +38,7 @@ const PaymentSection = () => {
           <Text style={styles.paymentText}> Cash on Delivery</Text>
         ) : (
           <Text style={styles.paymentText}>
-            **** **** **** {payment.substring(-1, 4)}
+            **** **** **** {payment.substring(payment.length - 4)}
           </Text>
         )}
       </View>

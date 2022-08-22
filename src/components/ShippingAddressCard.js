@@ -1,11 +1,32 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { blue, foreground, textBlue } from "../utils/Constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import api from "../utils/Api";
+import { setAddress } from "../features/checkout";
 
 const ShippingAddressCard = () => {
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
   const address = useSelector((state) => state.checkout.address);
+
+  const loadData = async () => {
+    const result = await api("user/address/view", "post", { token });
+    if (result && result.body) {
+      dispatch(setAddress(result.body.address[0]));
+    }
+  };
+
+  useEffect(() => {
+    console.log("address");
+    console.log(address);
+    if (address._id === "") {
+      loadData();
+    }
+  }, [address]);
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import Chip from "../../assets/svgs/Chip.js";
-import { CheckBox } from "@rneui/themed";
+import CheckBox from "./CheckBox";
 
 const PaymentCard = ({
   item,
@@ -17,12 +17,13 @@ const PaymentCard = ({
         </View>
         <View style={styles.test}>
           <Text style={styles.number}>
-            **** **** **** {item.cardNumber.substring(-1, 4)}
+            **** **** ****{" "}
+            {item.cardNumber.substring(item.cardNumber.length - 4)}
           </Text>
           <View style={styles.cardBottom}>
             <View>
               <Text style={styles.label}>Card Holder Name</Text>
-              <Text style={styles.value}>{item.name}</Text>
+              <Text style={styles.value}>{item.holderName}</Text>
             </View>
             <View>
               <Text style={styles.label}>Expiry Date</Text>
@@ -34,8 +35,8 @@ const PaymentCard = ({
 
       {def && (
         <CheckBox
-          title="Use as default payment method"
-          checked={item.cardNumber === selectedId}
+          label="Use for payment"
+          selected={item.cardNumber === selectedId}
           onPress={onPress}
         />
       )}
