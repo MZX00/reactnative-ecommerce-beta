@@ -32,10 +32,7 @@ const MyOrders = () => {
   };
 
   const setNameApi = async () => {
-    console.log("I am mad ");
     const result = await api("user/update/name", { token: token, name: name });
-    console.log("result");
-    console.log(result);
   };
 
   useEffect(() => {

@@ -37,7 +37,6 @@ const DeliveryCard = () => {
         id={item.id}
         text={item.text}
         onPress={() => {
-          console.log("ITEM PRESSED");
           setSelectedID(item.id);
         }}
         selected={selected}

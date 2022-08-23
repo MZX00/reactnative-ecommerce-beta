@@ -50,8 +50,6 @@ const CustomDropDown = ({
 
   useEffect(() => {
     if (data) {
-      console.log("I THE GREATEs");
-      console.log(value);
       setData(value);
     }
   }, [value]);
@@ -119,8 +117,6 @@ const CustomDropDown = ({
       setItems([...valid.current]);
     }
     if (data) {
-      // console.log("I AM HERE");
-      // console.log(value);
       // setData(value);
     } else {
       dispatch(setReq({ property: type, value: value }));

@@ -28,7 +28,9 @@ const HomePageMenu = ({
         <Pressable
           style={styles.component}
           onPress={() => {
-            navigation.navigate("HomePage");
+            if (!homeP) {
+              navigation.navigate("HomePage");
+            }
           }}
         >
           {homeP && <HomeFilled />}
@@ -86,7 +88,8 @@ const HomePageMenu = ({
 
 const styles = StyleSheet.create({
   component: {
-    justifyContent: "center",
+    flex: 1,
+    alignItems: "center",
   },
   card: {
     justifyContent: "space-evenly",

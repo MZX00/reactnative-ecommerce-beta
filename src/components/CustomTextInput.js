@@ -71,7 +71,6 @@ const CustomTextInput = ({ required, type, placeholderText, Icon }) => {
       let result = validateText(text, type);
       if (type) {
         if (!result[0]) {
-          console.log("Set data for " + type);
           dispatch(setReq({ property: type, value: text }));
         }
       }

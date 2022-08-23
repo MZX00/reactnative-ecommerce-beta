@@ -76,6 +76,7 @@ export const endpoints = {
   "Delete Account": "user/delete",
   "Confirm Change Password": "user/update/password",
   LOGIN: "user/signin",
+  Delete: "product/delete",
 };
 
 export const LoremIpsum =

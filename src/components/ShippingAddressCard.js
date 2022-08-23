@@ -21,8 +21,6 @@ const ShippingAddressCard = () => {
   };
 
   useEffect(() => {
-    console.log("address");
-    console.log(address);
     if (address._id === "") {
       loadData();
     }

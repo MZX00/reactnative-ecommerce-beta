@@ -24,16 +24,6 @@ import Header from "../components/Header";
 
 const HomePage = ({ route }) => {
   const navigation = useNavigation();
-  const filterData = [
-    { label: "Chair" },
-    { label: "Cupboard" },
-    { label: "Table" },
-    { label: "Accessories" },
-    { label: "Furniture" },
-    { label: "Enlighte" },
-  ];
-
-  console.log(route.params);
 
   const { catId, catName, subCat, header } = route.params
     ? route.params
@@ -52,7 +42,7 @@ const HomePage = ({ route }) => {
   const [productList, setProductList] = useState(null);
   // const [searchData, setSearchData] = useState("");
   const fetchData = useRef(productList);
-
+  let filterData;
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
 
@@ -61,13 +51,11 @@ const HomePage = ({ route }) => {
     if (catId) {
       const result = await api("product/view/category", "post", { _id: catId });
       if (result && result.body) {
-        // setSearchData(result.body.products);
         setProductList(result.body.products);
       }
     } else {
       const result = await api("product/view/list", "post", {});
       if (result && result.body) {
-        // setSearchData(result.body.products);
         setProductList(result.body.products);
         fetchData.current = result.body.products;
       }
@@ -75,6 +63,15 @@ const HomePage = ({ route }) => {
   };
 
   useEffect(() => {
+    filterData = [
+      { label: "Chair" },
+      { label: "Cupboard" },
+      { label: "Table" },
+      { label: "Accessories" },
+      { label: "Furniture" },
+      { label: "Enlighte" },
+    ];
+
     loadData();
   }, [route.params]);
 
@@ -178,6 +175,7 @@ const HomePage = ({ route }) => {
             contentContainerStyle={styles.chipList}
             showsHorizontalScrollIndicator={false}
             data={filterData}
+            extraData={filterData}
             renderItem={({ item, index, separators }) => {
               return (
                 <View style={styles.chipContainer}>
@@ -201,6 +199,7 @@ const HomePage = ({ route }) => {
           contentContainerStyle={styles.contentContainer}
           numColumns={2}
           data={productList}
+          extraData={productList}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
         />

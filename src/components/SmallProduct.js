@@ -28,7 +28,6 @@ const SmallProduct = ({ product }) => {
   }
 
   const onPress = () => {
-    console.log(product);
     dispatch(
       addToCart({
         _id: product._id,
@@ -47,8 +46,8 @@ const SmallProduct = ({ product }) => {
       {imagePath ? (
         <Image style={styles.img} source={{ uri: imagePath }} />
       ) : (
-        <View style={{ alignItems: "center", padding: 15 }}>
-          <EmptyImage width={80} height={80} />
+        <View style={styles.emptyImg}>
+          <EmptyImage width={120} height={120} />
         </View>
       )}
       <Text style={styles.name} numberOfLines={1}>
@@ -90,6 +89,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+  emptyImg: { alignItems: "center", height: 150, justifyContent: "center" },
   cartIcon: {
     width: 35,
     height: 35,

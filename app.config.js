@@ -6,7 +6,7 @@ export default {
   version: "22.08.03",
   orientation: "portrait",
   icon: "./assets/images/icon2.png",
-  userInterfaceStyle: "light",
+  userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/SplashScreen.png",
     resizeMode: "contain",

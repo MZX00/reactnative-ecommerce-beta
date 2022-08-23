@@ -75,11 +75,14 @@ const OrderPanel = () => {
       </View>
       <View style={styles.line}></View>
 
-      <FlatList
-        data={data[selected]}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-      />
+      <View style={styles.list}>
+        <FlatList
+          data={data[selected]}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+          extraData={data}
+        />
+      </View>
     </View>
   );
 };
@@ -97,6 +100,9 @@ const styles = StyleSheet.create({
     borderTopColor: "lightgrey",
     elevation: 5,
     borderTopWidth: 1,
+  },
+  list: {
+    height: "100%",
   },
 });
 

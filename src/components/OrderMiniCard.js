@@ -10,7 +10,7 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
   const [statusColor, setStatusColor] = useState("#FF980E");
 
   useEffect(() => {
-    if (status == "inprogress") {
+    if (status == "processing") {
       setStatusColor("#FF980E");
     } else if (status == "cancelled") {
       setStatusColor("#D3212C");
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   status: {
     fontSize: 14,
+    fontWeight: "bold",
   },
   name: {
     marginVertical: 5,

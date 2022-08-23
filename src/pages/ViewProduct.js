@@ -28,6 +28,7 @@ import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs/EmptyImage";
 import Close from "../../assets/svgs/Close";
 import { addToCart } from "../features/cart";
+import { setReq } from "../features/api";
 
 const ViewProduct = ({ navigation }) => {
   const id = [{ id: 0 }, { id: 1 }, { id: 2 }];
@@ -55,6 +56,9 @@ const ViewProduct = ({ navigation }) => {
     const result = await api("product/view", "post", { _id: itemID });
     if (result) {
       setData(result.body.product);
+      if (admin) {
+        dispatch(setReq({ property: "_id", value: itemID }));
+      }
     } else {
       Alert.alert("Error", "Couldnt get product");
       navigation.navigate("HomePage");
@@ -230,8 +234,17 @@ const ViewProduct = ({ navigation }) => {
 
         {admin && (
           <View style={styles.admin}>
-            <LargeBlackButton btnText={"Edit"} flex={1}></LargeBlackButton>
-            <LargeBlackButton btnText={"Delete"} flex={1}></LargeBlackButton>
+            <LargeBlackButton
+              btnText={"Edit"}
+              flex={1}
+              changeTo={"AddProduct"}
+            ></LargeBlackButton>
+            <LargeBlackButton
+              btnText={"Delete"}
+              flex={1}
+              fields={-1}
+              changeTo="HomePage"
+            ></LargeBlackButton>
           </View>
         )}
       </View>
