@@ -12,6 +12,7 @@ import { setReq } from "../features/api";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import EmptyImage from "../../assets/svgs//EmptyImage";
+import mime from "mime";
 
 const UploadImage = ({ flex }) => {
   const [img, setImg] = useState();
@@ -23,12 +24,14 @@ const UploadImage = ({ flex }) => {
     console.log(resp);
 
     if (!resp.cancelled) {
+      const name = resp.uri.substring(resp.uri.lastIndexOf("/") + 1);
+      // const newImageUri = "file:" + resp.uri.split("file:/").join("");
       dispatch(
         setReq({
           property: "image",
           value: {
-            name: resp.fileName,
-            type: resp.type,
+            name: name,
+            type: mime.getType(resp.uri),
             uri: resp.uri,
           },
         })

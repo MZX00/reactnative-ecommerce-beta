@@ -7,14 +7,24 @@ const api = async (endpoint, requestType, payload) => {
   // console.log(Constants.manifest);
   console.log(baseUrl);
   try {
-    const resp = await axios({
-      method: requestType,
-      url: baseUrl + endpoint,
-      data: payload,
-    });
-    // console.log("Calling from api");
-    // console.log(resp.data.body.products);
-    return resp.data;
+    if (requestType === "image") {
+      const resp = await axios.post(baseUrl + endpoint, payload, {
+        headers: {
+          accept: "application/json",
+          "content-type": "multipart/form-data",
+        },
+      });
+      console.log("Calling from api");
+      console.log(resp);
+      return resp.data;
+    } else {
+      const resp = await axios({
+        method: requestType,
+        url: baseUrl + endpoint,
+        data: payload,
+      });
+      return resp.data;
+    }
   } catch (err) {
     let title;
     let message;

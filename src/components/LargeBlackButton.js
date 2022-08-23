@@ -48,20 +48,23 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
           if (data.image) {
-            const imgData = new FormData();
-            imgData.append("image", data.image);
+            const form = new FormData();
+            form.append("image", data.image);
+            form.append("name", data.name);
+            form.append("price", data.price);
+            form.append("price", data.price);
+            form.append("price", data.price);
+            form.append("price", data.price);
+            form.append("price", data.price);
+            form.append("price", data.price);
+            form.append("price", data.price);
 
-            resp.data = await api(endpoints[btnText], "post", {
-              ...data,
-              image: imgData,
-            });
-            // console.log(data);
+            resp.data = await api(endpoints[btnText], "image", form);
           } else {
             resp.data = await api(endpoints[btnText], "post", data);
           }
 
           if (resp && resp.data.body) {
-            // console.log(resp);
             dispatch(setRes(resp.data.body));
             // console.log("I IS WORK");
             let success = successMessages[btnText];
