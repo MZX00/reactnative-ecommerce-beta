@@ -5,11 +5,11 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-
+import React from "react";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
 import Add from "../../assets/svgs/Add";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setPayment } from "../features/checkout";
 import { background } from "../utils/Constants";
@@ -46,9 +46,11 @@ const PaymentMethods = () => {
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   const rItem = ({ item }) => {
     const backgroundColor =
@@ -98,7 +100,7 @@ const PaymentMethods = () => {
         style={styles.add}
         activeOpacity={0.5}
         onPress={() => {
-          navigation.navigate("AddNewCard");
+          navigation.navigate("AddNewCard", { isNewCard: true });
         }}
       >
         <Add width={70} height={70} />

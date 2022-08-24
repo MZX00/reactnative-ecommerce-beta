@@ -75,8 +75,11 @@ export const endpoints = {
   "Add Product": "product/add",
   "Delete Account": "user/delete",
   "Confirm Change Password": "user/update/password",
+  "Add New Address": "user/address/create",
+  "ADD CARD": "user/card/create",
   LOGIN: "user/signin",
   Delete: "product/delete",
+  Edit: "product/update",
 };
 
 export const LoremIpsum =

@@ -3,11 +3,22 @@ import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { useSelector } from "react-redux";
 import { blue, foreground, grey } from "../utils/Constants";
+import OrderStatusModal from "./OrderStatusModal";
 
-const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
+const OrderMiniCard = ({
+  id,
+  cost,
+  date,
+  productList,
+  status,
+  name,
+  setRefresh,
+  refresh,
+}) => {
   const navigation = useNavigation();
   const admin = useSelector((state) => state.user.admin);
   const [statusColor, setStatusColor] = useState("#FF980E");
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (status == "processing") {
@@ -22,29 +33,20 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
   return (
     <View style={styles.container}>
       <View style={styles.verticle}>
-        <Text style={styles.id}>
-          Order N.o: {id ? id.slice(-7) : "Loading..."}
-        </Text>
-        <Text style={styles.date}>
-          {date ? date.substring(0, 10) : "Loading..."}
-        </Text>
+        <Text style={styles.id}>Order N.o: {id.slice(-7)}</Text>
+        <Text style={styles.date}>{date.substring(0, 10)}</Text>
       </View>
       <View style={styles.verticle}>
         <Text style={[styles.label, !admin && styles.name]}>
-          Items:{" "}
-          <Text style={styles.value}>
-            {productList ? productList.length : "Loading..."}
-          </Text>
+          Items: <Text style={styles.value}>{productList.length}</Text>
         </Text>
         <Text style={styles.label}>
-          Total Ammount :
-          <Text style={styles.value}> ${cost ? cost : "Loading..."}</Text>
+          Total Ammount :<Text style={styles.value}> ${cost}</Text>
         </Text>
       </View>
       {admin && (
         <Text style={[styles.name, styles.label]}>
-          Customer Name:{" "}
-          <Text style={styles.value}>{name ? name : "Loading..."}</Text>
+          Customer Name: <Text style={styles.value}>{name}</Text>
         </Text>
       )}
       <View style={styles.verticle}>
@@ -65,11 +67,32 @@ const OrderMiniCard = ({ id, cost, date, productList, status, name }) => {
           </View>
         </Pressable>
         <View>
-          <Text style={styles.status}>
-            <Text style={{ color: statusColor, textTransform: "capitalize" }}>
-              {" " + status}
-            </Text>
-          </Text>
+          {status == "processing" ? (
+            <Pressable
+              onPress={() => {
+                setModalOpen(true);
+              }}
+              style={styles.status}
+            >
+              <Text style={{ color: statusColor, textTransform: "capitalize" }}>
+                {" " + status}
+              </Text>
+            </Pressable>
+          ) : (
+            <View style={styles.status}>
+              <Text style={{ color: statusColor, textTransform: "capitalize" }}>
+                {" " + status}
+              </Text>
+            </View>
+          )}
+
+          <OrderStatusModal
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            _id={id}
+            setRefresh={setRefresh}
+            refresh={refresh}
+          />
         </View>
       </View>
     </View>
@@ -119,6 +142,7 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 14,
     fontWeight: "bold",
+    padding: 10,
   },
   name: {
     marginVertical: 5,

@@ -4,28 +4,16 @@ import Chip from "../components/Chip";
 import OrderMiniCard from "../components/OrderMiniCard";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
-import { foreground } from "../utils/Constants";
+import { background, foreground } from "../utils/Constants";
 import { useSelector } from "react-redux";
 import ShimmerOrder from "../components/Shimmers/ShimmerOrder";
-
-const renderItem = ({ item, index, separators }) => {
-  return (
-    <OrderMiniCard
-      id={item._id}
-      cost={item.cost}
-      date={item.dateCreated}
-      productList={item.products}
-      status={item.status}
-      name={item.userName}
-    />
-  );
-};
 
 const OrderPanel = () => {
   const admin = useSelector((state) => state.user.admin);
   const token = useSelector((state) => state.user.token);
 
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState();
   const [selected, setSelected] = useState("processing");
   const [data, setData] = useState({
     processing: [],
@@ -33,6 +21,20 @@ const OrderPanel = () => {
     cancelled: [],
   });
 
+  const renderItem = ({ item }) => {
+    return (
+      <OrderMiniCard
+        id={item._id}
+        cost={item.cost}
+        date={item.dateCreated}
+        productList={item.products}
+        status={item.status}
+        name={item.userName}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+    );
+  };
   const loadData = async () => {
     const endpath = admin ? "order/admin/view" : "order/view";
     setLoading(true);
@@ -48,7 +50,7 @@ const OrderPanel = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [refresh]);
 
   return (
     <View style={styles.container}>
@@ -84,10 +86,11 @@ const OrderPanel = () => {
           <ShimmerOrder />
         ) : (
           <FlatList
+            contentContainerStyle={styles.contentContainer}
             data={data[selected]}
             keyExtractor={(item) => item._id}
             renderItem={renderItem}
-            extraData={data}
+            extraData={[data, refresh]}
           />
         )}
       </View>
@@ -96,6 +99,9 @@ const OrderPanel = () => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    backgroundColor: background,
+  },
   container: { backgroundColor: foreground },
 
   chipContainer: {
@@ -110,7 +116,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   list: {
-    height: "100%",
+    height: "85%",
+    alignSelf: "stretch",
   },
 });
 

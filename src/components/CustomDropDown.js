@@ -3,14 +3,7 @@ import { StyleSheet, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useDispatch } from "react-redux";
 import { setReq } from "../features/api";
-import {
-  blue,
-  colorDefaults,
-  grey,
-  marginHorizontal,
-  marginVertical,
-  sizeDefaults,
-} from "../utils/Constants";
+import { blue, colorDefaults, grey, sizeDefaults } from "../utils/Constants";
 
 const CustomDropDown = ({
   placeholderText,
@@ -19,6 +12,7 @@ const CustomDropDown = ({
   setDropdown,
   data,
   setData,
+  content,
 }) => {
   const dispatch = useDispatch();
   const valid = useRef([]);
@@ -45,6 +39,10 @@ const CustomDropDown = ({
       setItems(colorDefaults);
       valid.current = colorDefaults;
       setSearchPlaceholder("Add a hex color : '#00000'");
+    }
+
+    if (content) {
+      setValue(content);
     }
   }, []);
 

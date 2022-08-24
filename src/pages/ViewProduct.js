@@ -31,6 +31,7 @@ import { addToCart } from "../features/cart";
 import { setReq } from "../features/api";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ViewProduct = ({ navigation }) => {
   //flatlist ids for rendering
@@ -62,7 +63,18 @@ const ViewProduct = ({ navigation }) => {
     if (result) {
       setData(result.body.product);
       if (admin) {
-        dispatch(setReq({ property: "_id", value: itemID }));
+        dispatch(
+          setReq({
+            property: "product_data",
+            value: result.body.product,
+          })
+        );
+        dispatch(
+          setReq({
+            property: "_id",
+            value: itemID,
+          })
+        );
       }
     } else {
       Alert.alert("Error", "Couldnt get product");
@@ -70,9 +82,9 @@ const ViewProduct = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
+  useFocusEffect(() => {
     loadData();
-  }, [itemID]);
+  });
 
   const openImage = () => {
     if (imagePath != "") {

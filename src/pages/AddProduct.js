@@ -5,48 +5,96 @@ import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { background } from "../utils/Constants";
 import CustomDropDown from "../components/CustomDropDown";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setValid } from "../features/validation";
 
-const AddProduct = () => {
+const AddProduct = ({ route, navigation }) => {
   const [dropdown, setDropdown] = useState("");
+
+  const dispatch = useDispatch();
+
+  const {
+    image,
+    name,
+    price,
+    description,
+    discount,
+    stock,
+    brand,
+    size,
+    color,
+  } = route.params
+    ? route.params.data.product_data
+    : {
+        image: undefined,
+        name: undefined,
+        price: undefined,
+        description: undefined,
+        discount: undefined,
+        stock: undefined,
+        brand: undefined,
+        size: undefined,
+        color: undefined,
+      };
+
+  useEffect(() => {
+    dispatch(setValid());
+    dispatch(setValid());
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <UploadImage flex={1}></UploadImage>
+        <UploadImage flex={1} prevImg={image}></UploadImage>
         <CustomTextInput
           placeholderText="Name"
-          type="name"
+          content={name ? name : ""}
           required={true}
+          type="name"
         ></CustomTextInput>
         <CustomTextInput
           placeholderText="Description"
+          content={description ? description : ""}
           type="description"
         ></CustomTextInput>
         <CustomTextInput
           placeholderText="Price"
-          type="price"
+          content={price > 0 ? price.toString() : "0"}
           required={true}
+          type="price"
         ></CustomTextInput>
         <CustomTextInput
           placeholderText="Discount"
+          content={discount ? discount.toString() : "0"}
           type="discount"
         ></CustomTextInput>
-        <CustomTextInput placeholderText="Stock" type="stock"></CustomTextInput>
-        <CustomTextInput placeholderText="Brand" type="brand"></CustomTextInput>
+        <CustomTextInput
+          placeholderText="stock"
+          content={stock > 0 ? stock.toString() : "0"}
+          type="stock"
+        ></CustomTextInput>
+        <CustomTextInput
+          placeholderText="Brand"
+          content={brand ? brand : ""}
+          type="brand"
+        ></CustomTextInput>
         <CustomDropDown
           placeholderText="Select a size"
-          type="size"
+          content={size ? size : ""}
           dropdown={dropdown}
           setDropdown={setDropdown}
+          type="size"
         ></CustomDropDown>
         <CustomDropDown
           placeholderText="Select a color"
-          type="color"
+          content={color ? color : ""}
           dropdown={dropdown}
           setDropdown={setDropdown}
+          type="color"
         ></CustomDropDown>
         <LargeBlackButton
-          btnText="Add Product"
+          btnText={name ? "Edit" : "Add Product"}
           changeTo="goBack"
           fields={2}
         ></LargeBlackButton>

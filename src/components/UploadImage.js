@@ -10,13 +10,15 @@ import {
 import { useDispatch } from "react-redux";
 import { setReq } from "../features/api";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptyImage from "../../assets/svgs//EmptyImage";
 import mime from "mime";
+import Constants from "expo-constants";
 
-const UploadImage = ({ flex }) => {
+const UploadImage = ({ flex, prevImg }) => {
   const [img, setImg] = useState();
   const dispatch = useDispatch();
+  const baseUrl = Constants.manifest.extra.baseUrl;
   const onPress = async () => {
     const resp = await ImagePicker.launchImageLibraryAsync({
       aspect: [1, 1],
@@ -42,6 +44,12 @@ const UploadImage = ({ flex }) => {
     }
   };
 
+  useEffect(() => {
+    if (prevImg) {
+      setImg(baseUrl + prevImg);
+    }
+  }, []);
+
   return (
     <View
       style={{
@@ -66,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: "stretch",
     alignItems: "center",
-    paddingVertical: 20,
+    // paddingVertical: 20,
     backgroundColor: "lightgrey",
   },
   image: {

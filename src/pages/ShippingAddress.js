@@ -1,10 +1,11 @@
+import React from "react";
 import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import Header from "../components/Header";
 import AddressCard from "../components/AddressCard";
 import Add from "../../assets/svgs/Add";
-import { useNavigation } from "@react-navigation/native";
-import { background, foreground } from "../utils/Constants";
-import { useEffect, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { background } from "../utils/Constants";
+import { useState } from "react";
 import api from "../utils/Api";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -32,9 +33,11 @@ const ShippingAddress = () => {
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   const renderItem = ({ item }) => {
     const { fullName, address, city, state, country } = item;
@@ -50,10 +53,6 @@ const ShippingAddress = () => {
     );
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   return (
     <View style={styles.container}>
       <Header content="Shipping Addresses" back={true} />
@@ -66,6 +65,7 @@ const ShippingAddress = () => {
             data={data}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
+            extraData={data}
           />
         )}
       </View>
@@ -74,7 +74,9 @@ const ShippingAddress = () => {
         style={styles.add}
         activeOpacity={0.5}
         onPress={() => {
-          navigation.navigate("AddAddress");
+          navigation.navigate("AddAddress", {
+            addNewAddress: true,
+          });
         }}
       >
         <Add width={70} height={70} />

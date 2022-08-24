@@ -19,17 +19,27 @@ import { setReq } from "../features/api";
 import { setValid, setInvalid, toggleError } from "../features/validation";
 import { useDispatch, useSelector } from "react-redux";
 
-const CustomTextInput = ({ required, type, placeholderText, Icon }) => {
-  const [text, setText] = useState("");
+const CustomTextInput = ({
+  required,
+  type,
+  placeholderText,
+  Icon,
+  content,
+}) => {
+  const [text, setText] = useState(content ? content : "");
   const [error, setError] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(content ? true : false);
   const [isSecureEntry, setIsSecureEntry] = useState(false);
   const [errorText, setErrorText] = useState("*This field is required");
 
   const anim = useRef(new Animated.Value(0)).current;
   const dispatch = useDispatch();
   const globalError = useSelector((state) => state.validation.error);
+
+  // useEffect(() => {
+  //   setText(content);
+  // }, [content]);
 
   // Label animation
   useEffect(() => {
@@ -49,7 +59,10 @@ const CustomTextInput = ({ required, type, placeholderText, Icon }) => {
       setIsPassword(true);
       setIsSecureEntry(true);
     }
-    setText("");
+
+    if (content) {
+    }
+    // setText("");
   }, []);
 
   // Set Global error

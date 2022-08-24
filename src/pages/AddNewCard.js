@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
@@ -11,27 +11,21 @@ import CreditCardIcon from "../../assets/svgs/CreditCardIcon";
 import Calander from "../../assets/svgs/Calander";
 import Lock from "../../assets/svgs/Lock";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { useDispatch, useSelector } from "react-redux";
+import { setReq } from "../features/api";
 
 const DATA = {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  type: "mastercard",
-  cardNumber: "5134620098662680",
-  name: "John Doe 0",
-  expDate: "07/27",
+  cardNumber: "****************",
+  holderName: "Name",
+  expDate: "mm/yy",
 };
 
-const AddNewCard = () => {
-  const [checked, setChecked] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Mastercard", value: "mastercard" },
-    { label: "Visa", value: "visa" },
-  ]);
-
-  const [name, setName] = useState("Matilda Brown");
-  const [cardNumber, setCardNumber] = useState("090078601");
-  const [expDate, setExpDate] = useState("06/25");
+const AddNewCard = ({ navigation, route }) => {
+  const token = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setReq({ property: "token", value: token }));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,14 +46,14 @@ const AddNewCard = () => {
 
         <View style={styles.inputBuffer}>
           <CustomTextInput
-            type="name"
+            type="holderName"
             placeholderText="Card Holder"
             required={true}
             Icon={ProfileFilled}
           />
 
           <CustomTextInput
-            type="number"
+            type="cardNumber"
             placeholderText="Card number"
             required={true}
             Icon={CreditCardIcon}
@@ -67,21 +61,25 @@ const AddNewCard = () => {
 
           <View style={styles.row}>
             <CustomTextInput
-              type="Name"
+              type="expDate"
               placeholderText="Expiry Date"
               required={true}
               Icon={Calander}
             />
 
             <CustomTextInput
-              type="number"
-              placeholderText="CCV"
+              type="cv"
+              placeholderText="CVV"
               required={true}
               Icon={Lock}
             />
           </View>
         </View>
-        <LargeBlackButton btnText="ADD CARD" changeTo="Checkout" />
+        <LargeBlackButton
+          btnText="ADD CARD"
+          changeTo={route.params.isNewCard ? "goBack" : "Checkout"}
+          fields={4}
+        />
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
   cardBuffer: {
     width: 375,
     position: "absolute",
-    top: 90,
+    top: 125,
     left: 10,
   },
   inputBuffer: {

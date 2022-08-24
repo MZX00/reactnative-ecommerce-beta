@@ -35,12 +35,12 @@ const MyProfile = () => {
     <View style={styles.container}>
       <Header content="My Profile" back={true} />
       <View style={styles.belowHeader}>
-        {/* <Image
+        <Image
           style={styles.profile}
           source={{
             uri: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
           }}
-        /> */}
+        />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.email}>{email}</Text>
@@ -115,10 +115,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   name: {
+    fontSize: 16,
     fontWeight: "bold",
     color: "#000000",
   },
   email: {
+    fontSize: 14,
     color: "#9B9B9B",
   },
   nameContainer: {

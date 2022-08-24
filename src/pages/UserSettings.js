@@ -17,9 +17,7 @@ const MyOrders = () => {
   const [email, setEmail] = useState();
   const [dob, setDob] = useState();
 
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const admin = useSelector((state) => state.user.admin);
 
   const loadData = async () => {
     //loading data on page load
@@ -32,7 +30,10 @@ const MyOrders = () => {
   };
 
   const setNameApi = async () => {
-    const result = await api("user/update/name", { token: token, name: name });
+    const result = await api("user/update/name", "post", {
+      token: token,
+      name: name,
+    });
   };
 
   useEffect(() => {
@@ -43,10 +44,6 @@ const MyOrders = () => {
 
   const [nameClicked, setNameClicked] = useState(false);
   const [dobClicked, setDobClicked] = useState(false);
-
-  // useEffect(() => {
-
-  // },[])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -75,6 +72,8 @@ const MyOrders = () => {
           </View>
           <Pressable
             onPress={() => {
+              console.log("inside onpress");
+              console.log(nameClicked);
               if (nameClicked) {
                 setNameApi();
               }
@@ -137,7 +136,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   dobContainer: {
-    // backgroundColor: "yellow",
     backgroundColor: foreground,
     elevation: 3,
     padding: 15,
@@ -153,7 +151,6 @@ const styles = StyleSheet.create({
   },
   label: {
     textDecorationLine: "underline",
-    // fontSize: 16,
     paddingBottom: 5,
   },
 });

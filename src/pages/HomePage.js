@@ -7,6 +7,7 @@ import {
   BackHandler,
   ToastAndroid,
 } from "react-native";
+import React from "react";
 import SearchBar from "../components/SearchBar";
 import { useEffect, useRef, useState } from "react";
 import api from "../utils/Api";
@@ -15,14 +16,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/user";
 import { resetRes } from "../features/api";
 import HomePageMenu from "../components/HomePageMenu";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { selectItem } from "../features/cart";
 import { init } from "../features/validation";
 import {
   CommonActions,
   useNavigation,
   useNavigationState,
-  useRoute,
+  useFocusEffect,
 } from "@react-navigation/native";
 import { background, blue50 } from "../utils/Constants";
 import Header from "../components/Header";
@@ -87,14 +87,16 @@ const HomePage = ({ route }) => {
     loadData();
   }, [route.params]);
 
-  useEffect(() => {
-    //cleanup after login
-    if (data.token) {
-      dispatch(login(data));
-      dispatch(resetRes());
-    }
-    loadData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      //cleanup after login
+      if (data.token) {
+        dispatch(login(data));
+        dispatch(resetRes());
+      }
+      loadData();
+    }, [])
+  );
 
   //Back button handling
   const handleBackPress = () => {
