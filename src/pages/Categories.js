@@ -5,6 +5,7 @@ import { FlatList } from "react-native-gesture-handler";
 import CategoryCard from "../components/CategoryCard";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
+import ShimmerCategory from "../components/Shimmers/ShimmerCategory";
 import api from "../utils/Api";
 import { background } from "../utils/Constants";
 
@@ -18,11 +19,14 @@ const Categories = ({ route }) => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState();
   const [header, setHeader] = useState("Categories");
+  const [loading, setLoading] = useState(false);
 
   const loadData = async () => {
+    setLoading(true);
     const result = await api("category/view", "get", {});
     if (result.body) {
       setCategories(result.body.categories);
+      setLoading(false);
     } else {
       ToastAndroid.show("Network Error! Please reload", ToastAndroid.SHORT);
     }
@@ -92,12 +96,16 @@ const Categories = ({ route }) => {
               }
         }
       ></Header>
-      <FlatList
-        contentContainerStyle={styles.container}
-        data={subCategories ? subCategories : categories}
-        extraData={[categories, subCategories]}
-        renderItem={renderItem}
-      />
+      {loading ? (
+        <ShimmerCategory />
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.container}
+          data={subCategories ? subCategories : categories}
+          extraData={[categories, subCategories]}
+          renderItem={renderItem}
+        />
+      )}
       <HomePageMenu categoriesPage />
     </View>
   );

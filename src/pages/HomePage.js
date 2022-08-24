@@ -13,17 +13,24 @@ import api from "../utils/Api";
 import SmallProduct from "../components/SmallProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/user";
-import { resetApi } from "../features/api";
+import { resetRes } from "../features/api";
 import HomePageMenu from "../components/HomePageMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { selectItem } from "../features/cart";
-import { init, validationSlice } from "../features/validation";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { init } from "../features/validation";
+import {
+  CommonActions,
+  useNavigation,
+  useNavigationState,
+  useRoute,
+} from "@react-navigation/native";
 import { background, blue50 } from "../utils/Constants";
 import Header from "../components/Header";
+import ShimmerHomePage from "../components/Shimmers/ShimmerHomePage";
 
 const HomePage = ({ route }) => {
   const navigation = useNavigation();
+  const routes = useNavigationState((state) => state.routes);
 
   const { catId, catName, subCat, header } = route.params
     ? route.params
@@ -40,24 +47,29 @@ const HomePage = ({ route }) => {
   const navIndex = useNavigationState((s) => s.index);
 
   const [productList, setProductList] = useState(null);
-  // const [searchData, setSearchData] = useState("");
   const fetchData = useRef(productList);
   let filterData;
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
 
+  const [loading, SetLoading] = useState(true);
+
   const loadData = async () => {
     //loading data on page load
     if (catId) {
+      SetLoading(true);
       const result = await api("product/view/category", "post", { _id: catId });
       if (result && result.body) {
         setProductList(result.body.products);
+        SetLoading(false);
       }
     } else {
+      SetLoading(true);
       const result = await api("product/view/list", "post", {});
       if (result && result.body) {
         setProductList(result.body.products);
         fetchData.current = result.body.products;
+        SetLoading(false);
       }
     }
   };
@@ -79,13 +91,20 @@ const HomePage = ({ route }) => {
     //cleanup after login
     if (data.token) {
       dispatch(login(data));
-      dispatch(resetApi());
+      dispatch(resetRes());
     }
     loadData();
   }, []);
 
+  //Back button handling
   const handleBackPress = () => {
-    if (navIndex === 0) {
+    const currentRoute = routes[routes.length - 1].name;
+    if (catId) {
+      navigation.navigate("Categories", {
+        subCat: route.params.subCat,
+        prevHead: route.params.header,
+      });
+    } else if (navIndex === 0) {
       if (backPressCount === 0) {
         setBackPressCount((prevCount) => prevCount + 1);
         setTimeout(() => setBackPressCount(0), 2000);
@@ -93,6 +112,17 @@ const HomePage = ({ route }) => {
       } else if (backPressCount === 1) {
         BackHandler.exitApp();
       }
+    } else if (currentRoute === "ContinueShopping") {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "HomePage",
+            },
+          ],
+        })
+      );
     } else {
       dispatch(init(0));
       navigation.goBack();
@@ -110,6 +140,7 @@ const HomePage = ({ route }) => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
   }, [handleBackPress]);
 
+  //List renderer
   const renderItem = ({ item, index, separators }) => {
     return (
       <TouchableOpacity
@@ -125,6 +156,7 @@ const HomePage = ({ route }) => {
     );
   };
 
+  //Search
   const searchFilter = (phrase) => {
     if (phrase) {
       const newData = fetchData.current.filter((item) => {
@@ -166,6 +198,7 @@ const HomePage = ({ route }) => {
           setClicked={setClicked}
           onFocus={onFocus}
           searchFilter={searchFilter}
+          disabled={!loading}
         ></SearchBar>
       )}
       <View style={styles.horizontalFl}>
@@ -195,14 +228,18 @@ const HomePage = ({ route }) => {
         )}
       </View>
       <View>
-        <FlatList
-          contentContainerStyle={styles.contentContainer}
-          numColumns={2}
-          data={productList}
-          extraData={productList}
-          keyExtractor={(item) => item._id}
-          renderItem={renderItem}
-        />
+        {loading ? (
+          <ShimmerHomePage />
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.contentContainer}
+            numColumns={2}
+            data={productList}
+            extraData={productList}
+            keyExtractor={(item) => item._id}
+            renderItem={renderItem}
+          />
+        )}
       </View>
       <HomePageMenu
         homeP={catId ? false : true}

@@ -2,25 +2,25 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableWithoutFeedback,
   Keyboard,
   Pressable,
+  Image,
 } from "react-native";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
 import CustomTextInput from "../components/CustomTextInput";
-import FacebookButton from "../components/FacebookButton";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   background,
   black,
+  blue,
   marginVertical,
   smallFontSize,
+  textBlue,
 } from "../utils/Constants";
 import { useDispatch } from "react-redux";
-import { resetApi } from "../features/api";
+import { resetReq, resetRes } from "../features/api";
 import { resetV, resetValidation } from "../features/validation";
 import { init } from "../features/validation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
@@ -29,13 +29,23 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const [visible, setVisible] = useState(true);
+
   useEffect(() => {
-    dispatch(resetApi());
+    dispatch(resetReq());
+    dispatch(resetRes());
   }, []);
 
   const onPress = () => {
     navigation.navigate("ForgotPassword");
   };
+
+  const keyboardShowListener = Keyboard.addListener("keyboardDidShow", () => {
+    setVisible(false);
+  });
+  const keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
+    setVisible(true);
+  });
 
   return (
     <Pressable
@@ -44,42 +54,71 @@ const Login = () => {
       accessible={false}
     >
       <View style={styles.container}>
-        <Header content="Welcome Back" flex={3} />
-        <CustomTextInput type="email" placeholderText="Email" required={true} />
-        <CustomTextInput
-          type="password"
-          placeholderText="Password"
-          required={true}
-        />
+        <View style={styles.header}>
+          <Image
+            source={require("../../assets/images/icon2.png")}
+            style={styles.icon}
+          />
+          <Text style={styles.headText}>Exclusive Furnitures</Text>
+        </View>
+        <View style={styles.center}>
+          <CustomTextInput
+            type="email"
+            placeholderText="Email"
+            required={true}
+          />
+          <CustomTextInput
+            type="password"
+            placeholderText="Password"
+            required={true}
+          />
+        </View>
         <LargeBlackButton btnText="LOGIN" changeTo="HomePage" fields={2} />
-        <Text onPress={onPress} style={styles.link}>
-          Forgot your password?
-        </Text>
-        <FacebookButton />
-        <Footer content="Don't have an account? " link="Sign Up" />
+
+        {visible && (
+          <Text onPress={onPress} style={styles.link}>
+            Forgot your password?
+          </Text>
+        )}
+        {visible && <Footer content="Don't have an account? " link="Sign Up" />}
       </View>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  head: {
-    marginTop: 5,
-  },
-
   container: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
     backgroundColor: background,
   },
+  header: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+    height: 250,
+  },
+  headText: {
+    fontSize: 18,
+    color: blue,
+    fontWeight: "bold",
+    paddingVertical: 10,
+  },
+  icon: {
+    height: 100,
+    width: 100,
+  },
+  center: {
+    flex: 2,
+    paddingVertical: 30,
+  },
   link: {
     alignSelf: "center",
     fontSize: smallFontSize,
     marginVertical: marginVertical,
     textDecorationLine: "underline",
-    color: black,
-    flex: 2,
+    color: textBlue,
+    flex: 1.5,
   },
 });
 

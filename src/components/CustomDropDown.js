@@ -116,10 +116,8 @@ const CustomDropDown = ({
       setValue([...oldValues.current]);
       setItems([...valid.current]);
     }
-    if (data) {
-      // setData(value);
-    } else {
-      dispatch(setReq({ property: type, value: value }));
+    if (data.length === 0) {
+      dispatch(setReq({ property: type, value: JSON.stringify(value) }));
     }
   };
 
@@ -157,8 +155,10 @@ const CustomDropDown = ({
           type === "color"
             ? onClose
             : () => {
-                if (!data) {
-                  dispatch(setReq({ property: type, value: value }));
+                if (data.length === 0) {
+                  dispatch(
+                    setReq({ property: type, value: JSON.stringify(value) })
+                  );
                 }
               }
         }

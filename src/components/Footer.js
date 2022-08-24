@@ -6,6 +6,7 @@ import {
   marginVertical,
   smallFontSize,
   orange,
+  textBlue,
 } from "../utils/Constants";
 
 const Footer = (props) => {
@@ -55,9 +56,8 @@ const styles = StyleSheet.create({
   },
   link: {
     marginHorizontal: marginHorizontal,
-    color: black,
+    color: textBlue,
     fontSize: smallFontSize,
-    fontWeight: "bold",
     textDecorationLine: "underline",
     backgroundColor: orange,
   },

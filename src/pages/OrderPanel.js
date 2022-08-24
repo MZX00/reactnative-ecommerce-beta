@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { foreground } from "../utils/Constants";
 import { useSelector } from "react-redux";
+import ShimmerOrder from "../components/Shimmers/ShimmerOrder";
 
 const renderItem = ({ item, index, separators }) => {
   return (
@@ -24,6 +25,7 @@ const OrderPanel = () => {
   const admin = useSelector((state) => state.user.admin);
   const token = useSelector((state) => state.user.token);
 
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("processing");
   const [data, setData] = useState({
     processing: [],
@@ -33,9 +35,11 @@ const OrderPanel = () => {
 
   const loadData = async () => {
     const endpath = admin ? "order/admin/view" : "order/view";
+    setLoading(true);
     const result = await api(endpath, "post", { token: token });
     if (result) {
       setData(result.body);
+      setLoading(false);
     } else {
       console.log("API not working");
       console.log(result);
@@ -76,12 +80,16 @@ const OrderPanel = () => {
       <View style={styles.line}></View>
 
       <View style={styles.list}>
-        <FlatList
-          data={data[selected]}
-          keyExtractor={(item) => item._id}
-          renderItem={renderItem}
-          extraData={data}
-        />
+        {loading ? (
+          <ShimmerOrder />
+        ) : (
+          <FlatList
+            data={data[selected]}
+            keyExtractor={(item) => item._id}
+            renderItem={renderItem}
+            extraData={data}
+          />
+        )}
       </View>
     </View>
   );
