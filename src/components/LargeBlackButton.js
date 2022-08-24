@@ -8,7 +8,6 @@ import {
   Pressable,
 } from "react-native";
 import {
-  black,
   blue,
   buttonFontSize,
   marginHorizontal,
@@ -21,8 +20,7 @@ import api from "../utils/Api";
 import { successMessages, endpoints } from "../utils/Constants";
 import { setRes } from "../features/api";
 import { init, toggleError } from "../features/validation";
-import cart, { addToCart } from "../features/cart";
-import { TextInput } from "react-native";
+import { addToCart } from "../features/cart";
 
 const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const [disable, setDisable] = useState(false);
@@ -32,9 +30,10 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const isValid = useSelector((state) => {
     return state.validation.target === state.validation.valid;
   });
+  // const temp = useSelector((state) => state.apiData);
 
   useEffect(() => {
-    if (fields) {
+    if (fields && fields > -1) {
       dispatch(init(fields));
     }
   }, [fields]);
@@ -43,10 +42,15 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
     if (isValid) {
       setDisable(true);
       try {
-        console.log("CART Data");
-        console.log(data);
+        console.log("endpoints[btnText]");
+        console.log(endpoints[btnText]);
+        console.log("fields");
+        console.log(fields);
+
+        // api calling
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
+          // to call image api
           if (data.image) {
             const form = new FormData();
             form.append("image", data.image);
@@ -61,18 +65,22 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
 
             resp.data = await api(endpoints[btnText], "image", form);
           } else {
+            console.log("Running api");
             resp.data = await api(endpoints[btnText], "post", data);
+            console.log("data");
+            console.log(data);
+            console.log("resp");
+            console.log(resp);
           }
-
           if (resp && resp.data.body) {
             dispatch(setRes(resp.data.body));
-            // console.log("I IS WORK");
             let success = successMessages[btnText];
-            // Alert.alert(success.title, success.message);
           } else {
             throw resp.data.error;
           }
         }
+
+        // navigation
         if (changeTo == "goBack") {
           navigation.goBack();
         } else if (changeTo == "HomePage") {
@@ -97,12 +105,17 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
               ],
             })
           );
-        } else if (btnText === "ADD TO CART") {
+        } else if (btnText === "ADD TO CART" && data) {
           dispatch(addToCart(cartItem));
+        } else if (data && btnText === "Edit") {
+          // edit article
+          navigation.navigate(changeTo, { edit: true, data });
         } else if (changeTo) {
+          // for only navigation
           navigation.navigate(changeTo);
         }
-        dispatch(init(0));
+
+        if (btnText == "Delete" && changeTo == "HomePage") dispatch(init(0));
       } catch (err) {
         dispatch(toggleError());
         console.log(err);
