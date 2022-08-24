@@ -3,11 +3,19 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Tick from "../../assets/svgs/Tick";
 import TickFilled from "../../assets/svgs/TickFilled";
 
-const CheckBox = ({ label, selected, onPress }) => {
+const CheckBox = ({ label, selected, onPress, disabled }) => {
+  const Selection = () => {
+    if (disabled) {
+      return <TickFilled disabled />;
+    } else if (selected) {
+      return <TickFilled />;
+    } else {
+      return <Tick />;
+    }
+  };
   return (
-    <Pressable onPress={onPress} style={styles.container}>
-      {!selected && <Tick />}
-      {selected && <TickFilled />}
+    <Pressable onPress={disabled ? () => {} : onPress} style={styles.container}>
+      <Selection />
       <Text style={styles.text}>{label}</Text>
     </Pressable>
   );

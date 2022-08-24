@@ -17,6 +17,7 @@ const SearchBar = ({
   setClicked,
   onFocus,
   searchFilter,
+  disabled,
 }) => {
   return (
     <View style={styles.container}>
@@ -27,6 +28,7 @@ const SearchBar = ({
       >
         <Search />
         <TextInput
+          editable={disabled}
           style={styles.input}
           placeholder="Search"
           value={searchPhrase}

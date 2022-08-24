@@ -6,9 +6,11 @@ import {
   View,
   Keyboard,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import {
   blue,
+  blue50,
   buttonFontSize,
   marginHorizontal,
   marginVertical,
@@ -18,12 +20,12 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../utils/Api";
 import { successMessages, endpoints } from "../utils/Constants";
-import { setRes } from "../features/api";
+import { resetReq, setRes } from "../features/api";
 import { init, toggleError } from "../features/validation";
 import { addToCart } from "../features/cart";
 
 const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
-  const [disable, setDisable] = useState(false);
+  //redux
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.apiData.req);
@@ -31,6 +33,8 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
     return state.validation.target === state.validation.valid;
   });
   // const temp = useSelector((state) => state.apiData);
+
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     if (fields && fields > -1) {
@@ -53,15 +57,17 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
           // to call image api
           if (data.image) {
             const form = new FormData();
-            form.append("image", data.image);
+            console.log(data.size);
+
             form.append("name", data.name);
             form.append("price", data.price);
-            form.append("price", data.price);
-            form.append("price", data.price);
-            form.append("price", data.price);
-            form.append("price", data.price);
-            form.append("price", data.price);
-            form.append("price", data.price);
+            form.append("image", data.image);
+
+            data.discount && form.append("description", data.description);
+            data.stock && form.append("stock", data.stock);
+            data.brand && form.append("brand", data.brand);
+            data.color && form.append("color", data.color);
+            data.size && form.append("size", data.size);
 
             resp.data = await api(endpoints[btnText], "image", form);
           } else {
@@ -74,6 +80,9 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
           }
           if (resp && resp.data.body) {
             dispatch(setRes(resp.data.body));
+            dispatch(resetReq());
+            // dispatch()
+            // console.log("I IS WORK");
             let success = successMessages[btnText];
           } else {
             throw resp.data.error;
@@ -143,7 +152,11 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
         onPress={onPress}
       >
         <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.text}>
-          {btnText}
+          {disable ? (
+            <ActivityIndicator size="large" color={blue50} />
+          ) : (
+            btnText
+          )}
         </Text>
       </Pressable>
     </View>

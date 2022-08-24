@@ -29,9 +29,14 @@ import EmptyImage from "../../assets/svgs/EmptyImage";
 import Close from "../../assets/svgs/Close";
 import { addToCart } from "../features/cart";
 import { setReq } from "../features/api";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ViewProduct = ({ navigation }) => {
+  //flatlist ids for rendering
   const id = [{ id: 0 }, { id: 1 }, { id: 2 }];
+
+  const Shimmer = createShimmerPlaceholder(LinearGradient);
 
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.user.admin);
@@ -46,7 +51,7 @@ const ViewProduct = ({ navigation }) => {
   });
 
   const [dropdown, setDropdown] = useState("");
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -94,12 +99,12 @@ const ViewProduct = ({ navigation }) => {
           </TouchableOpacity>
         );
       case 1:
-        const sizeList = data
+        const sizeList = data.size
           ? data.size.map((value) => {
               return { label: value.toUpperCase(), value };
             })
           : [];
-        const colorList = data
+        const colorList = data.color
           ? data.color.map((value) => {
               return { label: value.toUpperCase(), value };
             })
@@ -131,24 +136,45 @@ const ViewProduct = ({ navigation }) => {
             </View>
 
             <View style={styles.productHeader}>
-              <Text style={styles.productTitle}>
-                {data ? data.name : "Loading..."}
-              </Text>
-              <Text style={styles.productSub}>
-                {" "}
-                {data ? data.brand : "Loading..."}
-              </Text>
+              <Shimmer
+                height={20}
+                visible={data.name}
+                shimmerStyle={styles.shimmerText}
+              >
+                <Text style={styles.productTitle}>{data.name}</Text>
+              </Shimmer>
+              <Shimmer
+                width={100}
+                visible={data.name}
+                shimmerStyle={styles.shimmerText}
+              >
+                <Text style={styles.productSub}>{data.brand}</Text>
+              </Shimmer>
             </View>
-            <Text style={styles.productPrice}>
-              $ {data ? data.price : "..."}
-            </Text>
+            <Shimmer
+              width={50}
+              height={20}
+              visible={data.name}
+              shimmerStyle={styles.shimmerPrice}
+              contentStyle={styles.priceShimmer}
+              style={data.name && styles.shimmerFlex}
+            >
+              <Text style={styles.productPrice}>$ {data.price}</Text>
+            </Shimmer>
           </View>
         );
       case 2:
-        return (
+        return !data.name ? (
+          <View style={styles.shimmerDesc}>
+            <Shimmer width={300} shimmerStyle={styles.shimmerText}></Shimmer>
+            <Shimmer width={350} shimmerStyle={styles.shimmerText}></Shimmer>
+            <Shimmer width={270} shimmerStyle={styles.shimmerText}></Shimmer>
+            <Shimmer width={310} shimmerStyle={styles.shimmerText}></Shimmer>
+            <Shimmer width={200} shimmerStyle={styles.shimmerText}></Shimmer>
+          </View>
+        ) : (
           <Text style={styles.productDescription}>
-            {" "}
-            {data ? data.description : "..."}
+            {data ? data.description : "..."}???
           </Text>
         );
     }
@@ -171,7 +197,7 @@ const ViewProduct = ({ navigation }) => {
         </View>
       </Modal>
 
-      <Header content={data ? data.name : "Loading..."} flex={0} back={true} />
+      <Header content={data ? data.name : "..."} flex={0} back={true} />
       <View flex={1}>
         <FlatList data={id} renderItem={renderItems}></FlatList>
       </View>
@@ -291,8 +317,6 @@ const styles = StyleSheet.create({
     color: grey,
   },
   productPrice: {
-    paddingRight: 15,
-    width: "50%",
     textAlign: "right",
     textAlignVertical: "center",
     fontSize: 25,
@@ -371,6 +395,25 @@ const styles = StyleSheet.create({
     fontSize: buttonFontSize,
     color: "white",
     fontWeight: "500",
+  },
+  shimmerText: {
+    marginBottom: 10,
+  },
+  shimmerPrice: {
+    marginTop: 5,
+    marginLeft: "25%",
+  },
+  priceShimmer: {
+    flex: 1,
+    marginRight: 35,
+    marginTop: 5,
+    alignItems: "flex-end",
+  },
+  shimmerFlex: { flex: 1 },
+  shimmerDesc: {
+    marginLeft: 20,
+    width: "85%",
+    height: 700,
   },
 });
 

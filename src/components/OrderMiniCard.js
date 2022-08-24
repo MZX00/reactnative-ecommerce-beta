@@ -81,9 +81,10 @@ const styles = StyleSheet.create({
     backgroundColor: foreground,
     elevation: 4,
     color: "#000000",
-    margin: 10,
+    marginVertical: 10,
     padding: 15,
-    borderRadius: 4,
+    borderRadius: 10,
+    marginHorizontal: 25,
   },
   verticle: {
     flexDirection: "row",

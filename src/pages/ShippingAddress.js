@@ -3,10 +3,13 @@ import Header from "../components/Header";
 import AddressCard from "../components/AddressCard";
 import Add from "../../assets/svgs/Add";
 import { useNavigation } from "@react-navigation/native";
-import { background } from "../utils/Constants";
+import { background, foreground } from "../utils/Constants";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { useDispatch, useSelector } from "react-redux";
+
+import { setAddress } from "../features/checkout";
+import ShimmerAddress from "../components/Shimmers/ShimmerAddress";
 
 const ShippingAddress = () => {
   const navigation = useNavigation();
@@ -15,14 +18,17 @@ const ShippingAddress = () => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
+    setLoading(true);
     const result = await api("user/address/view", "post", { token });
     if (result && result.body) {
       setData(result.body.address);
       if (!defaultAdressID) {
         dispatch(setAddress(result.body.address[0]));
       }
+      setLoading(false);
     }
   };
 
@@ -51,12 +57,17 @@ const ShippingAddress = () => {
   return (
     <View style={styles.container}>
       <Header content="Shipping Addresses" back={true} />
+
       <View style={styles.list}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-        />
+        {loading ? (
+          <ShimmerAddress />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </View>
 
       <TouchableOpacity

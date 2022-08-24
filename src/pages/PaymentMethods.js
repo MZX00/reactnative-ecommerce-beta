@@ -16,14 +16,12 @@ import { background } from "../utils/Constants";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import CheckBox from "../components/CheckBox";
+import ShimmerPayment from "../components/Shimmers/ShimmerPayment";
 
 const PaymentMethods = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const cashOnDelivery = useSelector(
-    (state) => state.checkout.payment === "cod"
-  );
   const selectedId = useSelector((state) => {
     if (state.checkout.payment === "cod") {
       return null;
@@ -32,15 +30,24 @@ const PaymentMethods = () => {
     }
   });
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const checkCash = () => {
     dispatch(setPayment("cod"));
   };
 
-  useEffect(async () => {
+  const loadData = async () => {
+    setLoading(true);
     const result = await api("user/card/view", "post", { token });
-    setData(result.body.cards);
+    if (result) {
+      setData(result.body.cards);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   const rItem = ({ item }) => {
@@ -69,17 +76,22 @@ const PaymentMethods = () => {
           label={"Cash on Delivery"}
           selected={selectedId == null}
           onPress={checkCash}
+          disabled={loading}
         ></CheckBox>
       </View>
 
       <View>
-        <FlatList
-          contentContainerStyle={styles.contentContainer}
-          data={data}
-          renderItem={rItem}
-          keyExtractor={(item) => item.id}
-          extraData={selectedId}
-        />
+        {loading ? (
+          <ShimmerPayment />
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.contentContainer}
+            data={data}
+            renderItem={rItem}
+            keyExtractor={(item) => item.id}
+            extraData={selectedId}
+          />
+        )}
       </View>
 
       <TouchableOpacity

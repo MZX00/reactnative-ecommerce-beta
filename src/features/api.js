@@ -15,13 +15,15 @@ export const apiSlice = createSlice({
     setRes: (state, { payload }) => {
       state.res = payload;
     },
-    resetApi: (state, { payload }) => {
-      state.res = {};
+    resetReq: (state, { payload }) => {
       state.req = {};
+    },
+    resetRes: (state, { payload }) => {
+      state.res = {};
     },
   },
 });
 
-export const { setReq, setRes, resetApi } = apiSlice.actions;
+export const { setReq, setRes, resetReq, resetRes } = apiSlice.actions;
 
 export default apiSlice.reducer;

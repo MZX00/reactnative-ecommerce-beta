@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Image, StyleSheet, View, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs/EmptyImage";
