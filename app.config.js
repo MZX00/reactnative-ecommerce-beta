@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 export default {
   name: "beta-ecommerce",
   slug: "beta-ecommerce",
