@@ -1,8 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { marginHorizontal, marginVertical } from "../utils/Constants";
-import LargeBlackButton from "../components/LargeBlackButton";
+import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 const OrderSummary = () => {

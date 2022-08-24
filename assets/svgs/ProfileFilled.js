@@ -1,6 +1,7 @@
 import Svg, { Path } from "react-native-svg";
+import { blue50 } from "../../src/utils/Constants";
 
-const ProfileFilled = ({ width = 16, height = 24, color = "#200E32" }) => {
+const ProfileFilled = ({ width = 16, height = 24, color = blue50 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 16 24" fill="none">
       <Path

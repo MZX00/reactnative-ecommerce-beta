@@ -4,8 +4,6 @@ import Constants from "expo-constants";
 const baseUrl = Constants.manifest.extra.baseUrl;
 
 const api = async (endpoint, requestType, payload) => {
-  // console.log(Constants.manifest);
-  console.log(baseUrl);
   try {
     if (requestType === "image") {
       const resp = await axios.post(baseUrl + endpoint, payload, {
@@ -14,8 +12,6 @@ const api = async (endpoint, requestType, payload) => {
           "content-type": "multipart/form-data",
         },
       });
-      console.log("Calling from api");
-      console.log(resp);
       return resp.data;
     } else {
       const resp = await axios({

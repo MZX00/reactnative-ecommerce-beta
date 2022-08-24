@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Image,
-  Platform,
-  PushNotificationIOS,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { setReq } from "../features/api";
 import * as ImagePicker from "expo-image-picker";
@@ -23,11 +15,9 @@ const UploadImage = ({ flex, prevImg }) => {
     const resp = await ImagePicker.launchImageLibraryAsync({
       aspect: [1, 1],
     });
-    console.log(resp);
 
     if (!resp.cancelled) {
       const name = resp.uri.substring(resp.uri.lastIndexOf("/") + 1);
-      // const newImageUri = "file:" + resp.uri.split("file:/").join("");
       dispatch(
         setReq({
           property: "image",
@@ -39,8 +29,6 @@ const UploadImage = ({ flex, prevImg }) => {
         })
       );
       setImg(resp.uri);
-    } else {
-      console.log(resp);
     }
   };
 
@@ -74,7 +62,6 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: "stretch",
     alignItems: "center",
-    // paddingVertical: 20,
     backgroundColor: "lightgrey",
   },
   image: {

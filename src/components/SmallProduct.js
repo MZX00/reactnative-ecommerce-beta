@@ -31,11 +31,8 @@ const SmallProduct = ({ product }) => {
       addToCart({
         _id: product._id,
         name: product.name,
-        // stock: product.stock,
         price: product.price,
         image: product.image,
-        // color: color,
-        // size: size,
       })
     );
   };

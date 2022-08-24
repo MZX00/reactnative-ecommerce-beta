@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Pressable, SafeAreaView } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import Header from "../components/Header";
 import Forward from "../../assets/svgs/Forward";
 import Pencil from "../../assets/svgs/Pencil";
@@ -6,11 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { background, foreground } from "../utils/Constants";
 import { TextInput } from "react-native-gesture-handler";
-import Tick from "../components/Tick";
-import { useDispatch, useSelector } from "react-redux";
+import Tick from "../../assets/svgs/Tick";
+import { useSelector } from "react-redux";
 import api from "../utils/Api";
-
-const data = { name: "Matilda brown", dob: "12/2/1989" };
 
 const MyOrders = () => {
   const [name, setName] = useState();
@@ -46,7 +44,7 @@ const MyOrders = () => {
   const [dobClicked, setDobClicked] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content="Settings" back={true} />
 
       <View style={styles.innerContainer}>
@@ -72,8 +70,6 @@ const MyOrders = () => {
           </View>
           <Pressable
             onPress={() => {
-              console.log("inside onpress");
-              console.log(nameClicked);
               if (nameClicked) {
                 setNameApi();
               }
@@ -126,7 +122,7 @@ const MyOrders = () => {
           <Forward />
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -143,6 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   heading3: {
     fontWeight: "bold",

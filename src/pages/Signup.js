@@ -1,9 +1,8 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
 import { background } from "../utils/Constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 

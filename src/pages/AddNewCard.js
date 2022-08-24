@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
 import LargeBlackButton from "../components/LargeBlackButton";
@@ -28,7 +28,7 @@ const AddNewCard = ({ navigation, route }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView>
         <Header content="Add New Card" back={true} />
 
@@ -81,7 +81,7 @@ const AddNewCard = ({ navigation, route }) => {
           fields={4}
         />
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

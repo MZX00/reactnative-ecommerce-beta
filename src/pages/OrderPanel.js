@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   list: {
-    height: "85%",
     alignSelf: "stretch",
   },
 });

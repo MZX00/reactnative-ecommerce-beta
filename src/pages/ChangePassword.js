@@ -1,14 +1,13 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
 import CustomTextInput from "../components/CustomTextInput";
-import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReq } from "../features/api";
 import { background } from "../utils/Constants";
 
-const ChangePassword = ({ route }) => {
+const ChangePassword = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
 
@@ -17,7 +16,7 @@ const ChangePassword = ({ route }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content="Change Password" flex={0.5} back={true} />
 
       <CustomTextInput
@@ -42,7 +41,7 @@ const ChangePassword = ({ route }) => {
         changeTo="HomePage"
         fields={3}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

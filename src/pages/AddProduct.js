@@ -1,11 +1,10 @@
 import { StyleSheet, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import UploadImage from "../components/UploadImage";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { background } from "../utils/Constants";
 import CustomDropDown from "../components/CustomDropDown";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setValid } from "../features/validation";
 
@@ -44,7 +43,7 @@ const AddProduct = ({ route, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         <UploadImage flex={1} prevImg={image}></UploadImage>
         <CustomTextInput
@@ -100,12 +99,15 @@ const AddProduct = ({ route, navigation }) => {
         ></LargeBlackButton>
         <View style={{ flex: 1, padding: 10 }}></View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: background },
+  container: {
+    flex: 1,
+    backgroundColor: background,
+  },
 });
 
 export default AddProduct;

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
-import { blue, blue50 } from "../../utils/Constants";
+import { blue50 } from "../../utils/Constants";
 import Chip from "../../../assets/svgs/Chip";
 import CheckBox from "../CheckBox";
 

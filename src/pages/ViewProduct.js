@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Alert,
-  BackHandler,
   Modal,
   Pressable,
 } from "react-native";
@@ -13,14 +12,8 @@ import LargeBlackButton from "../components/LargeBlackButton";
 import Header from "../components/Header";
 import CustomDropDown from "../components/CustomDropDown";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {
-  background,
-  blue50,
-  buttonFontSize,
-  grey,
-  marginVertical,
-} from "../utils/Constants";
-import { useEffect, useState } from "react";
+import { background, blue50, buttonFontSize, grey } from "../utils/Constants";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/Api";
 import Counter from "../components/Counter";

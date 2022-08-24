@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import {
-  blue,
-  foreground,
-  marginHorizontal,
-  marginVertical,
-  textBlue,
-} from "../utils/Constants";
+import { StyleSheet, Text, View } from "react-native";
+import { foreground, textBlue } from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
 import MasterCard from "../../assets/svgs/MasterCard";
 import COD from "../../assets/svgs/COD";
@@ -14,7 +8,6 @@ import { useSelector } from "react-redux";
 
 const PaymentSection = () => {
   const navigation = useNavigation();
-  const [cardNumber, setCardNumber] = useState("");
   const payment = useSelector((state) => state.checkout.payment);
 
   return (

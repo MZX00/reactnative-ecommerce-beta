@@ -37,10 +37,6 @@ const CustomTextInput = ({
   const dispatch = useDispatch();
   const globalError = useSelector((state) => state.validation.error);
 
-  // useEffect(() => {
-  //   setText(content);
-  // }, [content]);
-
   // Label animation
   useEffect(() => {
     Animated.timing(anim, {
@@ -62,7 +58,6 @@ const CustomTextInput = ({
 
     if (content) {
     }
-    // setText("");
   }, []);
 
   // Set Global error
@@ -195,7 +190,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: black,
     marginLeft: marginHorizontal,
-    // paddingBottom: 5,
     fontSize: 16,
     paddingLeft: 5,
     borderBottomWidth: 0.5,

@@ -8,7 +8,6 @@ const TotalAmmountLabel = () => {
       return sum + price * quantity;
     }, 0);
   });
-  // const total = "9,800";
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Total:</Text>

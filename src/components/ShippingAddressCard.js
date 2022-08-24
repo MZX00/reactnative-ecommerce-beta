@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { blue, foreground, textBlue } from "../utils/Constants";
+import { foreground } from "../utils/Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import api from "../utils/Api";

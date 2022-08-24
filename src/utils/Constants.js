@@ -48,27 +48,6 @@ export const successMessages = {
   },
 };
 
-// // Alert failure Messages for button
-// export const errorMessages = {
-//   "Sign Up": {
-//     title: "Account already exists",
-//     message: "Please login instead",
-//   },
-//   "Add Product": {
-//     title: "Failed to add Product",
-//     message: "Invalid or missing product details",
-//   },
-//   "Delete Account": {
-//     title: "Failed to delete Account",
-//     message: "Please enter correct password",
-//   },
-//   "Confirm Change Password": {
-//     title: "Failed to change password",
-//     message: "Invalid Credentials",
-//   },
-//   LOGIN: { title: "Login Failed", message: "Invalid Credentials" },
-// };
-
 // API endpoints
 export const endpoints = {
   "Sign Up": "user/signup",

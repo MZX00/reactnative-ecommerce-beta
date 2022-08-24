@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import CategoryCard from "../components/CategoryCard";
@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import ShimmerCategory from "../components/Shimmers/ShimmerCategory";
 import api from "../utils/Api";
-import { background } from "../utils/Constants";
 
 const Categories = ({ route }) => {
   const navigation = useNavigation();

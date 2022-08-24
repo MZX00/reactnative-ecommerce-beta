@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   background,
-  black,
   blue,
   marginVertical,
   smallFontSize,
@@ -21,9 +20,6 @@ import {
 } from "../utils/Constants";
 import { useDispatch } from "react-redux";
 import { resetReq, resetRes } from "../features/api";
-import { resetV, resetValidation } from "../features/validation";
-import { init } from "../features/validation";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 
 const Login = () => {
   const dispatch = useDispatch();

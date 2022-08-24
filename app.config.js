@@ -3,12 +3,12 @@ import "dotenv/config";
 export default {
   name: "beta-ecommerce",
   slug: "beta-ecommerce",
-  version: "22.08.03",
+  version: "22.08.24",
   orientation: "portrait",
   icon: "./assets/images/icon2.png",
   userInterfaceStyle: "automatic",
   splash: {
-    image: "./assets/SplashScreen.png",
+    image: "./assets/images/SplashScreen.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff",
   },
@@ -17,7 +17,7 @@ export default {
   },
   assetBundlePatterns: ["**/*"],
   extra: {
-    baseUrl: process.env.BASE_URL,
+    baseUrl: "https://beta-ecommerce-api.herokuapp.com/",
   },
   ios: {
     supportsTablet: true,

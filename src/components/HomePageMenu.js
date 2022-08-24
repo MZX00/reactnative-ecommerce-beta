@@ -4,7 +4,7 @@ import HomeFilled from "../../assets/svgs/HomeFilled";
 import ProfileFilled from "../../assets/svgs/ProfileFilled";
 import ProfileOutline from "../../assets/svgs/ProfileOutline";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Document from "../../assets/svgs/Document";
 import DocumentFilled from "../../assets/svgs/DocumentFilled";
 import { foreground } from "../utils/Constants";

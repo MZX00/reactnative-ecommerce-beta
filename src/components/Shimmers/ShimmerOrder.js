@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
-import { blue, blue50, foreground, textBlue } from "../../utils/Constants";
+import { blue, blue50, foreground } from "../../utils/Constants";
 
 const Card = () => {
   const Shimmer = createShimmerPlaceholder(LinearGradient);

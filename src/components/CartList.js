@@ -12,7 +12,7 @@ import Counter from "./Counter";
 import EmptyCart from "../../assets/svgs/EmptyCart";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs//EmptyImage";
-import { foreground, grey } from "../utils/Constants";
+import { foreground } from "../utils/Constants";
 import Delete from "../../assets/svgs/Delete";
 import { removeFromCart } from "../features/cart";
 
@@ -71,8 +71,6 @@ const CartList = () => {
   const data = useSelector((state) => state.cart.items);
 
   useEffect(() => {}, []);
-
-  // const data = dummyData;
   return data.length ? (
     <FlatList
       data={data}

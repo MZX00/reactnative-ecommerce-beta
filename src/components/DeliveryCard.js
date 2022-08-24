@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View, FlatList } from "react-native";
 import TCS from "../../assets/svgs/TCS";
 import Fedex from "../../assets/svgs/Fedex";
 import Leopard from "../../assets/svgs/Leopard";
-import { blue, borderBlue, foreground, grey } from "../utils/Constants";
+import { blue, foreground } from "../utils/Constants";
 
 const data = [
   { id: 0, text: "2-3 days" },

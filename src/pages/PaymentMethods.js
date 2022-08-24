@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import React from "react";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
@@ -13,7 +7,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setPayment } from "../features/checkout";
 import { background } from "../utils/Constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "../utils/Api";
 import CheckBox from "../components/CheckBox";
 import ShimmerPayment from "../components/Shimmers/ShimmerPayment";
@@ -71,7 +65,7 @@ const PaymentMethods = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content="Payment methods" back={true} />
       <View style={styles.cashStyle}>
         <CheckBox
@@ -105,7 +99,7 @@ const PaymentMethods = () => {
       >
         <Add width={70} height={70} />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import Header from "../components/Header";
 import Constants from "expo-constants";
 import { background, foreground } from "../utils/Constants";
 import { useSelector } from "react-redux";
 
-const renderItem = ({ item, index, separators }) => {
+const renderItem = ({ item }) => {
   const baseUrl = Constants.manifest.extra.baseUrl;
   let imagePath;
 
@@ -43,12 +35,12 @@ const renderItem = ({ item, index, separators }) => {
   );
 };
 
-const OrderDetails = ({ navigation, route }) => {
+const OrderDetails = ({ route }) => {
   const admin = useSelector((state) => state.user.admin);
   const { id, cost, date, productList, status, name } = route.params;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content={"Order Details"} back={true} />
       <View style={styles.orderDetails}>
         <View style={styles.horizontal}>
@@ -76,7 +68,7 @@ const OrderDetails = ({ navigation, route }) => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

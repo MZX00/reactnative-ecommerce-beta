@@ -1,7 +1,6 @@
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   Alert,
   View,
   Keyboard,
@@ -32,7 +31,6 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const isValid = useSelector((state) => {
     return state.validation.target === state.validation.valid;
   });
-  // const temp = useSelector((state) => state.apiData);
 
   const [disable, setDisable] = useState(false);
 
@@ -46,18 +44,12 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
     if (isValid) {
       setDisable(true);
       try {
-        console.log("endpoints[btnText]");
-        console.log(endpoints[btnText]);
-        console.log("fields");
-        console.log(fields);
-
         // api calling
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
           // to call image api
           if (data.image) {
             const form = new FormData();
-            console.log(data.size);
 
             form.append("name", data.name);
             form.append("price", data.price);
@@ -71,18 +63,11 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
 
             resp.data = await api(endpoints[btnText], "image", form);
           } else {
-            console.log("Running api");
             resp.data = await api(endpoints[btnText], "post", data);
-            console.log("data");
-            console.log(data);
-            console.log("resp");
-            console.log(resp);
           }
           if (resp && resp.data.body) {
             dispatch(setRes(resp.data.body));
             dispatch(resetReq());
-            // dispatch()
-            // console.log("I IS WORK");
             let success = successMessages[btnText];
           } else {
             throw resp.data.error;

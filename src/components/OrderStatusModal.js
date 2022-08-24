@@ -1,6 +1,4 @@
-import { useRef } from "react";
 import { View, StyleSheet, Modal, Pressable, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import api from "../utils/Api";
 
@@ -35,7 +33,7 @@ const OrderStatusModal = ({
 
   return (
     <Modal visible={modalOpen} animationType="slide" transparent={true}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.buttonsContainer}>
           <Pressable style={styles.buttons} onPress={cancelOrder}>
             <Text style={[styles.text, { color: "#D3212C" }]}>
@@ -60,11 +58,10 @@ const OrderStatusModal = ({
             </Text>
           </Pressable>
         </View>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };
-// style={[styles.text, { color: "red" }]}
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "rgba(0, 0, 0, 0.96)",
@@ -75,8 +72,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    // backgroundColor: "yellow",
-    // backgroundColor: "#ffffff",
     alignItems: "center",
   },
   buttons: {

@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import {
-  foreground,
-  marginHorizontal,
-  marginVertical,
-} from "../utils/Constants";
+import { foreground } from "../utils/Constants";
 import { useNavigation } from "@react-navigation/native";
 import CheckBox from "./CheckBox";
 import { useDispatch, useSelector } from "react-redux";

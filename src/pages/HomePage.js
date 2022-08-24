@@ -48,7 +48,15 @@ const HomePage = ({ route }) => {
 
   const [productList, setProductList] = useState(null);
   const fetchData = useRef(productList);
-  let filterData;
+  const filterData = [
+    { label: "Chair" },
+    { label: "Cupboard" },
+    { label: "Table" },
+    { label: "Accessories" },
+    { label: "Furniture" },
+    { label: "Enlighte" },
+  ];
+
   const data = useSelector((state) => state.apiData.res);
   const dispatch = useDispatch();
 
@@ -56,6 +64,7 @@ const HomePage = ({ route }) => {
 
   const loadData = async () => {
     //loading data on page load
+
     if (catId) {
       SetLoading(true);
       const result = await api("product/view/category", "post", { _id: catId });
@@ -75,15 +84,6 @@ const HomePage = ({ route }) => {
   };
 
   useEffect(() => {
-    filterData = [
-      { label: "Chair" },
-      { label: "Cupboard" },
-      { label: "Table" },
-      { label: "Accessories" },
-      { label: "Furniture" },
-      { label: "Enlighte" },
-    ];
-
     loadData();
   }, [route.params]);
 

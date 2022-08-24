@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  ActivityIndicator,
-  BackHandler,
-} from "react-native";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
 import LargeBlackButton from "../components/LargeBlackButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,13 +7,6 @@ import OrderCompletionSVG from "../../assets/svgs/OrderCompletionSVG";
 import OrderFailed from "../../assets/svgs/OrderFailed";
 import api from "../utils/Api";
 import { background, blue50 } from "../utils/Constants";
-import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
-import { LinearGradient } from "expo-linear-gradient";
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
 import React from "react";
 
 const ContinueShopping = () => {
@@ -64,7 +50,7 @@ const ContinueShopping = () => {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.container, loading && styles.loader]}>
+    <View style={[styles.container, loading && styles.loader]}>
       {!loading && (
         <View style={styles.completed}>
           <View>{success ? <OrderCompletionSVG /> : <OrderFailed />}</View>
@@ -91,7 +77,7 @@ const ContinueShopping = () => {
       {loading && (
         <ActivityIndicator size="large" style={styles.loader} color={blue50} />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -104,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignItems: "center",
-
     flex: 1,
   },
   heading: {

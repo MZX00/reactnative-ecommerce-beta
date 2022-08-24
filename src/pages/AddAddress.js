@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
@@ -15,7 +15,7 @@ const AddAddress = ({ navigation, route }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header content="Add Shipping Address" back={true} />
       <CustomTextInput
         type="fullName"
@@ -44,7 +44,7 @@ const AddAddress = ({ navigation, route }) => {
         fields={4}
         changeTo={route.params ? "goBack" : "Checkout"}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,15 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { init } from "../features/validation";
-import { StatusBar } from "react-native";
-import {
-  black,
-  foreground,
-  marginHorizontal,
-  marginVertical,
-} from "../utils/Constants";
+import { black, foreground } from "../utils/Constants";
 import BackIcon from "../../assets/svgs/BackIcon";
 
 const Header = ({ content, back = false, onPress, elevate = true }) => {

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Tick from "../../assets/svgs/Tick";
 import TickFilled from "../../assets/svgs/TickFilled";

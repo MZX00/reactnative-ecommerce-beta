@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import userReducer from "./src/features/user";
 import apiReducer from "./src/features/api";
 import validationReducer from "./src/features/validation";
-// import Test from "./src/pages/Test";
 import cartReducer from "./src/features/cart";
 import checkoutReducer from "./src/features/checkout";
 import Main from "./src/pages/Main";

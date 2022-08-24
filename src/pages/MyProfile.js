@@ -1,19 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import ProfileComponent from "../components/ProfileComponent";
-import { background } from "../utils/Constants";
+import { background, grey } from "../utils/Constants";
 import api from "../utils/Api";
 
 const MyProfile = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [dob, setDob] = useState();
 
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const admin = useSelector((state) => state.user.admin);
 
@@ -23,7 +20,6 @@ const MyProfile = () => {
     if (result && result.body) {
       setName(result.body.name);
       setEmail(result.body.email);
-      setDob(result.body.dob);
     }
   };
 
@@ -82,6 +78,8 @@ const MyProfile = () => {
             secText="Password, Delete account"
             goTo="UserSettings"
           />
+
+          <View style={styles.line}></View>
           <ProfileComponent mainText="Logout" log={true} />
         </ScrollView>
       </View>
@@ -98,7 +96,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     marginTop: "5%",
     alignSelf: "center",
-    // backgroundColor: "#F1CBAE",
     width: "93%",
     flex: 1,
     marginBottom: 50,
@@ -122,6 +119,15 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 14,
     color: "#9B9B9B",
+  },
+  line: {
+    borderTopColor: "grey",
+    borderTopWidth: 0.5,
+    width: "87%",
+    elevation: 2,
+    marginVertical: 10,
+    alignSelf: "center",
+    justifyContent: "center",
   },
   nameContainer: {
     marginLeft: 20,

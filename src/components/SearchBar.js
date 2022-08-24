@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { foreground } from "../utils/Constants";
 import Search from "../../assets/svgs/Search";
-import Close from "../../assets/svgs/Close";
 import CloseA from "../../assets/svgs/CloseA";
 
 const SearchBar = ({
