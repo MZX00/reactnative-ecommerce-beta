@@ -1,4 +1,10 @@
-import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Text,
+} from "react-native";
 import React from "react";
 import PaymentCard from "../components/PaymentCard";
 import Header from "../components/Header";
@@ -11,6 +17,7 @@ import { useState } from "react";
 import api from "../utils/Api";
 import CheckBox from "../components/CheckBox";
 import ShimmerPayment from "../components/Shimmers/ShimmerPayment";
+import EmptyPayment from "../../assets/svgs/EmptyStates/EmptyPayment";
 
 const PaymentMethods = () => {
   const navigation = useNavigation();
@@ -80,13 +87,22 @@ const PaymentMethods = () => {
         {loading ? (
           <ShimmerPayment />
         ) : (
-          <FlatList
-            contentContainerStyle={styles.contentContainer}
-            data={data}
-            renderItem={rItem}
-            keyExtractor={(item) => item.id}
-            extraData={selectedId}
-          />
+          <View>
+            {data.length === 0 ? (
+              <View style={styles.empty}>
+                <EmptyPayment />
+                <Text style={styles.emptyText}>No cards found.</Text>
+                <Text>Click the button to add a new card as payment.</Text>
+              </View>
+            ) : (
+              <FlatList
+                contentContainerStyle={styles.contentContainer}
+                data={data}
+                renderItem={rItem}
+                extraData={selectedId}
+              />
+            )}
+          </View>
         )}
       </View>
 
@@ -124,6 +140,16 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: 150,
+  },
+  empty: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "90%",
+  },
+  emptyText: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 20,
   },
 });
 

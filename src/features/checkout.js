@@ -12,9 +12,13 @@ export const checkout = createSlice({
     setPayment: (state, { payload }) => {
       state.payment = payload;
     },
+    clearCheckout: (state, { payload }) => {
+      state.payment = "cod";
+      state.address = { _id: "" };
+    },
   },
 });
 
-export const { setAddress, setPayment } = checkout.actions;
+export const { setAddress, setPayment, clearCheckout } = checkout.actions;
 
 export default checkout.reducer;

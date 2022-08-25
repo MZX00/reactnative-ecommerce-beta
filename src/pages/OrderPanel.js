@@ -1,11 +1,12 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Text, ToastAndroid } from "react-native";
 import Header from "../components/Header";
 import Chip from "../components/Chip";
 import OrderMiniCard from "../components/OrderMiniCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../utils/Api";
 import { background, foreground } from "../utils/Constants";
 import { useSelector } from "react-redux";
+import EmptyOrder from "../../assets/svgs/EmptyStates/EmptyOrder";
 import ShimmerOrder from "../components/Shimmers/ShimmerOrder";
 
 const OrderPanel = () => {
@@ -21,6 +22,12 @@ const OrderPanel = () => {
     cancelled: [],
   });
 
+  const [empty, setEmpty] = useState(
+    data.processing.length === 0 &&
+      data.completed.length === 0 &&
+      data.completed.length === 0
+  );
+
   const renderItem = ({ item }) => {
     return (
       <OrderMiniCard
@@ -35,22 +42,65 @@ const OrderPanel = () => {
       />
     );
   };
+
+  const EmptyState = () => {
+    if (
+      (selected === "processing" && data.processing.length === 0) ||
+      (data.processing.length === 0 &&
+        data.completed.length === 0 &&
+        data.completed.length === 0)
+    ) {
+      return (
+        <View style={styles.empty}>
+          <EmptyOrder />
+          <Text style={styles.emptyText}>No Orders placed.</Text>
+          <Text>Your orders appear here.</Text>
+        </View>
+      );
+    } else if (selected === "completed" && data.completed.length === 0) {
+      return (
+        <View style={styles.empty}>
+          <EmptyOrder />
+          <Text style={styles.emptyText}>No Orders Delivered.</Text>
+          <Text>Your completed orders appear here.</Text>
+        </View>
+      );
+    } else if (selected === "cancelled" && data.cancelled.length === 0) {
+      return (
+        <View style={styles.empty}>
+          <EmptyOrder />
+          <Text style={styles.emptyText}>No Orders Cancelled.</Text>
+          <Text>Your cancelled orders appear here.</Text>
+        </View>
+      );
+    } else {
+      return <Text>Error</Text>;
+    }
+  };
+
   const loadData = async () => {
     const endpath = admin ? "order/admin/view" : "order/view";
     setLoading(true);
     const result = await api(endpath, "post", { token: token });
-    if (result) {
+    if (result && result.body) {
       setData(result.body);
       setLoading(false);
     } else {
-      console.log("API not working");
-      console.log(result);
+      ToastAndroid.show("Error: Please refresh", ToastAndroid.LONG);
     }
   };
 
   useEffect(() => {
     loadData();
   }, [refresh]);
+
+  useEffect(() => {
+    setEmpty(
+      (data.processing.length === 0 && selected == "processing") ||
+        (data.completed.length === 0 && selected == "completed") ||
+        (data.cancelled.length === 0 && selected == "cancelled")
+    );
+  }, [data, selected]);
 
   return (
     <View style={styles.container}>
@@ -85,13 +135,19 @@ const OrderPanel = () => {
         {loading ? (
           <ShimmerOrder />
         ) : (
-          <FlatList
-            contentContainerStyle={styles.contentContainer}
-            data={data[selected]}
-            keyExtractor={(item) => item._id}
-            renderItem={renderItem}
-            extraData={[data, refresh]}
-          />
+          <View style={styles.inner}>
+            {empty ? (
+              <EmptyState />
+            ) : (
+              <FlatList
+                contentContainerStyle={styles.contentContainer}
+                data={data[selected]}
+                keyExtractor={(item) => item._id}
+                renderItem={renderItem}
+                extraData={[data, refresh]}
+              />
+            )}
+          </View>
         )}
       </View>
     </View>
@@ -101,6 +157,7 @@ const OrderPanel = () => {
 const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: background,
+    paddingBottom: 10,
   },
   container: { backgroundColor: foreground },
 
@@ -115,8 +172,19 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderTopWidth: 1,
   },
-  list: {
-    alignSelf: "stretch",
+  list: { marginBottom: "78%" },
+  empty: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "60%",
+  },
+  emptyText: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 20,
+  },
+  inner: {
+    height: "100%",
   },
 });
 

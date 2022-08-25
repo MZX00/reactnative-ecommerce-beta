@@ -229,12 +229,11 @@ const HomePage = ({ route }) => {
           />
         )}
       </View>
-      <View>
+      <View style={styles.listContainer}>
         {loading ? (
           <ShimmerHomePage />
         ) : (
           <FlatList
-            contentContainerStyle={styles.contentContainer}
             numColumns={2}
             data={productList}
             extraData={productList}
@@ -259,9 +258,8 @@ const styles = StyleSheet.create({
   filterComponent: {
     marginHorizontal: 20,
   },
-  contentContainer: {
-    paddingBottom: 180,
-  },
+  listContainer: { marginBottom: "46%" },
+  contentContainer: { paddingBottom: 10 },
 
   head: {
     marginTop: 5,

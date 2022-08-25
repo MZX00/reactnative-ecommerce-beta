@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import HomePageMenu from "../components/HomePageMenu";
 import ProfileComponent from "../components/ProfileComponent";
 import { background, grey } from "../utils/Constants";
 import api from "../utils/Api";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 
 const MyProfile = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [orders, setOrders] = useState(0);
+  const [addresses, setAddresses] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const token = useSelector((state) => state.user.token);
   const admin = useSelector((state) => state.user.admin);
+  const payment = useSelector((state) => state.checkout.payment);
+
+  const Shimmer = createShimmerPlaceholder(LinearGradient);
 
   const loadData = async () => {
     //loading data on page load
+    setLoading(true);
     const result = await api("user/view", "post", { token: token });
     if (result && result.body) {
       setName(result.body.name);
       setEmail(result.body.email);
+      setAddresses(result.body.addresses);
+      setOrders(result.body.orders);
+      setLoading(false);
     }
   };
 
@@ -38,8 +50,12 @@ const MyProfile = () => {
           }}
         />
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.email}>{email}</Text>
+          <Shimmer visible={!loading} shimmerStyle={styles.space}>
+            <Text style={styles.name}>{name}</Text>
+          </Shimmer>
+          <Shimmer visible={!loading} width={100}>
+            <Text style={styles.email}>{email}</Text>
+          </Shimmer>
         </View>
       </View>
 
@@ -49,17 +65,21 @@ const MyProfile = () => {
             <View>
               <ProfileComponent
                 mainText="My Orders"
-                secText="Already have 12 orders"
+                secText={`You have ${orders === 0 ? "" : orders} orders`}
                 goTo="OrderPanel"
               />
               <ProfileComponent
                 mainText="Shipping Addresses"
-                secText="3 addresses"
+                secText={`${addresses === 0 ? "" : addresses} addresses`}
                 goTo="ShippingAddress"
               />
               <ProfileComponent
                 mainText="Payment Methods"
-                secText="Vise **34"
+                secText={
+                  payment === "cod"
+                    ? "Cash on Delivery"
+                    : "**** **** **** " + payment.substring(payment.length - 4)
+                }
                 goTo="PaymentMethods"
               />
             </View>
@@ -94,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    marginTop: "5%",
+    marginTop: "2%",
     alignSelf: "center",
     width: "93%",
     flex: 1,
@@ -107,9 +127,10 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   belowHeader: {
-    marginLeft: 20,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
   },
   name: {
     fontSize: 16,
@@ -131,6 +152,9 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     marginLeft: 20,
+  },
+  space: {
+    marginBottom: 5,
   },
 });
 

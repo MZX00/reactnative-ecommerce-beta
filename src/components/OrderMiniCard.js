@@ -67,14 +67,19 @@ const OrderMiniCard = ({
           </View>
         </Pressable>
         <View>
-          {status == "processing" ? (
+          {status == "processing" && admin ? (
             <Pressable
               onPress={() => {
                 setModalOpen(true);
               }}
               style={styles.status}
             >
-              <Text style={{ color: statusColor, textTransform: "capitalize" }}>
+              <Text
+                style={[
+                  styles.btnAdmin,
+                  { backgroundColor: statusColor, textTransform: "capitalize" },
+                ]}
+              >
                 {" " + status}
               </Text>
             </Pressable>
@@ -105,9 +110,9 @@ const styles = StyleSheet.create({
     elevation: 4,
     color: "#000000",
     marginVertical: 10,
-    padding: 15,
+    padding: 18,
     borderRadius: 10,
-    marginHorizontal: 25,
+    marginHorizontal: 17,
   },
   verticle: {
     flexDirection: "row",
@@ -131,6 +136,16 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     margin: 5,
+  },
+  btnAdmin: {
+    color: "#fff",
+    minWidth: 60,
+    borderRadius: 50,
+    fontSize: 14,
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginRight: -10,
   },
   details: {
     color: "#ffffff",

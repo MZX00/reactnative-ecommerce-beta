@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Counter from "./Counter";
-import EmptyCart from "../../assets/svgs/EmptyCart";
 import Constants from "expo-constants";
 import EmptyImage from "../../assets/svgs//EmptyImage";
 import { foreground } from "../utils/Constants";
 import Delete from "../../assets/svgs/Delete";
 import { removeFromCart } from "../features/cart";
+import EmptyCart from "../../assets/svgs/EmptyStates/EmptyCart";
 
 const Item = ({
   title = "",

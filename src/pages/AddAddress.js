@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTextInput from "../components/CustomTextInput";
 import Header from "../components/Header";
@@ -15,7 +16,7 @@ const AddAddress = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <Header content="Add Shipping Address" back={true} />
       <CustomTextInput
         type="fullName"
@@ -44,7 +45,7 @@ const AddAddress = ({ navigation, route }) => {
         fields={4}
         changeTo={route.params ? "goBack" : "Checkout"}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

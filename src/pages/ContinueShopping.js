@@ -34,7 +34,7 @@ const ContinueShopping = () => {
     const result = await api("order/create", "post", {
       products: products,
       token: token,
-      cost: cost,
+      cost: cost + 15,
     });
     if (!result.error) {
       dispatch(clearCart());

@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import Forward from "../../assets/svgs/Forward";
 import { foreground, grey } from "../utils/Constants";
 import { logout } from "../features/user";
-import { clearCart } from "../features/cart";
+import { clearCart, clearSelectedItem } from "../features/cart";
 import { init } from "../features/validation";
+import { resetReq, resetRes } from "../features/api";
+import { clearCheckout } from "../features/checkout";
 
 const ProfileComponent = ({ mainText, secText, goTo, log = false }) => {
   const navigation = useNavigation();
@@ -14,7 +16,12 @@ const ProfileComponent = ({ mainText, secText, goTo, log = false }) => {
   const logoutFunction = () => {
     dispatch(logout());
     dispatch(clearCart());
+    dispatch(clearSelectedItem());
     dispatch(init(0));
+    dispatch(resetReq());
+    dispatch(resetRes());
+    dispatch(clearCheckout());
+
     navigation.dispatch(
       CommonActions.reset({
         index: 0,

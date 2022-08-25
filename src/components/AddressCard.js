@@ -32,14 +32,6 @@ const ShippingAddressCard = ({
     <View style={styles.container}>
       <View style={styles.line1}>
         <Text style={styles.name}>{fullName}</Text>
-        <Text
-          style={styles.change}
-          onPress={() => {
-            navigation.navigate("AddAddress");
-          }}
-        >
-          Edit
-        </Text>
       </View>
       <View>
         <Text style={styles.address}>{address}</Text>
@@ -63,6 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: foreground,
     elevation: 10,
     borderRadius: 15,
+    marginHorizontal: 15,
   },
   line1: {
     flexDirection: "row",
@@ -75,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
     fontWeight: "bold",
+    textAlign: "left",
   },
   change: {
     color: "blue",

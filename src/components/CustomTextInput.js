@@ -32,6 +32,8 @@ const CustomTextInput = ({
   const [isFocused, setIsFocused] = useState(content ? true : false);
   const [isSecureEntry, setIsSecureEntry] = useState(false);
   const [errorText, setErrorText] = useState("*This field is required");
+  const [maxLength, setMaxLength] = useState();
+  const [keypress, setKeyPress] = useState();
 
   const anim = useRef(new Animated.Value(0)).current;
   const dispatch = useDispatch();
@@ -46,8 +48,19 @@ const CustomTextInput = ({
     }).start();
   }, [isFocused]);
 
-  //Password field
   useEffect(() => {
+    if (type === "phone") {
+      setMaxLength(11);
+    } else if (type === "expDate") {
+      setMaxLength(5);
+    } else if (type === "cv") {
+      setMaxLength(3);
+    } else if (type === "cardNumber") {
+      setMaxLength(12);
+    } else if (type === "date") {
+      setMaxLength(8);
+    }
+    //Password field
     if (
       type &&
       (type === "password" || type === "newPassword" || type === "prevPassword")
@@ -94,8 +107,85 @@ const CustomTextInput = ({
     setIsFocused(true);
   };
 
-  const onChange = (e) => {
-    setText(e.nativeEvent.text);
+  const onChange = ({ nativeEvent }) => {
+    //exp date handling
+    if (type === "expDate" && keypress != "Backspace") {
+      if (nativeEvent.text.length === 1) {
+        if (keypress > 2) {
+          setText(0 + nativeEvent.text + "/");
+        } else {
+          setText(nativeEvent.text);
+        }
+      } else if (nativeEvent.text.length === 2) {
+        if (keypress == 0 && nativeEvent.text.charAt(0) == "0") {
+        } else if (keypress > 2 && nativeEvent.text.charAt(0) == "1") {
+        } else {
+          setText(nativeEvent.text + "/");
+        }
+      } else if (nativeEvent.text.length === 3) {
+        setText(
+          nativeEvent.text.substring(0, 2) +
+            "/" +
+            nativeEvent.text.charAt(nativeEvent.text.length - 1)
+        );
+      } else {
+        setText(nativeEvent.text);
+      }
+    } else if (type === "date" && keypress != "Backspace") {
+      if (nativeEvent.text.length === 1) {
+        if (keypress > 4) {
+          setText(0 + nativeEvent.text + "/");
+        } else {
+          setText(nativeEvent.text);
+        }
+      } else if (nativeEvent.text.length === 2) {
+        if (keypress == 0 && nativeEvent.text.charAt(0) == "0") {
+        } else if (keypress > 1 && nativeEvent.text.charAt(1) == "3") {
+        } else {
+          setText(nativeEvent.text + "/");
+        }
+      } else if (nativeEvent.text.length === 3) {
+        if (keypress > 1) {
+          setText(
+            nativeEvent.text.substring(0, 2) +
+              "/" +
+              0 +
+              nativeEvent.text.charAt(nativeEvent.text.length - 1)
+          );
+        } else {
+          setText(
+            nativeEvent.text.substring(0, 2) +
+              "/" +
+              nativeEvent.text.charAt(nativeEvent.text.length - 1)
+          );
+        }
+      } else if (nativeEvent.text.length === 4) {
+        if (keypress > 1) {
+          setText(
+            nativeEvent.text.substring(0, nativeEvent.text.length - 1) +
+              0 +
+              nativeEvent.text.charAt(nativeEvent.text.length - 1) +
+              "/"
+          );
+        } else {
+          setText(nativeEvent.text);
+        }
+      } else if (nativeEvent.text.length === 5) {
+        if (keypress == 0 && nativeEvent.text.charAt(3) == "0") {
+        } else if (keypress > 2 && nativeEvent.text.charAt(3) == "1") {
+        } else {
+          setText(nativeEvent.text + "/");
+        }
+      } else {
+        setText(nativeEvent.text);
+      }
+    } else {
+      setText(nativeEvent.text);
+    }
+  };
+
+  const onKeyPress = ({ nativeEvent }) => {
+    setKeyPress(nativeEvent.key);
   };
 
   return (
@@ -147,8 +237,24 @@ const CustomTextInput = ({
           placeholderTextColor="#afafaf"
           onBlur={onBlur}
           onChange={onChange}
+          onKeyPress={
+            type === "expDate" || type === "date" ? onKeyPress : undefined
+          }
           secureTextEntry={isSecureEntry}
           onFocus={onFocus}
+          keyboardType={
+            type === "phone" ||
+            type === "date" ||
+            type === "cv" ||
+            type === "expDate" ||
+            type === "price" ||
+            type === "discount" ||
+            type === "cardNumber" ||
+            type === "stock"
+              ? "numeric"
+              : undefined
+          }
+          maxLength={maxLength}
         />
         {isPassword && (
           <View

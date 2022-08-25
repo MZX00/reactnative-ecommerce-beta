@@ -9,7 +9,6 @@ const Card = () => {
     <View style={styles.shimmerCard}>
       <View style={styles.line1}>
         <Shimmer width={100} height={20} shimmerStyle={styles.shimmerText} />
-        <Shimmer width={30} shimmerStyle={styles.shimmerText} />
       </View>
       <View style={styles.buffer} />
       <Shimmer width={250} shimmerStyle={styles.shimmerText} />

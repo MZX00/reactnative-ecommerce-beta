@@ -1,6 +1,7 @@
 import { View, StyleSheet, Modal, Pressable, Text } from "react-native";
 import { useSelector } from "react-redux";
 import api from "../utils/Api";
+import { blue50 } from "../utils/Constants";
 
 const OrderStatusModal = ({
   modalOpen,
@@ -64,9 +65,12 @@ const OrderStatusModal = ({
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(0, 0, 0, 0.96)",
-    flex: 1,
-    alignItems: "center",
+    backgroundColor: blue50,
+    height: "28%",
+    marginTop: "auto",
+    alignItems: "flex-end",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   buttonsContainer: {
     position: "absolute",
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "95%",
     backgroundColor: "#ffffff",
-    marginBottom: 30,
+    marginBottom: 15,
     marginTop: 15,
     borderRadius: 15,
     paddingVertical: 15,

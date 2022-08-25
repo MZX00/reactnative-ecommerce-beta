@@ -6,6 +6,7 @@ import {
   Keyboard,
   Pressable,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import {
   blue,
@@ -28,6 +29,7 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.apiData.req);
+  const address = useSelector((state) => state.checkout.address);
   const isValid = useSelector((state) => {
     return state.validation.target === state.validation.valid;
   });
@@ -44,6 +46,14 @@ const LargeBlackButton = ({ changeTo, btnText, flex, cartItem, fields }) => {
     if (isValid) {
       setDisable(true);
       try {
+        if (btnText === "Submit Order" && address._id === "") {
+          ToastAndroid.show(
+            "Please add adress to place order.",
+            ToastAndroid.SHORT
+          );
+          setDisable(false);
+          return;
+        }
         // api calling
         if (endpoints[btnText] && (fields || cartItem)) {
           let resp = { data: {} };
