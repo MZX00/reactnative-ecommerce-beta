@@ -52,7 +52,11 @@ const UploadImage = ({ flex, prevImg }) => {
         activeOpacity={0.5}
       >
         {img && <Image style={styles.image} source={{ uri: img }}></Image>}
-        {!img && <EmptyImage width={150} height={150} />}
+        {!img && (
+          <View style={styles.emptyImgContainer}>
+            <EmptyImage width={150} height={150} />
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -63,6 +67,9 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     alignItems: "center",
     backgroundColor: "lightgrey",
+  },
+  emptyImgContainer: {
+    paddingVertical: 10,
   },
   image: {
     width: "50%",

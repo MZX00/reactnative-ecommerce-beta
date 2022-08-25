@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, View, StatusBar } from "react-native";
 import UploadImage from "../components/UploadImage";
 import CustomTextInput from "../components/CustomTextInput";
 import LargeBlackButton from "../components/LargeBlackButton";
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: background,
+    paddingTop: StatusBar.currentHeight,
   },
 });
 
